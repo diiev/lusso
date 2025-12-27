@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUSSO Coffee | Искусство Кофе</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { 
+            --lusso-cream: #F4F1DE; 
+            --lusso-accent: #CC7351; 
+            --lusso-brown: #A37259; 
+            --lusso-dark: #2B3B2B; 
+        }
+        
+        body { 
+            background-color: var(--lusso-cream); 
+            color: var(--lusso-dark); 
+            font-family: 'Montserrat', sans-serif; 
+            overflow-x: hidden;
+        }
+
+        /* Parallax Background */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(244, 241, 222, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(163, 114, 89, 0.1);
+        }   
+
+         /* Анимации слайдеров */
+        .fade-enter-active, .fade-leave-active { transition: all 0.6s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateX(20px); }
+
+        .menu-slide-enter-active, .menu-slide-leave-active { transition: all 0.5s ease; }
+        .menu-slide-enter-from { opacity: 0; transform: scale(0.9); }
+        .menu-slide-leave-to { opacity: 0; transform: scale(1.1); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--lusso-cream); }
+        ::-webkit-scrollbar-thumb { background: var(--lusso-accent); border-radius: 10px; }
+
+        /* Slider Animations */
+        .slide-fade-enter-active, .slide-fade-leave-active { transition: all 0.8s ease-in-out; }
+        .slide-fade-enter-from { opacity: 0; transform: scale(1.1); }
+        .slide-fade-leave-to { opacity: 0; transform: scale(0.9); }
+
+        .mission-text {
+            text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        } 
+        /* Анимация появления мобильного меню */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+} 
+/* Анимация шторки: теперь она гарантированно на весь экран */
+.lusso-menu-enter-active, .lusso-menu-leave-active {
+    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+}
+.lusso-menu-enter-from, .lusso-menu-leave-to {
+    transform: translateY(-100%);
+}
+.lusso-menu-enter-to, .lusso-menu-leave-from {
+    transform: translateY(0);
+}
+
+/* Появление текста внутри */
+.menu-item-anim {
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transition-delay: var(--delay);
+}
+
+.lusso-menu-enter-from .menu-item-anim {
+    opacity: 0;
+    transform: translateX(-20px); /* Вылетает сбоку, так красивее */
+}
+
+.lusso-menu-enter-to .menu-item-anim {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+      
+       <!-- NAVIGATION -->
+<nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
+    <!-- Логотип -->
+    <h1 class="text-2xl font-black tracking-tighter text-[#A37259] z-[60]">
+        <a href="index.html">LUSSO</a>
+    </h1>
+
+    <!-- Десктопное меню (скрыто на мобилках) -->
+    <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
+        <a href="#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
+        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Меню</a>
+        <a href="#about" class="hover:text-[#CC7351] transition-colors">О нас</a>
+        <a href="#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
+    </div>
+
+    <!-- Правая часть: Кнопка и Бургер -->
+    <div class="flex items-center gap-4 z-[60]">
+        <a href="menu.html" class="bg-[#CC7351] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
+            Заказать
+        </a>
+        
+        <!-- Кнопка Бургера (только для мобилок) -->
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+        </button>
+    </div>
+<!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
+<transition name="lusso-menu">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+        
+        <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
+        <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
+            LUSSO
+        </div>
+
+        <!-- Контент -->
+        <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
+            
+            <!-- Кнопка Закрыть (в углу) -->
+            <div class="flex justify-end mb-8">
+                <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B3B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Центр: Ссылки (Размер текста уменьшен) -->
+            <nav class="flex flex-col gap-4 flex-grow justify-center">
+                <div v-for="(link, index) in [
+                    {n: '01', t: 'Миссия', h: '#mission'},
+                    {n: '02', t: 'Меню', h: 'menu.html'},
+                    {n: '03', t: 'О нас', h: '#about'},
+                    {n: '04', t: 'Отзывы', h: '#reviews'}
+                ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
+                    <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
+                        <span class="text-[10px] font-bold text-[#CC7351] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-2xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
+                            {{ link.t }}
+                        </span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Низ: Информация -->
+            <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
+                        <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">IG</div>
+                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">WA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</transition>
+
+
+
+</nav>
+
+
+        <!-- HERO SLIDER -->
+        <section class="relative h-screen overflow-hidden bg-black">
+            <transition-group name="slide-fade" tag="div" class="h-full">
+                <div v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index" 
+                     class="absolute inset-0 w-full h-full">
+                    <div class="absolute inset-0 bg-black/40 z-10"></div>
+                    <img :src="slide.image" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-white text-center px-4">
+                        <span class="text-xs uppercase tracking-[0.5em] mb-4 animate__animated animate__fadeInDown">Specialty Coffee Roasters</span>
+                        <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter animate__animated animate__fadeInUp">
+                            {{ slide.title }}
+                        </h2>
+                        <div class="w-20 h-1 bg-[#CC7351] animate__animated animate__zoomIn"></div>
+                    </div>
+                </div>
+            </transition-group>
+            <!-- Slider Controls -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-4">
+                <button v-for="(_, i) in slides" @click="currentSlide = i" 
+                        :class="['w-12 h-1 transition-all', currentSlide === i ? 'bg-[#CC7351]' : 'bg-white/30']"></button>
+            </div>
+        </section>
+
+        <!-- MISSION SECTION -->
+        <section id="mission" class="py-24 px-6 text-center bg-[#2B3B2B] text-[#F4F1DE] relative overflow-hidden">
+            <div class="max-w-4xl mx-auto relative z-10">
+                <p class="text-[#CC7351] font-bold uppercase tracking-widest text-xs mb-6">Наше призвание</p>
+                <h3 class="text-3xl md:text-5xl font-black mb-10 leading-tight mission-text">
+                    Создавать исключительный опыт в каждой чашке, объединяя традиции и инновации обжарки.
+                </h3>
+                <p class="text-lg opacity-60 font-light max-w-2xl mx-auto">
+                    Мы верим, что кофе — это не просто напиток, а момент спокойствия в городском хаосе. Каждое зерно отобрано нами вручную.
+                </p>
+            </div>
+            <!-- Decorative Element -->
+            <div class="absolute -bottom-20 -right-20 text-[20rem] font-black text-white/5 select-none">LUSSO</div>
+        </section>
+
+        <!-- MENU PREVIEW (Grid) -->
+    <section id="menu" class="py-12 md:py-24 px-4 md:px-6 bg-white overflow-hidden"> 
+    <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col items-center mb-10 md:mb-16">
+            <h2 class="text-3xl md:text-4xl font-black tracking-tighter uppercase mb-2">Наши хиты</h2>
+            <div class="w-16 h-1 bg-[#CC7351]"></div>
+        </div>
+
+        <!-- Контейнер слайдера с обработкой свайпов -->
+        <div class="relative group" 
+             @touchstart="touchStart" 
+             @touchend="touchEnd">
+            
+            <div class="flex items-center justify-between">
+                <!-- Кнопка Назад (на мобилках - поверх изображения слева) -->
+                <button @click="prevMenu" class="absolute left-2 md:left-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[#CC7351] hover:text-white transition-all z-30 shadow-md md:shadow-none">
+                    ←
+                </button>
+
+                <div class="w-full md:w-3/4 mx-auto overflow-hidden">
+                    <transition name="menu-slide" mode="out-in">
+                        <div :key="currentMenuIndex" class="flex flex-col md:flex-row gap-6 md:gap-12 items-center">
+                            <!-- Изображение -->
+                            <div class="w-full md:w-1/2 aspect-square rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl md:shadow-2xl">
+                                <img :src="menuItems[currentMenuIndex].img" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Текст -->
+                            <div class="w-full md:w-1/2 text-center md:text-left px-2">
+                                <span class="text-[#CC7351] font-bold text-[10px] md:text-xs uppercase tracking-widest">
+                                    {{ menuItems[currentMenuIndex].category }}
+                                </span>
+                                <h3 class="text-2xl md:text-4xl font-black my-2 md:my-4 text-[#2B3B2B]">
+                                    {{ menuItems[currentMenuIndex].name }}
+                                </h3>
+                                <p class="text-sm md:text-base text-gray-400 mb-6 md:mb-8 leading-relaxed">
+                                    {{ menuItems[currentMenuIndex].desc }}
+                                </p>
+                                <div class="text-2xl md:text-3xl font-bold text-[#A37259]">
+                                    {{ menuItems[currentMenuIndex].price }} ₽
+                                </div>
+                                <a href="menu.html" class="inline-block mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-[#2B3B2B] text-white rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[#CC7351] transition-all uppercase tracking-widest w-full md:w-auto">
+                                    ЗАКАЗАТЬ
+                                </a>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
+
+                <!-- Кнопка Вперед (на мобилках - поверх изображения справа) -->
+                <button @click="nextMenu" class="absolute right-2 md:right-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[#CC7351] hover:text-white transition-all z-30 shadow-md md:shadow-none">
+                    →
+                </button>
+            </div>
+
+            <!-- Индикаторы (Dots) - увеличены для удобства нажатия пальцем -->
+            <div class="flex justify-center gap-4 mt-10 md:mt-12">
+                <div v-for="(_, i) in menuItems" 
+                     :key="i" 
+                     @click="currentMenuIndex = i" 
+                     :class="['h-2 rounded-full transition-all cursor-pointer', currentMenuIndex === i ? 'w-8 bg-[#CC7351]' : 'w-2 bg-gray-200']">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+        <!-- ABOUT US (Parallax) -->
+        <section id="about" class="relative py-32 parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000');">
+            <div class="absolute inset-0 bg-[#2B3B2B]/80"></div>
+            <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row gap-16 items-center">
+                <div class="md:w-1/2">
+                    <div class="bg-white/10 backdrop-blur-lg p-12 rounded-[3rem] border border-white/20">
+                        <h2 class="text-4xl font-black text-white mb-6">История одного зерна</h2>
+                        <p class="text-white/80 leading-relaxed mb-8">
+                            LUSSO зародился в самом сердце города как место для истинных ценителей. Мы не просто варим кофе, мы контролируем каждый этап: от выбора фермы в Эфиопии до профиля обжарки в нашей лаборатории.
+                        </p>
+                        <div class="flex gap-8">
+                            <div><p class="text-3xl font-black text-[#CC7351]">10+</p><p class="text-[10px] text-white/50 uppercase">Сортов кофе</p></div>
+                            <div><p class="text-3xl font-black text-[#CC7351]">2</p><p class="text-[10px] text-white/50 uppercase">Локации</p></div>
+                            <div><p class="text-3xl font-black text-[#CC7351]">100%</p><p class="text-[10px] text-white/50 uppercase">Арабика</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=600" 
+                         class="rounded-[3rem] shadow-2xl floating border-8 border-white/5">
+                </div>
+            </div>
+        </section>
+
+        <!-- REVIEWS SLIDER (ОБНОВЛЕНО) -->
+        <section id="reviews" class="py-24 bg-[#FBF9F2] overflow-hidden">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-3xl font-black mb-16 uppercase tracking-tighter">Голоса наших гостей</h2>
+                
+                <div class="relative">
+                    <transition name="fade" mode="out-in">
+                        <div :key="currentReviewIndex" class="flex flex-col items-center">
+                            <div class="text-6xl text-[#CC7351] opacity-20 font-serif mb-4">“</div>
+                            <p class="text-xl md:text-2xl font-medium text-[#2B3B2B] italic leading-relaxed mb-10">
+                                {{ reviews[currentReviewIndex].text }}
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full bg-[#CC7351] flex items-center justify-center text-white font-bold text-xl">
+                                    {{ reviews[currentReviewIndex].author[0] }}
+                                </div>
+                                <div class="text-left">
+                                    <p class="font-black text-sm uppercase">{{ reviews[currentReviewIndex].author }}</p>
+                                    <p class="text-[10px] text-[#A37259] font-bold tracking-widest uppercase">Постоянный гость</p>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+
+                    <div class="flex justify-center gap-2 mt-12">
+                        <div v-for="(_, i) in reviews" :key="i" @click="currentReviewIndex = i" :class="['w-2 h-2 rounded-full transition-all cursor-pointer', currentReviewIndex === i ? 'bg-[#CC7351] scale-150' : 'bg-gray-300']"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+               <!-- FOOTER (ОБНОВЛЕНО) -->
+        <footer class="bg-[#2B3B2B] text-white pt-20 pb-10 px-6">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <h2 class="text-5xl font-black text-[#CC7351] tracking-tighter mb-6">LUSSO</h2>
+                    <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
+                    <div class="flex gap-4">
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">{{ soc }}</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Навигация</h4>
+                    <ul class="space-y-4 text-sm text-white/60">
+                        <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Кейтеринг</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Контакты</h4>
+                    <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
+                    <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
+                    <p class="text-[10px] text-[#CC7351] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
+                </div>
+            </div>
+            
+            <div class="max-w-6xl mx-auto pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-white/20 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
+                <div class="flex gap-8 text-[10px] text-white/20 uppercase tracking-widest">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+       <script>
+        const { createApp, ref, onMounted } = Vue;
+        createApp({
+            setup() {
+                const currentSlide = ref(0);
+                const currentMenuIndex = ref(0);
+                const currentReviewIndex = ref(0);  
+                 const isMobileMenuOpen = ref(false); // Новая переменная для контроля меню
+
+
+                 // Логика свайпов
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    const touchStart = (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    };
+
+    const touchEnd = (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    };
+
+    const handleSwipe = () => {
+        const threshold = 50; // порог чувствительности
+        if (touchStartX - touchEndX > threshold) {
+            nextMenu(); // Свайп влево -> следующий
+        } else if (touchEndX - touchStartX > threshold) {
+            prevMenu(); // Свайп вправо -> предыдущий
+        }
+    };
+
+                const slides = [
+                    { title: "ВКУС ЭСТЕТИКИ", image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000" },
+                    { title: "МАГИЯ ОБЖАРКИ", image: "https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?q=80&w=2000" }
+                ];
+
+                const menuItems = [
+                    { name: "Авторский Капучино", category: "Кофе", price: 280, desc: "На двойном эспрессо с тонким ароматом мускатного ореха и густой сливочной пенкой.", img: "https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=1000" },
+                    { name: "Миндальный Круассан", category: "Выпечка", price: 250, desc: "Классический французский рецепт с обилием миндальных лепестков и нежного крема.", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000" },
+                    { name: "Матча Латте", category: "Чай", price: 320, desc: "Японский чай высшего сорта на альтернативном молоке с добавлением ванильного сиропа.", img: "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1000" }
+                ];
+
+                const reviews = [
+                    { text: "Lusso — это место, где время замедляется. Внимание к деталям и вкус кофе просто поражают. Лучшая атмосфера в городе.", author: "Ваха Мусаев" },
+                    { text: "Каждый раз, приходя сюда, чувствую себя особенным гостем. Ребята знают о кофе всё и даже больше!", author: "Лом-Али Якубов" },
+                    { text: "Миндальный круассан и флэт уайт здесь — мой обязательный ритуал выходного дня. Идеально.", author: "Делина Вахаева" }
+                ];
+
+                const nextMenu = () => { currentMenuIndex.value = (currentMenuIndex.value + 1) % menuItems.length; };
+                const prevMenu = () => { currentMenuIndex.value = (currentMenuIndex.value - 1 + menuItems.length) % menuItems.length; };
+
+                onMounted(() => {
+                    setInterval(() => { currentSlide.value = (currentSlide.value + 1) % slides.length; }, 6000);
+                    setInterval(() => { currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length; }, 8000);
+                });
+
+                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, touchStart, nextMenu, prevMenu };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
