@@ -1,3 +1,4 @@
+/* INDEX.HTML */
 :root {
     --lusso-cream: #F4F1DE;
     --lusso-accent: #CC7351;
@@ -12,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-        /* Parallax Background */
+/* Parallax Background */
 .parallax-bg {
     background-attachment: fixed;
     background-position: center;
@@ -20,24 +21,27 @@ body {
     background-size: cover;
 }
 
-        /* Glassmorphism Header */
+/* Glassmorphism Header */
 .glass-header {
     background: rgba(244, 241, 222, 0.8);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(163, 114, 89, 0.1);
-}   
+}
 
-         /* Анимации слайдеров */
-.fade-enter-active, .fade-leave-active {
+/* Анимации слайдеров */
+.fade-enter-active,
+.fade-leave-active {
     transition: all 0.6s ease;
 }
 
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
     opacity: 0;
     transform: translateX(20px);
 }
 
-.menu-slide-enter-active, .menu-slide-leave-active {
+.menu-slide-enter-active,
+.menu-slide-leave-active {
     transition: all 0.5s ease;
 }
 
@@ -51,7 +55,7 @@ body {
     transform: scale(1.1);
 }
 
-        /* Custom Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -65,8 +69,9 @@ body {
     border-radius: 10px;
 }
 
-        /* Slider Animations */
-.slide-fade-enter-active, .slide-fade-leave-active {
+/* Slider Animations */
+.slide-fade-enter-active,
+.slide-fade-leave-active {
     transition: all 0.8s ease-in-out;
 }
 
@@ -81,31 +86,38 @@ body {
 }
 
 .mission-text {
-    text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .floating {
     animation: floating 3s ease-in-out infinite;
-} 
-        /* Анимация появления мобильного меню */
-.fade-enter-active, .fade-leave-active {
+}
+
+/* Анимация появления мобильного меню */
+.fade-enter-active,
+.fade-leave-active {
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
     opacity: 0;
     transform: translateY(-100%);
-} 
+}
+
 /* Анимация шторки: теперь она гарантированно на весь экран */
-.lusso-menu-enter-active, .lusso-menu-leave-active {
+.lusso-menu-enter-active,
+.lusso-menu-leave-active {
     transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
 }
 
-.lusso-menu-enter-from, .lusso-menu-leave-to {
+.lusso-menu-enter-from,
+.lusso-menu-leave-to {
     transform: translateY(-100%);
 }
 
-.lusso-menu-enter-to, .lusso-menu-leave-from {
+.lusso-menu-enter-to,
+.lusso-menu-leave-from {
     transform: translateY(0);
 }
 
@@ -118,7 +130,7 @@ body {
 .lusso-menu-enter-from .menu-item-anim {
     opacity: 0;
     transform: translateX(-20px);
- /* Вылетает сбоку, так красивее */
+    /* Вылетает сбоку, так красивее */
 }
 
 .lusso-menu-enter-to .menu-item-anim {
@@ -138,4 +150,86 @@ body {
     100% {
         transform: translateY(0px);
     }
+}
+ 
+/* END INDEX.HTML */
+
+
+
+
+/* MENU HTML */
+
+:root {
+    --lusso-cream: #F4F1DE;
+    --lusso-accent: #CC7351;
+    --lusso-brown: #A37259;
+    --lusso-dark: #2B3B2B;
+}
+
+body {
+    background-color: var(--lusso-cream);
+    color: var(--lusso-dark);
+    font-family: 'Montserrat', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+        /* Элементы стиля LUSSO */
+.glass-header {
+    background: rgba(244, 241, 222, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(163, 114, 89, 0.1);
+}
+
+.lusso-card {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.lusso-card:hover {
+    transform: translateY(-5px);
+    shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+        
+        /* Скроллбар */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--lusso-cream);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--lusso-accent);
+    border-radius: 10px;
+}
+
+        /* Анимация мобильного меню (Шторка) */
+.lusso-menu-enter-active, .lusso-menu-leave-active {
+    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.lusso-menu-enter-from, .lusso-menu-leave-to {
+    transform: translateY(-100%);
+}
+
+.menu-item-anim {
+    transition: all 0.5s ease;
+    transition-delay: var(--delay);
+}
+
+.lusso-menu-enter-from .menu-item-anim {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+        /* Категории (без скроллбара) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

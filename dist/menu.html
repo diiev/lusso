@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUSSO Coffee | Искусство Кофе</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"> 
+</head>
+<body>
+    <div id="app-menu">
+      
+        <header>
+         <!-- NAVIGATION -->
+<nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
+    <!-- Логотип -->
+    <h1 class="text-2xl font-black tracking-tighter text-[#A37259] z-[60]">
+        <a href="index.html">LUSSO</a>
+    </h1>
+
+    <!-- Десктопное меню (скрыто на мобилках) -->
+    <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
+        <a href="#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
+        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Меню</a>
+        <a href="about.html" class="hover:text-[#CC7351] transition-colors">О нас</a>
+        <a href="#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[#CC7351] transition-colors">Вакансии</a>
+    </div>
+
+    <!-- Правая часть: Кнопка и Бургер -->
+    <div class="flex items-center gap-4 z-[60]">
+        <a href="menu.html" class="bg-[#CC7351] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
+            Заказать
+        </a>
+        
+        <!-- Кнопка Бургера (только для мобилок) -->
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+        </button>
+    </div>
+<!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
+<transition name="lusso-menu">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+        
+        <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
+        <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
+            LUSSO
+        </div>
+
+        <!-- Контент -->
+        <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
+            
+            <!-- Кнопка Закрыть (в углу) -->
+            <div class="flex justify-end mb-8">
+                <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B3B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Центр: Ссылки (Размер текста уменьшен) -->
+            <nav class="flex flex-col gap-4 flex-grow justify-center">
+                <div v-for="(link, index) in [
+                    {n: '01', t: 'Миссия', h: '#mission'},
+                    {n: '02', t: 'Меню', h: 'menu.html'},
+                    {n: '03', t: 'О нас', h: '#about'},
+                    {n: '04', t: 'Отзывы', h: '#reviews'}
+                ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
+                    <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
+                        <span class="text-[10px] font-bold text-[#CC7351] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-2xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
+                            {{ link.t }}
+                        </span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Низ: Информация -->
+            <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
+                        <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">IG</div>
+                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">WA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</transition>
+</nav>
+</header>
+        <div class="max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-24">
+            
+            <!-- 1. ВЫБОР ЛОКАЦИИ (В стиле Home) -->
+            <div v-if="!selectedLocation" class="animate__animated animate__fadeIn flex flex-col items-center py-10 md:py-20">
+                <p class="text-center font-bold opacity-40 uppercase tracking-[0.3em] text-xl md:text-2xl mb-16">Выберите кофейню</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-4xl">
+                    <div v-for="loc in locations" @click="selectLocation(loc.name)" 
+                         class="group relative overflow-hidden rounded-[2.5rem] bg-white cursor-pointer transition-all hover:scale-[1.02] shadow-sm hover:shadow-2xl">
+                        <div class="overflow-hidden h-64 relative">
+                            <img :src="loc.image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all"></div>
+                        </div>
+                        <div class="p-8">
+                            <div class="w-12 h-1 bg-[#CC7351] mb-4"></div>
+                            <h3 class="font-black text-2xl mb-2 group-hover:text-[#CC7351] transition-colors">{{ loc.name }}</h3>
+                            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">{{ loc.addr }}</p>
+                            <p class="text-sm text-gray-500 leading-relaxed">{{ loc.desc }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ГЛАВНОЕ МЕНЮ -->
+            <div v-else class="animate__animated animate__fadeIn">
+                <!-- Header Меню -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 border-b border-black/5 pb-8">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[#CC7351]">{{ selectedLocation }}</span>
+                        <h2 class="text-4xl md:text-5xl font-black tracking-tighter mt-2">МЕНЮ</h2>
+                    </div>
+                    <button @click="selectedLocation = null" class="text-[10px] font-bold tracking-widest text-gray-400 hover:text-[#CC7351] uppercase border-b border-gray-200 pb-1 self-start md:self-auto transition-all">Сменить локацию</button>
+                </div>
+
+                <!-- Поиск и Категории -->
+                <div class="space-y-6 mb-10">
+                    <div class="relative group max-w-2xl">
+                        <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-gray-300 group-focus-within:text-[#CC7351] transition-colors">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                        <input v-model="searchQuery" type="text" placeholder="Найти кофе или десерт..." 
+                               class="w-full bg-white border-none py-5 pl-14 pr-6 rounded-[1.5rem] text-sm font-semibold shadow-sm focus:shadow-xl focus:scale-[1.01] transition-all outline-none">
+                    </div>
+
+                    <div class="flex overflow-x-auto py-2 gap-3 no-scrollbar"> 
+                        <button v-for="cat in categories" :key="cat" @click="activeCategory = cat" 
+                            :class="['px-8 py-3 rounded-full whitespace-nowrap text-[10px] font-black tracking-widest uppercase transition-all shadow-sm', activeCategory === cat ? 'bg-[#2B3B2B] text-white' : 'bg-white text-gray-400 hover:text-[#2B3B2B]']">
+                            {{ cat }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Сетка товаров -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"> 
+                    <div v-for="item in filteredItems" :key="item.id" class="lusso-card rounded-[2rem] overflow-hidden flex flex-col">
+                        <div class="aspect-[4/5] overflow-hidden relative">
+                            <img :src="item.image" class="w-full h-full object-cover">
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[#CC7351] shadow-sm">
+                                {{ item.price }} ₽
+                            </div>
+                        </div>
+                        <div class="p-5 flex-grow flex flex-col">
+                            <h3 class="font-black text-lg mb-1 leading-tight">{{ item.name }}</h3>
+                            <p class="text-[11px] text-gray-400 font-medium line-clamp-2 mb-6 leading-relaxed">{{ item.desc }}</p>
+                            
+                            <div class="mt-auto flex items-center justify-between">
+                                <div class="flex items-center bg-[#FBF9F2] p-1 rounded-xl w-full justify-between border border-black/[0.03]">
+                                    <button v-if="getItemQty(item.id) > 0" @click="changeQty(item, -1)" class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-sm hover:text-red-400 transition-colors">
+                                        <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M20 12H4"/></svg>
+                                    </button>
+                                    <span v-if="getItemQty(item.id) > 0" class="font-black text-xs px-2">{{ getItemQty(item.id) }}</span>
+                                    <button @click="changeQty(item, 1)" :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[#CC7351] text-white shadow-lg shadow-[#CC7351]/20' : 'bg-white w-full text-[#CC7351] font-black text-[10px] tracking-widest']">
+                                        <span v-if="getItemQty(item.id) === 0">В КОРЗИНУ</span>
+                                        <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M12 4v16m8-8H4"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+            <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
+            <transition name="animate__animated animate__fadeInUp">
+                <div v-if="cart.length > 0" class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-[450px] z-[100] flex gap-3">
+                    <button @click="confirmClear = true" class="w-16 h-16 bg-white border border-black/5 rounded-[1.5rem] flex items-center justify-center shadow-2xl active:scale-90 transition-all text-red-400">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                    <button @click="openCheckout" class="flex-1 bg-[#CC7351] text-white rounded-[1.5rem] flex justify-between items-center px-8 shadow-2xl shadow-[#CC7351]/30 active:scale-95 transition-all">
+                        <span class="font-black text-sm tracking-[0.2em] uppercase">Заказать</span>
+                        <span class="font-black text-lg">{{ cartTotalSum }} ₽</span>
+                    </button>
+                </div>
+            </transition> 
+            
+        </div>
+
+        <!-- МОДАЛКИ (Остаются функциональными, но обновляются визуально) -->
+        <div v-if="showCheckout || confirmClear" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-[#2B3B2B]/60 backdrop-blur-md" @click="showCheckout = false; confirmClear = false"></div>
+            
+            <!-- Оформление -->
+            <div v-if="showCheckout" class="relative bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl animate__animated animate__zoomIn">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-black tracking-tighter uppercase">{{ checkoutMode === 'order' ? 'Заказ' : 'Счёт' }}</h2>
+                    <button @click="checkoutMode = checkoutMode === 'order' ? 'waiter' : 'order'" class="text-[9px] font-black px-4 py-2 bg-[#FBF9F2] rounded-full uppercase tracking-widest text-[#A37259]">
+                        {{ checkoutMode === 'order' ? 'Для официанта' : 'К оформлению' }}
+                    </button>
+                </div>
+
+                <div class="max-h-[30vh] overflow-y-auto pr-2 mb-8 no-scrollbar">
+                    <div v-for="item in cart" :key="item.id" class="flex justify-between items-center mb-4 pb-4 border-b border-black/[0.03]">
+                        <div>
+                            <p class="font-bold text-sm">{{ item.name }}</p>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{{ item.qty }} шт × {{ item.price }} ₽</p>
+                        </div>
+                        <span class="font-black text-sm text-[#CC7351]">{{ item.price * item.qty }} ₽</span>
+                    </div>
+                </div>
+
+                <div v-if="checkoutMode === 'order'" class="space-y-3 mb-8">
+                    <input v-model="form.name" type="text" class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all" placeholder="Ваше Имя">
+                    <input v-model="form.phone" type="tel" class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all" placeholder="Номер телефона">
+                    <div class="flex bg-[#FBF9F2] p-1.5 rounded-2xl gap-2">
+                        <button @click="form.type = 'pickup'" :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'pickup' ? 'bg-white shadow-sm text-[#CC7351]' : 'text-gray-400']">Самовывоз</button>
+                        <button @click="form.type = 'delivery'" :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'delivery' ? 'bg-white shadow-sm text-[#CC7351]' : 'text-gray-400']">Доставка</button>
+                    </div>
+                    <input v-if="form.type === 'delivery'" v-model="form.address" type="text" class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all" placeholder="Адрес доставки">
+                </div>
+
+                <div class="pt-6 border-t-2 border-dashed border-gray-100 flex justify-between items-center mb-8">
+                    <span class="font-bold text-gray-400 uppercase tracking-widest text-xs">Итого к оплате</span>
+                    <span class="text-3xl font-black text-[#CC7351]">{{ cartTotalSum }} ₽</span>
+                </div>
+
+                <button v-if="checkoutMode === 'order'" @click="sendToWhatsapp" class="w-full py-5 bg-[#CC7351] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить в WhatsApp</button>
+                <button v-else @click="showCheckout = false" class="w-full py-5 bg-[#2B3B2B] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
+            </div>
+
+            <!-- Подтверждение очистки -->
+            <div v-if="confirmClear" class="relative bg-white w-full max-w-xs rounded-[2.5rem] p-10 text-center shadow-2xl animate__animated animate__bounceIn">
+                <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">!</div>
+                <h3 class="text-xl font-black mb-2">Очистить?</h3>
+                <p class="text-xs text-gray-400 font-medium mb-8 leading-relaxed">Все товары исчезнут из вашей корзины.</p>
+                <div class="flex gap-3">
+                    <button @click="confirmClear = false" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold text-gray-400 text-xs uppercase tracking-widest">Нет</button>
+                    <button @click="clearCart" class="flex-1 py-4 bg-red-500 text-white rounded-2xl font-bold text-xs uppercase tracking-widest shadow-lg shadow-red-500/20">Да</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- УВЕДОМЛЕНИЕ -->
+        <transition name="animate__animated animate__fadeInDown">
+            <div v-if="showNotice" class="fixed top-24 left-1/2 -translate-x-1/2 z-[300] w-[90%] max-w-md bg-[#2B3B2B] text-[#F4F1DE] p-5 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/10">
+                <div class="w-8 h-8 bg-[#CC7351] rounded-full flex items-center justify-center font-bold text-white text-xs">!</div>
+                <p class="text-xs font-bold uppercase tracking-widest">{{ noticeText }}</p>
+            </div>
+        </transition> 
+            <!-- FOOTER (ОБНОВЛЕНО) -->
+        <footer class="bg-[#2B3B2B] text-white pt-20 pb-10 px-6">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <h2 class="text-5xl font-black text-[#CC7351] tracking-tighter mb-6">LUSSO</h2>
+                    <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
+                    <div class="flex gap-4">
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">{{ soc }}</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Навигация</h4>
+                    <ul class="space-y-4 text-sm text-white/60">
+                        <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Кейтеринг</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Контакты</h4>
+                    <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
+                    <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
+                    <p class="text-[10px] text-[#CC7351] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
+                </div>
+            </div>
+            
+            <div class="max-w-6xl mx-auto pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-white/20 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
+                <div class="flex gap-8 text-[10px] text-white/20 uppercase tracking-widest">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </footer> 
+        
+            <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="/assets/js/script.js"></script>
+    </div>
+           
+            
+            
+   
+</body>
+</html>

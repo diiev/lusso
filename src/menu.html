@@ -1,88 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUSSO | Меню</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script> 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        :root { 
-            --lusso-cream: #F4F1DE; 
-            --lusso-accent: #CC7351; 
-            --lusso-brown: #A37259; 
-            --lusso-dark: #2B3B2B; 
-        }
-        body { background-color: var(--lusso-cream); color: var(--lusso-dark); font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        /* Элементы стиля LUSSO */
-        .glass-header { background: rgba(244, 241, 222, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(163, 114, 89, 0.1); }
-        .lusso-card { background: white; border: 1px solid rgba(0,0,0,0.05); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .lusso-card:hover { transform: translateY(-5px); shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        
-        /* Скроллбар */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--lusso-cream); }
-        ::-webkit-scrollbar-thumb { background: var(--lusso-accent); border-radius: 10px; }
-
-        /* Анимация мобильного меню (Шторка) */
-        .lusso-menu-enter-active, .lusso-menu-leave-active { transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1); }
-        .lusso-menu-enter-from, .lusso-menu-leave-to { transform: translateY(-100%); }
-        .menu-item-anim { transition: all 0.5s ease; transition-delay: var(--delay); }
-        .lusso-menu-enter-from .menu-item-anim { opacity: 0; transform: translateX(-20px); }
-
-        /* Категории (без скроллбара) */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
-</head>
+@@include('template/partials/head.html')
 <body>
-    <div id="app">
-        <!-- NAVIGATION -->
-        <nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-black tracking-tighter text-[#A37259] z-[60]">
-                <a href="index.html">LUSSO</a>
-            </h1>
-
-            <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
-                <a href="index.html#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
-                <a href="menu.html" class="text-[#CC7351]">Меню</a>
-                <a href="about.html" class="hover:text-[#CC7351] transition-colors">О нас</a>
-                <a href="index.html#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
-            </div>
-
-            <div class="flex items-center gap-4 z-[60]">
-                <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-                    <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-                    <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-                    <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
-                </button>
-            </div>
-
-            <!-- МОБИЛЬНАЯ ШТОРКА -->
-            <transition name="lusso-menu">
-                <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
-                    <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">LUSSO</div>
-                    <div class="relative flex flex-col h-full w-full p-8 pt-24 z-10">
-                        <nav class="flex flex-col gap-6 flex-grow justify-center">
-                            <div v-for="(link, index) in [
-                                {t: 'Миссия', h: 'index.html#mission'},
-                                {t: 'Меню', h: 'menu.html'},
-                                {t: 'О нас', h: 'about.html'},
-                                {t: 'Отзывы', h: 'index.html#reviews'}
-                            ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
-                                <a @click="isMobileMenuOpen = false" :href="link.h" class="text-4xl font-black tracking-tighter text-[#2B3B2B] uppercase">
-                                    {{ link.t }}
-                                </a>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </transition>
-        </nav>
-
+    <div id="app-menu">
+      
+        @@include('template/partials/header.html')
         <div class="max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-24">
             
             <!-- 1. ВЫБОР ЛОКАЦИИ (В стиле Home) -->
@@ -163,7 +85,7 @@
                     </div>
                 </div>
             </div>
-
+              
             <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
             <transition name="animate__animated animate__fadeInUp">
                 <div v-if="cart.length > 0" class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-[450px] z-[100] flex gap-3">
@@ -175,7 +97,8 @@
                         <span class="font-black text-lg">{{ cartTotalSum }} ₽</span>
                     </button>
                 </div>
-            </transition>
+            </transition> 
+            
         </div>
 
         <!-- МОДАЛКИ (Остаются функциональными, но обновляются визуально) -->
@@ -238,83 +161,13 @@
                 <div class="w-8 h-8 bg-[#CC7351] rounded-full flex items-center justify-center font-bold text-white text-xs">!</div>
                 <p class="text-xs font-bold uppercase tracking-widest">{{ noticeText }}</p>
             </div>
-        </transition>
+        </transition> 
+           @@include('template/partials/footer.html')
+           @@include('template/partials/scripts.html')
     </div>
-
-    <script>
-        const { createApp, ref, computed } = Vue;
-        createApp({
-            setup() {
-                const isMobileMenuOpen = ref(false);
-                const selectedLocation = ref(null); 
-                const noticeText = ref("");
-                const showNotice = ref(false);
-                const activeCategory = ref('Все');
-                const showCheckout = ref(false);
-                const confirmClear = ref(false);
-                const checkoutMode = ref('order'); 
-                const searchQuery = ref("");
-                const cart = ref([]);
-                const form = ref({ name: '', phone: '', type: 'pickup', address: '' });
-
-                const locations = [
-                    { name: 'LUSSO', addr: 'ул. Кавказская, 52', desc: 'Первая specialty кофейня в городе. Островок тишины и эстетики.', image: 'assets/img/lusso_1.jpg', whatsapp: '79389997788' },
-                    { name: 'LUSSO URBAN HAVEN', addr: 'Проспект А. Кадырова, 28', desc: 'Городское убежище для продуктивной работы и встреч.', image: 'assets/img/lusso_2.jpeg', whatsapp: '79389998118' }
-                ];
-
-                const categories = ['Все', 'Кофе', 'Выпечка', 'Десерты', 'Завтраки'];
-                const items = [
-                    { id: 1, name: 'Капучино', price: 220, desc: 'На двойном эспрессо с воздушной сливочной пенкой.', category: 'Кофе', image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=500' },
-                    { id: 2, name: 'Круассан', price: 180, desc: 'Классический масляный круассан из 24 слоев теста.', category: 'Выпечка', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=500' },
-                    { id: 3, name: 'Чизкейк Нью-Йорк', price: 320, desc: 'Классический сливочный десерт с ягодным соусом.', category: 'Десерты', image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500' },
-                    { id: 4, name: 'Флэт Уайт', price: 250, desc: 'Насыщенный кофейный вкус с минимальным слоем пены.', category: 'Кофе', image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=500' }
-                ];
-
-                const filteredItems = computed(() => {
-                    return items.filter(item => {
-                        const matchesCategory = activeCategory.value === 'Все' || item.category === activeCategory.value;
-                        const matchesSearch = item.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || item.desc.toLowerCase().includes(searchQuery.value.toLowerCase());
-                        return matchesCategory && matchesSearch;
-                    });
-                });
-
-                const cartTotalSum = computed(() => cart.value.reduce((acc, i) => acc + (i.price * i.qty), 0));
-                const selectLocation = (loc) => selectedLocation.value = loc;
-                const getItemQty = (id) => cart.value.find(i => i.id === id)?.qty || 0;
-                const clearCart = () => { cart.value = []; confirmClear.value = false; };
-                const openCheckout = () => { checkoutMode.value = 'order'; showCheckout.value = true; };
-                const removeItem = (id) => { cart.value = cart.value.filter(i => i.id !== id); if(cart.value.length === 0) showCheckout.value = false; };
-
-                const changeQty = (item, delta) => {
-                    const existing = cart.value.find(i => i.id === item.id);
-                    if (existing) {
-                        existing.qty += delta;
-                        if (existing.qty <= 0) cart.value = cart.value.filter(i => i.id !== item.id);
-                    } else if (delta > 0) {
-                        cart.value.push({ ...item, qty: 1 });
-                    }
-                };
-
-                const sendToWhatsapp = () => { 
-                    if (!form.value.name || !form.value.phone) {
-                        noticeText.value = "Заполните имя и телефон";
-                        showNotice.value = true;
-                        setTimeout(() => { showNotice.value = false; }, 3000);
-                        return;
-                    }
-                    const currentLocation = locations.find(l => l.name === selectedLocation.value);
-                    const phone = currentLocation ? currentLocation.whatsapp : "79389997788"; 
-                    let text = `Новый заказ от: ${form.value.name}\nТел: ${form.value.phone}\nТочка: ${selectedLocation.value}\nТип: ${form.value.type === 'pickup' ? 'Самовывоз' : 'Доставка'}\n`;
-                    if (form.value.type === 'delivery') text += `Адрес: ${form.value.address}\n`;
-                    text += `\nЗаказ:\n`;
-                    cart.value.forEach(i => { text += `— ${i.name} (x${i.qty}) — ${i.price * i.qty}₽\n`; });
-                    text += `\nИТОГО: ${cartTotalSum.value} ₽`;
-                    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`);
-                };
-
-                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, selectLocation, getItemQty, changeQty, cartTotalSum, sendToWhatsapp, clearCart, openCheckout, removeItem };
-            }
-        }).mount('#app');
-    </script>
+           
+            
+            
+   
 </body>
 </html>
