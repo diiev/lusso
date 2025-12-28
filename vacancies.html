@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUSSO | Вакансии</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    :root {
+      --lusso-cream: #f4f1de;
+      --lusso-accent: #cc7351;
+      --lusso-brown: #a37259;
+      --lusso-dark: #2b3b2b;
+    }
+    body {
+      background-color: var(--lusso-cream);
+      color: var(--lusso-dark);
+      font-family: "Montserrat", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .glass-header {
+      background: rgba(244, 241, 222, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(163, 114, 89, 0.12);
+    }
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--lusso-cream);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--lusso-accent);
+      border-radius: 999px;
+    }
+    .lusso-menu-enter-active,
+    .lusso-menu-leave-active {
+      transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    .lusso-menu-enter-from,
+    .lusso-menu-leave-to {
+      transform: translateY(-100%);
+    }
+    .menu-item-anim {
+      transition: all 0.5s ease;
+      transition-delay: var(--delay);
+    }
+    .lusso-menu-enter-from .menu-item-anim {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .fade-section {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.8s ease;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    } 
+
+    /* Анимация появления модального окна */
+.modal-fade-enter-active, .modal-fade-leave-active {
+    transition: all 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+}
+.modal-fade-enter-from, .modal-fade-leave-to {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+}
+
+/* Кастомный скролл внутри модалки */
+.modal-scroll::-webkit-scrollbar { width: 4px; }
+.modal-scroll::-webkit-scrollbar-thumb { background: var(--lusso-accent); border-radius: 10px; }
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-black tracking-tighter text-[#A37259] z-[60]">
+        <a href="index.html">LUSSO</a>
+      </h1>
+
+      <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
+        <a href="index.html#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
+        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Меню</a>
+        <a href="about.html" class="hover:text-[#CC7351] transition-colors">О нас</a>
+        <a href="vacancies.html" class="text-[#CC7351]">Вакансии</a>
+      </div>
+
+      <div class="flex items-center gap-4 z-[60]">
+        <a
+          href="menu.html"
+          class="bg-[#CC7351] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all"
+        >
+          Заказать
+        </a>
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
+          <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+          <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+          <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+        </button>
+      </div>
+
+      <!-- MOBILE MENU -->
+      <transition name="lusso-menu">
+        <div
+          v-if="isMobileMenuOpen"
+          class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden"
+        >
+          <div
+            class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0"
+          >
+            LUSSO
+          </div>
+          <div class="relative flex flex-col h-full w-full p-6 pt-16 pb-10 z-10">
+            <div class="flex justify-end mb-10">
+              <button
+                @click="isMobileMenuOpen = false"
+                class="w-11 h-11 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#2B3B2B"
+                  stroke-width="2.3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            <nav class="flex flex-col gap-4 flex-grow justify-center">
+              <div
+                v-for="(link, index) in mobileLinks"
+                :key="index"
+                class="menu-item-anim"
+                :style="{'--delay': (index * 0.08) + 's'}"
+              >
+                <a @click="handleMobileNav(link.h)" :href="link.h" class="group flex items-center gap-4 py-2">
+                  <span class="text-[10px] font-bold text-[#CC7351] tracking-[0.2em]">{{ link.n }}</span>
+                  <span class="text-3xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
+                    {{ link.t }}
+                  </span>
+                </a>
+              </div>
+            </nav>
+
+            <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.45s">
+              <div class="flex justify-between items-end">
+                <div>
+                  <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Команда LUSSO</p>
+                  <p class="text-xs font-black text-[#2B3B2B]">Кофе как ремесло. Сервис как искусство.</p>
+                </div>
+                <div class="flex gap-2">
+                  <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">
+                    IG
+                  </div>
+                  <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">
+                    WA
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative h-[70vh] md:h-[80vh] mt-16">
+      <div
+        class="absolute inset-0"
+        style="background-image:url('assets/img/lusso_1.jpg'); background-size:cover; background-position:center;"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-[#2B3B2B]/90"></div>
+      <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center px-6">
+        <p class="text-xs uppercase tracking-[0.4em] text-[#F4F1DE]/70 mb-4">Вакансии</p>
+        <h2 class="text-4xl md:text-6xl font-black text-[#F4F1DE] tracking-tight mb-4">
+          Карьера в LUSSO.
+        </h2>
+        <p class="text-sm md:text-base text-[#F4F1DE]/75 max-w-xl">
+          Команда, которая любит кофе, детали и людей. Если тебе близка эстетика LUSSO, возможно, мы ищем именно тебя.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHY LUSSO -->
+    <section class="py-14 md:py-20 px-4 md:px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[3fr,2fr] gap-10 items-center fade-section" ref="whyRef">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-[#CC7351] mb-4">Почему LUSSO</p>
+          <h3 class="text-3xl md:text-4xl font-black mb-4">Команда, где важен каждый гость и каждый шот эспрессо.</h3>
+          <p class="text-sm md:text-base text-gray-600 mb-6">
+            LUSSO — это не сеть «про поток». Это кофейни, где ценят ремесло, аккуратность и спокойный, но сильный сервис.
+            Обучаем, поддерживаем и растём вместе.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+            <div>
+              <p class="text-2xl font-black text-[#CC7351] mb-1">1:1</p>
+              <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Обучение бариста</p>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-[#CC7351] mb-1">Гибко</p>
+              <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Графики смен</p>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-[#CC7351] mb-1">Рост</p>
+              <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Карьерные переходы</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5 floating">
+          <p class="text-[11px] uppercase tracking-[0.25em] text-[#A37259] mb-3">Философия команды</p>
+          <p class="text-sm text-gray-600 mb-4">
+            Мы не делим роли на «важные» и «вспомогательные». Каждый человек в команде влияет на то, каким гости запомнят свой день.
+          </p>
+          <p class="text-xs text-gray-400">
+            Если ты внимателен к людям, любишь порядок, интересуешься кофе и эстетикой — тебе будет комфортно в LUSSO.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOB LIST -->
+    <section class="py-10 md:py-16 px-4 md:px-6 bg-white/60">
+      <div class="max-w-6xl mx-auto fade-section" ref="jobsRef">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-2">Открытые позиции</h3>
+            <div class="w-16 h-1 bg-[#CC7351]"></div>
+          </div>
+          <p class="text-sm text-gray-500 max-w-md">
+            Выберите позицию, изучите требования и отправьте отклик через форму ниже — мы свяжемся с вами.
+          </p>
+        </div>
+
+     <!-- Список вакансий -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div v-for="job in jobs" :key="job.id" 
+         @click="openJobModal(job)"
+         class="group text-left bg-white rounded-[2rem] p-8 border border-black/5 hover:border-[#CC7351]/30 transition-all cursor-pointer shadow-sm hover:shadow-2xl">
+        <div class="flex justify-between items-start mb-6">
+            <div class="w-12 h-1 bg-[#CC7351] group-hover:w-20 transition-all duration-500"></div>
+            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-[#FBF9F2] text-[#A37259] uppercase tracking-widest">
+                {{ job.type }}
+            </span>
+        </div>
+        <h4 class="text-2xl font-black text-[#2B3B2B] mb-2 tracking-tighter">{{ job.title }}</h4>
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">{{ job.location }}</p>
+        <div class="flex items-center gap-2 text-[10px] font-bold text-[#CC7351] uppercase tracking-[0.2em]">
+            <span>Подробнее</span>
+            <span class="group-hover:translate-x-2 transition-transform">→</span>
+        </div>
+    </div>
+</div> 
+
+<!-- МОДАЛЬНОЕ ОКНО ПОДРОБНОСТЕЙ -->
+<transition name="modal-fade">
+    <div v-if="activeJobModal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-8">
+        <!-- Фон с размытием -->
+        <div class="absolute inset-0 bg-[#2B3B2B]/60 backdrop-blur-xl" @click="activeJobModal = null"></div>
+        
+        <!-- Контент модалки -->
+        <div class="relative bg-[#F4F1DE] w-full max-w-4xl max-h-[90vh] rounded-[3rem] overflow-hidden shadow-2xl flex flex-col">
+            <!-- Шапка модалки -->
+            <div class="p-8 md:p-12 pb-0 flex justify-between items-start">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#CC7351] mb-2 block">Вакансия</span>
+                    <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-[#2B3B2B]">{{ activeJobModal.title }}</h3>
+                </div>
+                <button @click="activeJobModal = null" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 transition-all">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Скролл-зона с описанием -->
+            <div class="p-8 md:p-12 pt-6 overflow-y-auto modal-scroll flex-grow">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Левая колонка: Инфо -->
+                    <div class="md:col-span-1 space-y-8">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Локация</p>
+                            <p class="text-sm font-bold">{{ activeJobModal.location }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">График</p>
+                            <p class="text-sm font-bold">{{ activeJobModal.schedule }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Опыт</p>
+                            <p class="text-sm font-bold">{{ activeJobModal.experience }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Правая колонка: Списки -->
+                    <div class="md:col-span-2 space-y-10">
+                        <div>
+                            <h5 class="text-sm font-black uppercase tracking-widest mb-4 border-b border-black/5 pb-2">Что нужно делать</h5>
+                            <ul class="space-y-3">
+                                <li v-for="res in activeJobModal.responsibilities" class="text-sm text-gray-600 flex gap-3">
+                                    <span class="text-[#CC7351]">•</span> {{ res }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-sm font-black uppercase tracking-widest mb-4 border-b border-black/5 pb-2">Кого мы ищем</h5>
+                            <ul class="space-y-3">
+                                <li v-for="req in activeJobModal.requirements" class="text-sm text-gray-600 flex gap-3">
+                                    <span class="text-[#CC7351]">•</span> {{ req }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Подвал модалки с кнопкой отклика -->
+            <div class="p-8 md:p-10 bg-white/50 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-gray-400 max-w-sm text-center md:text-left">Нажмите кнопку, чтобы перейти к форме отклика. Мы рассмотрим вашу анкету в течение 24 часов.</p>
+                <button @click="scrollToApply" class="w-full md:w-auto px-12 py-4 bg-[#2B3B2B] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[#CC7351] transition-all shadow-xl shadow-black/10">
+                    Откликнуться на вакансию
+                </button>
+            </div>
+        </div>
+    </div>
+</transition>
+        <!-- выбранная позиция -->
+        <div v-if="selectedJob" class="mt-10 bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-[#A37259] mb-2">{{ selectedJob.location }}</p>
+              <h4 class="text-2xl md:text-3xl font-black mb-2">{{ selectedJob.title }}</h4>
+              <p class="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold mb-3">{{ selectedJob.type }}</p>
+            </div>
+            <div class="text-sm text-gray-500">
+              <p><span class="font-semibold">График:</span> {{ selectedJob.schedule }}</p>
+              <p><span class="font-semibold">Опыт:</span> {{ selectedJob.experience }}</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600">
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Что вы будете делать</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li v-for="(item, i) in selectedJob.responsibilities" :key="i">{{ item }}</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Мы ищем</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li v-for="(item, i) in selectedJob.requirements" :key="i">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPLICATION FORM -->
+    <section class="py-16 md:py-20 px-4 md:px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 fade-section" ref="formRef">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-[#CC7351] mb-4">Отклик на вакансию</p>
+          <h3 class="text-3xl md:text-4xl font-black mb-4">Присоединяйтесь к команде.</h3>
+          <p class="text-sm md:text-base text-gray-600 mb-6">
+            Заполните короткую форму, выберите интересующую позицию — и мы свяжемся с вами, чтобы назначить встречу в одной из кофейен LUSSO.
+          </p>
+          <ul class="text-sm text-gray-500 space-y-2">
+            <li>— Можно откликнуться даже без опыта — обучаем с нуля.</li>
+            <li>— Обязательно любовь к аккуратности и гостям.</li>
+            <li>— Возраст от 18 лет.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5">
+          <form @submit.prevent="handleSubmit">
+            <div class="mb-4">
+              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Имя</label>
+              <input
+                v-model="form.name"
+                type="text"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                placeholder="Как к вам обращаться?"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Телефон</label>
+              <input
+                v-model="form.phone"
+                type="text"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                placeholder="+7 (___) ___-__-__"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Желаемая позиция</label>
+              <select
+                v-model="form.position"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+              >
+                <option value="">Выберите из списка</option>
+                <option v-for="job in jobs" :key="job.id" :value="job.title">{{ job.title }}</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
+              <textarea
+                v-model="form.message"
+                rows="4"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                placeholder="Расскажите о себе, опыте и графике, который вам удобен."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full py-3.5 bg-[#2B3B2B] text-[#F4F1DE] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[#CC7351] transition-all"
+            >
+              Отправить отклик
+            </button>
+            <p v-if="formSent" class="text-[11px] text-green-600 mt-3">
+              Спасибо! Отклик отправлен. Менеджер свяжется с вами в ближайшее время.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#2B3B2B] text-white pt-16 pb-10 px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <div class="md:col-span-2">
+          <h2 class="text-5xl font-black text-[#CC7351] tracking-tighter mb-4">LUSSO</h2>
+          <p class="text-white/60 max-w-sm mb-6">
+            Команда, которая делает кофе и атмосферу, к которым хочется возвращаться каждый день.
+          </p>
+          <div class="flex gap-4">
+            <a
+              href="#"
+              class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all"
+              >IG</a
+            >
+            <a
+              href="#"
+              class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all"
+              >WA</a
+            >
+            <a
+              href="#"
+              class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all"
+              >TG</a
+            >
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-6 text-[#A37259]">Навигация</h4>
+          <ul class="space-y-3 text-sm text-white/60">
+            <li><a href="index.html" class="hover:text-white transition-colors">Главная</a></li>
+            <li><a href="menu.html" class="hover:text-white transition-colors">Меню</a></li>
+            <li><a href="about.html" class="hover:text-white transition-colors">О нас</a></li>
+            <li><a href="vacancies.html" class="hover:text-white transition-colors">Вакансии</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-6 text-[#A37259]">Контакты</h4>
+          <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
+          <p class="text-sm text-white/60 mb-2">пр. А. Кадырова, 28</p>
+          <p class="text-sm text-white/60 mb-4">+7 (938) 999 77 88</p>
+          <p class="text-[10px] text-[#CC7351] font-bold uppercase tracking-widest">Ежедневно 08:00–23:00</p>
+        </div>
+      </div>
+      <div
+        class="max-w-6xl mx-auto pt-6 border-top border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <p class="text-[10px] text-white/25 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
+        <div class="flex gap-6 text-[10px] text-white/30 uppercase tracking-widest">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        const isMobileMenuOpen = ref(false);
+        const mobileLinks = ref([
+          { n: "01", t: "Главная", h: "index.html" },
+          { n: "02", t: "Меню", h: "menu.html" },
+          { n: "03", t: "О нас", h: "about.html" },
+          { n: "04", t: "Вакансии", h: "vacancies.html" },
+        ]);
+
+        const jobs = ref([
+          {
+            id: 1,
+            title: "Бариста",
+            location: "LUSSO · Кавказская, 52",
+            type: "Full-time",
+            short: "Работа с кофемашиной, приготовление напитков по стандартам LUSSO, общение с гостями.",
+            schedule: "5/2, смены по 8 часов",
+            experience: "Опыт работы от 6 месяцев будет плюсом, но не обязателен",
+            responsibilities: [
+              "Приготовление эспрессо и напитков на его основе",
+              "Соблюдение рецептур и стандартов подачи",
+              "Коммуникация с гостями, помощь в выборе напитка",
+              "Поддержание чистоты барной зоны",
+            ],
+            requirements: [
+              "Любовь к кофе и интерес к теме specialty",
+              "Внимательность к деталям и аккуратность",
+              "Умение работать в команде и в ритме кофейни",
+              "Готовность обучаться и развиваться",
+            ],
+          },
+          {
+            id: 2,
+            title: "Бариста (URBAN HAVEN)",
+            location: "LUSSO URBAN HAVEN · Кадырова, 28",
+            type: "Part-time",
+            short: "Подходит для тех, кто совмещает учебу и работу. Современный ритм, много to-go заказов.",
+            schedule: "Гибкий, от 3 смен в неделю",
+            experience: "Желателен опыт работы с гостями",
+            responsibilities: [
+              "Приготовление напитков на основе эспрессо и фильтра",
+              "Работа с to-go заказами и доставкой",
+              "Поддержание порядка в зале и на баре",
+              "Работа с кассой и терминалами",
+            ],
+            requirements: [
+              "Коммуникабельность и дружелюбие",
+              "Собранность в динамичной среде",
+              "Готовность к сменной работе",
+              "Минимум базовых знаний о кофе — обучаем остальному",
+            ],
+          },
+          {
+            id: 3,
+            title: "Старший бариста",
+            location: "LUSSO · обе локации",
+            type: "Full-time",
+            short: "Ответственность за смену, контроль качества, обучение новых сотрудников.",
+            schedule: "Сменный график, обсуждается индивидуально",
+            experience: "Опыт работы бариста от 1 года",
+            responsibilities: [
+              "Организация работы смены",
+              "Контроль качества напитков и сервиса",
+              "Обучение и ввод новых сотрудников",
+              "Взаимодействие с управляющим",
+            ],
+            requirements: [
+              "Глубокое понимание процессов кофейни",
+              "Лидерские качества и тактичность",
+              "Умение работать с обратной связью",
+              "Желание расти в управленческом направлении",
+            ],
+          },
+        ]);
+
+        const selectedJob = ref(jobs.value[0] || null);
+
+        const form = ref({
+          name: "",
+          phone: "",
+          position: "",
+          message: "",
+        });
+        const formSent = ref(false);
+         const activeJobModal = ref(null); // Состояние открытой модалки
+        const whyRef = ref(null);
+        const jobsRef = ref(null);
+        const formRef = ref(null);
+
+        const handleMobileNav = (href) => {
+          isMobileMenuOpen.value = false;
+          if (href.startsWith("#")) {
+            const el = document.querySelector(href);
+            if (el) {
+              setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 200);
+            }
+          }
+        };
+      
+
+         const openJobModal = (job) => {
+        activeJobModal.value = job;
+        // Блокируем скролл основной страницы при открытой модалке
+        document.body.style.overflow = 'hidden';
+    }; 
+
+      const closeJobModal = () => {
+        activeJobModal.value = null;
+        document.body.style.overflow = 'auto';
+    };
+
+    const scrollToApply = () => {
+        const jobTitle = activeJobModal.value.title;
+        activeJobModal.value = null; // Закрываем модалку
+        document.body.style.overflow = 'auto';
+        
+        // Устанавливаем название вакансии в форму автоматически
+        form.value.position = jobTitle;
+        
+        // Скроллим к форме
+        setTimeout(() => {
+            const formEl = document.querySelector('#contact');
+            if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
+    };
+        const selectJob = (job) => {
+          selectedJob.value = job;
+          if (!form.value.position) form.value.position = job.title;
+          const el = document.querySelector("#form");
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        };
+
+        const handleSubmit = () => {
+          if (!form.value.name || !form.value.phone || !form.value.position) {
+            alert("Пожалуйста, заполните имя, телефон и выберите позицию.");
+            return;
+          }
+          formSent.value = true;
+          setTimeout(() => {
+            formSent.value = false;
+          }, 5000);
+          // Здесь можно добавить отправку на бэкенд или в Telegram
+        };
+
+        onMounted(() => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("visible");
+                }
+              });
+            },
+            { threshold: 0.2 }
+          );
+
+          [whyRef.value, jobsRef.value, formRef.value].forEach((el) => {
+            if (el) observer.observe(el);
+          });
+        });
+
+        return {
+           activeJobModal,
+        openJobModal,
+        closeJobModal,
+        scrollToApply,
+          isMobileMenuOpen,
+          mobileLinks,
+          jobs,
+          selectedJob,
+          selectJob,
+          form,
+          formSent,
+          handleSubmit,
+          handleMobileNav,
+          whyRef,
+          jobsRef,
+          formRef,
+        };
+      },
+    }).mount("#app");
+  </script>
+</body>
+</html>
