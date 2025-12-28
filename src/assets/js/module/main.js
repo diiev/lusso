@@ -59,4 +59,4 @@ function indexPage () {
             }
         }).mount('#app');
     } 
-    export default indexPage
+    export default indexPage;

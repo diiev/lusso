@@ -34,14 +34,14 @@ const path = {
     },
     src: {
         html: srcPath + "*.html",
-        css: srcPath + "assets/css/*.scss",  // исправлено на scss
+        css: srcPath + "assets/css/*.css",  
         js: srcPath + "assets/js/*.js",
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}"
     },
     watch: {
         html: srcPath + "**/*.html",
         js: srcPath + "assets/js/**/*.js",
-        css: srcPath + "assets/css/**/*.scss",  // исправлено на scss
+        css: srcPath + "assets/css/**/*.css", 
         images: srcPath + "assets/img/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}"
     },
     clean: "./" + distPath
@@ -69,11 +69,11 @@ function css() {
     return src(path.src.css, { base: srcPath + "assets/css/" })
         .pipe(plumber({
             errorHandler: notify.onError({
-                title: "SCSS Error",
+                title: "CSS Error",
                 message: "Error: <%= error.message %>"
             })
         }))
-        .pipe(sass())
+        // здесь уже чистый CSS, ничего не компилируем
         .pipe(autoprefixer())
         .pipe(cssbeautify())
         .pipe(dest(path.build.css))
@@ -83,11 +83,13 @@ function css() {
         }))
         .pipe(removeComments())
         .pipe(rename({
-            suffix: ".min"
+            suffix: ".min",
+            extname: ".css"
         }))
         .pipe(dest(path.build.css))
         .pipe(browserSync.stream());
 }
+
 
 function js() {
     return src(path.src.js, { base: srcPath + "assets/js/" })
