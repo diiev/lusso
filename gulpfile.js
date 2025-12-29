@@ -91,6 +91,14 @@ function css() {
 }
 
 
+
+function libs() {
+   
+    return src("src/assets/js/libs/**/*") 
+        .pipe(dest("dist/assets/js/libs/"))
+        .pipe(browserSync.reload({ stream: true }));
+}
+
 function js() {
     return src(path.src.js, { base: srcPath + "assets/js/" })
         .pipe(webpack({
@@ -139,15 +147,17 @@ function watchFiles(done) {  // ← добавлен done callback
     done();  // ← сигнализируем завершение
 }
 
-const build = series(clean, parallel(html, css, js, images, webpImages));
+const build = series(clean, parallel(html, css, libs, js, images, webpImages));
 const watch = series(build, parallel(watchFiles, serve));  // исправлено: series вместо parallel
 
 exports.html = html;
 exports.css = css;
+exports.libs = libs
 exports.js = js;
 exports.images = images;
 exports.webpImages = webpImages;
-exports.clean = clean;
+exports.clean = clean; 
+
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;

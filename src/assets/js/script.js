@@ -1,7 +1,8 @@
 'use strict'
 
-const { default: indexPage } = require("./module/main")
-const { default: menu } = require("./module/menu")
+
+import { default as indexPage } from "./module/main"
+import { default as menu } from "./module/menu"
 
 
 indexPage() 

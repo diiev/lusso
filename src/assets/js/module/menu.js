@@ -17,15 +17,17 @@ function menu () {
 
                 const locations = [
                     { name: 'LUSSO', addr: 'ул. Кавказская, 52', desc: 'Первая specialty кофейня в городе. Островок тишины и эстетики.', image: 'assets/img/lusso_1.jpg', whatsapp: '79389997788' },
-                    { name: 'LUSSO URBAN HAVEN', addr: 'Проспект А. Кадырова, 28', desc: 'Городское убежище для продуктивной работы и встреч.', image: 'assets/img/lusso_2.jpeg', whatsapp: '79389998118' }
+                    { name: 'LUSSO URBAN HAVEN', addr: 'Проспект А. Кадырова, 28', desc: 'Городское убежище для продуктивной работы и встреч.', image: 'assets/img/lusso_2.jpg', whatsapp: '79389998118' }
                 ];
 
-                const categories = ['Все', 'Кофе', 'Выпечка', 'Десерты', 'Завтраки'];
+                const categories = ['Все', 'Кофе', 'Сендвичи', 'Десерты', 'Завтраки'];
                 const items = [
-                    { id: 1, name: 'Капучино', price: 220, desc: 'На двойном эспрессо с воздушной сливочной пенкой.', category: 'Кофе', image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=500' },
-                    { id: 2, name: 'Круассан', price: 180, desc: 'Классический масляный круассан из 24 слоев теста.', category: 'Выпечка', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=500' },
-                    { id: 3, name: 'Чизкейк Нью-Йорк', price: 320, desc: 'Классический сливочный десерт с ягодным соусом.', category: 'Десерты', image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=500' },
-                    { id: 4, name: 'Флэт Уайт', price: 250, desc: 'Насыщенный кофейный вкус с минимальным слоем пены.', category: 'Кофе', image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=500' }
+                    { id: 1, name: 'Эспрессо', price: 200, desc: 'Такой эспрессо ты точно не пробовал.', category: 'Кофе', image: 'assets/img/espresso.jpg' },
+                    { id: 2, name: 'Сэндвич с курицей', price: 370, desc: 'С грибным соусом,моцареллой и томатами', category: 'Сендвичи', image: 'assets/img/chikensandwich.jpg' },
+                    { id: 3, name: 'Бельгийские вафли с мороженным', price: 320, desc: 'C ягодами и шоколадным соусом.', category: 'Десерты', image: 'assets/img/belg.jpg' },
+                    { id: 4, name: 'Флэт Уайт', price: 250, desc: 'Насыщенный кофейный вкус с минимальным слоем пены.', category: 'Кофе', image: 'assets/img/fletwhite.jpg' },
+                    { id: 5, name: 'Американо', price: 200, desc: '', category: 'Кофе', image: 'assets/img/americano.jpg' }, 
+                    { id: 6, name: 'Английский завтрак', price: 200, desc: '', category: 'Завтраки', image: 'assets/img/english_morning.jpg' },
                 ];
 
                 const filteredItems = computed(() => {
