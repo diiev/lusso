@@ -64,10 +64,11 @@
             <!-- Центр: Ссылки (Размер текста уменьшен) -->
             <nav class="flex flex-col gap-4 flex-grow justify-center">
                 <div v-for="(link, index) in [
-                    {n: '01', t: 'Миссия', h: '#mission'},
-                    {n: '02', t: 'Меню', h: 'menu.html'},
-                    {n: '03', t: 'О нас', h: '#about'},
-                    {n: '04', t: 'Отзывы', h: '#reviews'}
+                    {n: '01', t: 'Главная', h: 'index.html'},
+                    {n: '02', t: 'Наше меню', h: 'menu.html'},
+                    {n: '03', t: 'О нас', h: 'about.html'},
+                    {n: '04', t: 'Отзывы', h: 'index.html#reviews'},
+                    {n: '05', t: 'Вакансии', h: 'vacancies.html'}
                 ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
                     <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
                         <span class="text-[10px] font-bold text-[--lusso-accent] tracking-[0.2em]">{{ link.n }}</span>
