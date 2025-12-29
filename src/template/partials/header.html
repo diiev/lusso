@@ -2,22 +2,22 @@
          <!-- NAVIGATION -->
 <nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
     <!-- Логотип -->
-    <h1 class="text-3xl font-black tracking-tighter text-[#A37259] z-[60]">
+    <h1 class="text-2xl font-black tracking-tighter text-[--lusso-accent] z-[60]">
         <a href="index.html">LUSSO</a>
     </h1>
 
     <!-- Десктопное меню (скрыто на мобилках) -->
     <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
-        <a href="index.html" class="hover:text-[#CC7351] transition-colors">Главная</a>
-        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Наше меню</a>
-        <a href="about.html" class="hover:text-[#CC7351] transition-colors">О нас</a>
-        <a href="index.html#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
-        <a href="vacancies.html" class="hover:text-[#CC7351] transition-colors">Вакансии</a>
+        <a href="index.html" class="hover:text-[--lusso-accent] transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[--lusso-accent] transition-colors">Наше меню</a>
+        <a href="about.html" class="hover:text-[--lusso-accent] transition-colors">О нас</a>
+        <a href="index.html#reviews" class="hover:text-[--lusso-accent] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[--lusso-accent] transition-colors">Вакансии</a>
     </div>
 
     <!-- Правая часть: Кнопка и Бургер -->
     <div class="flex items-center gap-4 z-[60]">
-        <a href="menu.html" class="bg-[#CC7351] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
+        <a href="menu.html" class="bg-[--lusso-accent] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
             Заказать
         </a>
         
@@ -56,7 +56,7 @@
                     {n: '04', t: 'Отзывы', h: '#reviews'}
                 ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
                     <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
-                        <span class="text-[10px] font-bold text-[#CC7351] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-[10px] font-bold text-[--lusso-accent] tracking-[0.2em]">{{ link.n }}</span>
                         <span class="text-2xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
                             {{ link.t }}
                         </span>
