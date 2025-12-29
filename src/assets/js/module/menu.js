@@ -1,5 +1,6 @@
-function menu () {
 
+function menu () {
+   
         const { createApp, ref, computed } = Vue;
         createApp({
             setup() {
@@ -42,7 +43,8 @@ function menu () {
                 const selectLocation = (loc) => selectedLocation.value = loc;
                 const getItemQty = (id) => cart.value.find(i => i.id === id)?.qty || 0;
                 const clearCart = () => { cart.value = []; confirmClear.value = false; };
-                const openCheckout = () => { checkoutMode.value = 'order'; showCheckout.value = true; };
+               
+                
                 const removeItem = (id) => { cart.value = cart.value.filter(i => i.id !== id); if(cart.value.length === 0) showCheckout.value = false; };
 
                 const changeQty = (item, delta) => {
@@ -53,8 +55,33 @@ function menu () {
                     } else if (delta > 0) {
                         cart.value.push({ ...item, qty: 1 });
                     }
-                };
+                }; 
 
+
+const lockScroll = () => {
+    document.body.style.overflow = 'hidden'
+}
+
+const unlockScroll = () => {
+    document.body.style.overflow = ''
+}
+
+const openCheckout = () => {
+    checkoutMode.value = 'order'
+    showCheckout.value = true
+    lockScroll()
+}
+
+const closeModal = () => {
+    showCheckout.value = false
+    confirmClear.value = false
+    unlockScroll()
+}
+
+
+
+
+  
                 const sendToWhatsapp = () => { 
                     if (!form.value.name || !form.value.phone) {
                         noticeText.value = "Заполните имя и телефон";
@@ -70,9 +97,10 @@ function menu () {
                     cart.value.forEach(i => { text += `— ${i.name} (x${i.qty}) — ${i.price * i.qty}₽\n`; });
                     text += `\nИТОГО: ${cartTotalSum.value} ₽`;
                     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`);
-                };
+                }; 
 
-                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, selectLocation, getItemQty, changeQty, cartTotalSum, sendToWhatsapp, clearCart, openCheckout, removeItem };
+
+                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, closeModal, selectLocation, getItemQty, changeQty, cartTotalSum, sendToWhatsapp, clearCart, openCheckout, removeItem };
             }
         }).mount('#app-menu');
 

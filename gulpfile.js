@@ -63,7 +63,7 @@ function html() {
       basepath: '@file'
     }))
     .pipe(dest(path.build.html))
-    .pipe(browserSync.stream());
+     .pipe(browserSync.reload({ stream: true }));
 }
 function css() {
     return src(path.src.css, { base: srcPath + "assets/css/" })
@@ -87,7 +87,7 @@ function css() {
             extname: ".css"
         }))
         .pipe(dest(path.build.css))
-        .pipe(browserSync.stream());
+        .pipe(browserSync.reload({ stream: true }));
 }
 
 
@@ -126,7 +126,7 @@ function js() {
 function images() {
     return src(path.src.images, { base: srcPath + "assets/img/" })
         .pipe(dest(path.build.images))
-        .pipe(browserSync.stream());
+         .pipe(browserSync.reload({ stream: true }));
 }
 
 function webpImages() {

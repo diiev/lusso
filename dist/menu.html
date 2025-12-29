@@ -16,16 +16,16 @@
          <!-- NAVIGATION -->
 <nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
     <!-- Логотип -->
-    <h1 class="text-2xl font-black tracking-tighter text-[#A37259] z-[60]">
+    <h1 class="text-3xl font-black tracking-tighter text-[#A37259] z-[60]">
         <a href="index.html">LUSSO</a>
     </h1>
 
     <!-- Десктопное меню (скрыто на мобилках) -->
-    <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
-        <a href="#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
-        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Меню</a>
+    <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
+        <a href="index.html" class="hover:text-[#CC7351] transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Наше меню</a>
         <a href="about.html" class="hover:text-[#CC7351] transition-colors">О нас</a>
-        <a href="#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
+        <a href="index.html#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
         <a href="vacancies.html" class="hover:text-[#CC7351] transition-colors">Вакансии</a>
     </div>
 
@@ -174,7 +174,79 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
+
+
+
+
+                           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
+    <div v-for="loc in locations" 
+         @click="selectLocation(loc.name)" 
+         class="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-400 hover:scale-[1.02] active:scale-[0.99]"
+         style="background: linear-gradient(135deg, var(--lusso-cream) 0%, #f8f4ee 100%);">
+        
+        <!-- Декоративный уголок -->
+        <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+            <div class="absolute transform rotate-45 bg-[#CC7351] text-white px-6 py-1 text-xs font-bold uppercase tracking-wider right-[-32px] top-[16px]">
+                Visit
+            </div>
+        </div>
+        
+        <!-- Изображение с эффектом наведения -->
+        <div class="overflow-hidden h-56 relative">
+            <img :src="loc.image" 
+                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            
+            <!-- Наложение на изображение -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        </div>
+        
+        <!-- Контент карточки -->
+        <div class="p-6 relative">
+            <!-- Декоративная линия -->
+            <div class="w-12 h-1 bg-[#CC7351] mb-4 rounded-full"></div>
+            
+            <!-- Заголовок -->
+            <div class="flex items-start justify-between mb-3">
+                <p class="font-bold text-xl text-[#2B3B2B] group-hover:text-[#CC7351] transition-colors duration-300">
+                    {{ loc.name }}
+                </p>
+                <!-- Иконка наведения -->
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-[#CC7351] transform group-hover:translate-x-1 transition-all duration-300" 
+                     fill="none" 
+                     stroke="currentColor" 
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </div>
+            
+            <!-- Адрес с иконкой -->
+            <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <p class="text-xs text-gray-600 font-medium">{{ loc.addr }}</p>
+            </div>
+            
+            <!-- Описание -->
+            <p class="text-sm  text-gray-600 leading-relaxed mb-4 line-clamp-3">
+                {{ loc.desc }}
+            </p>
+            
+            <!-- Индикатор наведения -->
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#CC7351]/0 via-[#CC7351]/50 to-[#CC7351]/0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center"></div>
+        </div>
+        
+        <!-- Световая тень наведения -->
+        <div class="absolute inset-0 rounded-2xl shadow-lg shadow-[#CC7351]/0 group-hover:shadow-[#CC7351]/20 transition-shadow duration-500 pointer-events-none"></div>
+    </div>
+            </div>
+
+
+
+
+            
             </div>
               
             <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
@@ -194,7 +266,7 @@
 
         <!-- МОДАЛКИ (Остаются функциональными, но обновляются визуально) -->
         <div v-if="showCheckout || confirmClear" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-[#2B3B2B]/60 backdrop-blur-md" @click="showCheckout = false; confirmClear = false"></div>
+            <div class="absolute inset-0 bg-[#2B3B2B]/60 backdrop-blur-md" @click="closeModal"></div>
             
             <!-- Оформление -->
             <div v-if="showCheckout" class="relative bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl animate__animated animate__zoomIn">
@@ -211,7 +283,7 @@
                             <p class="font-bold text-sm">{{ item.name }}</p>
                             <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{{ item.qty }} шт × {{ item.price }} ₽</p>
                         </div>
-                        <span class="font-black text-sm text-[#CC7351]">{{ item.price * item.qty }} ₽</span>
+                        <span class="font-black w-[60px]  text-sm text-[#CC7351]">{{ item.price * item.qty }} ₽</span>
                     </div>
                 </div>
 
@@ -231,7 +303,7 @@
                 </div>
 
                 <button v-if="checkoutMode === 'order'" @click="sendToWhatsapp" class="w-full py-5 bg-[#CC7351] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить в WhatsApp</button>
-                <button v-else @click="showCheckout = false" class="w-full py-5 bg-[#2B3B2B] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
+                <button v-else @click="closeModal" class="w-full py-5 bg-[#2B3B2B] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
             </div>
 
             <!-- Подтверждение очистки -->

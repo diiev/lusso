@@ -1,137 +1,13 @@
 
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUSSO | О нас</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        :root {
-            --lusso-cream: #F4F1DE;
-            --lusso-accent: #CC7351;
-            --lusso-brown: #A37259;
-            --lusso-dark: #2B3B2B;
-        }
-
-        body {
-            background-color: var(--lusso-cream);
-            color: var(--lusso-dark);
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .glass-header {
-            background: rgba(244, 241, 222, 0.9);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(163, 114, 89, 0.12);
-        }
-
-        .parallax-bg {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--lusso-cream); }
-        ::-webkit-scrollbar-thumb { background: var(--lusso-accent); border-radius: 10px; }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .fade-section {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: all 0.8s ease;
-        }
-        .fade-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
-</head>
+@@include('template/partials/head.html')
 <body>
-<div id="app">
-    <!-- NAV -->
-    <nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-black tracking-tighter text-[#A37259]">
-            <a href="index.html">LUSSO</a>
-        </h1>
+<div id="app-about">
 
-        <div class="hidden md:flex gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
-            <a href="index.html#mission" class="hover:text-[#CC7351] transition-colors">Миссия</a>
-            <a href="menu.html" class="hover:text-[#CC7351] transition-colors">Меню</a>
-            <a href="about.html" class="text-[#CC7351] transition-colors">О нас</a>
-            <a href="index.html#reviews" class="hover:text-[#CC7351] transition-colors">Отзывы</a>
-        </div>
-
-        <div class="flex items-center gap-4 z-[60]">
-            <a href="menu.html" class="bg-[#CC7351] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
-                Заказать
-            </a>
-            <!-- burger -->
-            <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-                <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-                <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-                <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
-            </button>
-        </div>
-
-        <!-- mobile menu -->
-        <transition name="lusso-menu">
-            <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
-                <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
-                    LUSSO
-                </div>
-
-                <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
-                    <div class="flex justify-end mb-8">
-                        <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B3B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                    </div>
-
-                    <nav class="flex flex-col gap-4 flex-grow justify-center">
-                        <div v-for="(link, index) in mobileLinks" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.08) + 's'}">
-                            <a @click="handleMobileNav(link.h)" :href="link.h" class="group flex items-center gap-4 py-2">
-                                <span class="text-[10px] font-bold text-[#CC7351] tracking-[0.2em]">{{ link.n }}</span>
-                                <span class="text-3xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
-                                    {{ link.t }}
-                                </span>
-                            </a>
-                        </div>
-                    </nav>
-
-                    <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
-                        <div class="flex justify-between items-end">
-                            <div>
-                                <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш телефон</p>
-                                <p class="text-xs font-black text-[#2B3B2B]">+7 (938) 999 77 88</p>
-                            </div>
-                            <div class="flex gap-2">
-                                <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">IG</div>
-                                <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">WA</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
-    </nav>
-
+    @@include('template/partials/header.html')
     <!-- HERO ABOUT -->
-    <section class="relative h-[70vh] md:h-[80vh] parallax-bg" style="background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000');">
+    <section class="relative h-[70vh] md:h-[80vh] parallax-bg" style="background-image:url('assets/img/lusso_4.webp');">
         <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-[#2B3B2B]/90"></div>
         <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center px-6 pt-24">
             <p class="text-xs uppercase tracking-[0.4em] text-[#F4F1DE]/70 mb-4">О нас</p>
@@ -308,42 +184,8 @@
         </div>
     </section>
 
-    <!-- FOOTER (такой же стиль, как на главной) -->
-    <footer class="bg-[#2B3B2B] text-white pt-16 pb-10 px-6">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div class="md:col-span-2">
-                <h2 class="text-5xl font-black text-[#CC7351] tracking-tighter mb-4">LUSSO</h2>
-                <p class="text-white/60 max-w-sm mb-6">Первая speciality кофейня в городе. Философия вкуса и эстетики в каждой детали.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">IG</a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">WA</a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">TG</a>
-                </div>
-            </div>
-            <div>
-                <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-6 text-[#A37259]">Навигация</h4>
-                <ul class="space-y-3 text-sm text-white/60">
-                    <li><a href="index.html" class="hover:text-white transition-colors">Главная</a></li>
-                    <li><a href="menu.html" class="hover:text-white transition-colors">Меню</a></li>
-                    <li><a href="about.html" class="hover:text-white transition-colors">О нас</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-6 text-[#A37259]">Контакты</h4>
-                <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
-                <p class="text-sm text-white/60 mb-2">пр. А. Кадырова, 28</p>
-                <p class="text-sm text-white/60 mb-4">+7 (938) 999 77 88</p>
-                <p class="text-[10px] text-[#CC7351] font-bold uppercase tracking-widest">Ежедневно 08:00–23:00</p>
-            </div>
-        </div>
-        <div class="max-w-6xl mx-auto pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-[10px] text-white/25 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
-            <div class="flex gap-6 text-[10px] text-white/30 uppercase tracking-widest">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-            </div>
-        </div>
-    </footer>
+        @@include('template/partials/footer.html')
+        @@include('template/partials/scripts.html')
 </div>
 
 <script>
@@ -418,7 +260,7 @@ createApp({
             contactRef
         };
     }
-}).mount('#app');
+}).mount('#app-about');
 </script>
 </body>
 </html>
