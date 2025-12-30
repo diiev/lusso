@@ -1,9 +1,13 @@
 /* INDEX.HTML */
 :root {
-    --lusso-cream: #F4F1DE;
-    --lusso-accent: #CC7351;
-    --lusso-brown: #A37259;
-    --lusso-dark: #2B3B2B;
+    --lusso-cream: #EFE6D8;
+ /* тёплый сливочно-бежевый */
+    --lusso-accent: #D4AA73;
+ /* оставить без изменений */
+    --lusso-brown: #57453F;
+ /* оставить без изменений */
+    --lusso-dark: #3F352F;
+ /* тёплый тёмно-коричневый */
 }
 
 body {
@@ -159,13 +163,7 @@ body {
 
 /* MENU HTML */
 
-:root {
-    --lusso-cream: #F4F1DE;
-    --lusso-accent: #CC7351;
-    --lusso-brown: #A37259;
-    --lusso-dark: #2B3B2B;
-}
-
+ 
 body {
     background-color: var(--lusso-cream);
     color: var(--lusso-dark);
@@ -234,7 +232,9 @@ body {
     scrollbar-width: none;
 }
 
-
+#app-menu {
+    touch-action: manipulation;
+}
 
 /* END MENU HTML */
 
@@ -242,13 +242,6 @@ body {
 /* VACANCIES HTML */
 
 
-
-:root {
-    --lusso-cream: #f4f1de;
-    --lusso-accent: #cc7351;
-    --lusso-brown: #a37259;
-    --lusso-dark: #2b3b2b;
-}
 
 body {
     background-color: var(--lusso-cream);
@@ -401,13 +394,7 @@ body {
 
 
 
-:root {
-    --lusso-cream: #F4F1DE;
-    --lusso-accent: #CC7351;
-    --lusso-brown: #A37259;
-    --lusso-dark: #2B3B2B;
-}
-
+        
 body {
     background-color: var(--lusso-cream);
     color: var(--lusso-dark);

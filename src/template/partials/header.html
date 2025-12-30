@@ -23,9 +23,9 @@
         
         <!-- Кнопка Бургера (только для мобилок) -->
         <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
         </button>
     </div>
 <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
@@ -69,7 +69,7 @@
             <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
                 <div class="flex justify-between items-end">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-brown] mb-1">Наш адрес</p>
                         <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
                     </div>
                     <div class="flex gap-2">

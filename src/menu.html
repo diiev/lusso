@@ -22,7 +22,7 @@
                         <!-- Декоративный уголок -->
                         <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
                             <div
-                                class="absolute transform rotate-45 bg-[#CC7351] text-white px-6 py-1 text-xs font-bold uppercase tracking-wider right-[-32px] top-[16px]">
+                                class="absolute transform rotate-45 bg-[--lusso-accent] text-white px-6 py-1 text-xs font-bold uppercase tracking-wider right-[-32px] top-[16px]">
                                 Visit
                             </div>
                         </div>
@@ -41,16 +41,16 @@
                         <!-- Контент карточки -->
                         <div class="p-6 relative">
                             <!-- Декоративная линия -->
-                            <div class="w-12 h-1 bg-[#CC7351] mb-4 rounded-full"></div>
+                            <div class="w-12 h-1 bg-[--lusso-accent] mb-4 rounded-full"></div>
 
                             <!-- Заголовок -->
                             <div class="flex items-start justify-between mb-3">
                                 <p
-                                    class="font-bold text-xl text-[--lusso-dark] group-hover:text-[#CC7351] transition-colors duration-300">
+                                    class="font-bold text-xl text-[--lusso-dark] group-hover:text-[--lusso-accent] transition-colors duration-300">
                                     {{ loc.name }}
                                 </p>
                                 <!-- Иконка наведения -->
-                                <svg class="w-5 h-5 text-gray-400 group-hover:text-[#CC7351] transform group-hover:translate-x-1 transition-all duration-300"
+                                <svg class="w-5 h-5 text-gray-400 group-hover:text-[--lusso-accent] transform group-hover:translate-x-1 transition-all duration-300"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -76,13 +76,13 @@
 
                             <!-- Индикатор наведения -->
                             <div
-                                class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#CC7351]/0 via-[#CC7351]/50 to-[#CC7351]/0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center">
+                                class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[--lusso-accent]/0 via-[--lusso-accent]/50 to-[--lusso-accent]/0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center">
                             </div>
                         </div>
 
                         <!-- Световая тень наведения -->
                         <div
-                            class="absolute inset-0 rounded-2xl shadow-lg shadow-[#CC7351]/0 group-hover:shadow-[#CC7351]/20 transition-shadow duration-500 pointer-events-none">
+                            class="absolute inset-0 rounded-2xl shadow-lg shadow-[--lusso-accent]/0 group-hover:shadow-[--lusso-accent]/20 transition-shadow duration-500 pointer-events-none">
                         </div>
                     </div>
                 </div>
@@ -94,12 +94,12 @@
                 <div
                     class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 border-b border-black/5 pb-8">
                     <div>
-                        <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[#CC7351]">{{
+                        <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-[--lusso-accent]">{{
                             selectedLocation }}</span>
                         <h2 class="text-4xl md:text-5xl font-black tracking-tighter mt-2">МЕНЮ</h2>
                     </div>
                     <button @click="selectedLocation = null"
-                        class="text-[10px] font-bold tracking-widest text-gray-400 hover:text-[#CC7351] uppercase border-b border-gray-200 pb-1 self-start md:self-auto transition-all">Сменить
+                        class="text-[10px] font-bold tracking-widest text-gray-400 hover:text-[--lusso-accent] uppercase border-b border-gray-200 pb-1 self-start md:self-auto transition-all">Сменить
                         локацию</button>
                 </div>
 
@@ -109,7 +109,7 @@
                     <div class="relative mb-6 group">
                         <!-- Иконка поиска с анимацией цвета -->
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <svg class="h-4 w-4 text-gray-300 transition-colors duration-300 group-focus-within:text-[#CC7351]"
+                            <svg class="h-4 w-4 text-gray-300 transition-colors duration-300 group-focus-within:text-[--lusso-accent]"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -118,7 +118,7 @@
 
                         <!-- Поле ввода с эффектом увеличения (scale) -->
                         <input v-model="searchQuery" type="text" placeholder="Поиск любимых блюд..."
-                            class="peer w-full bg-white border border-transparent py-3.5 pl-11 pr-10 rounded-2xl text-[13px] font-medium shadow-sm ring-1 ring-gray-100/50 transition-all duration-500 placeholder:text-gray-300 focus:shadow-xl focus:shadow-[#CC7351]/5 focus:ring-[#CC7351]/30 focus:scale-[1.02] outline-none">
+                            class="peer w-full bg-white border border-transparent py-3.5 pl-11 pr-10 rounded-2xl text-[13px] font-medium shadow-sm ring-1 ring-gray-100/50 transition-all duration-500 placeholder:text-gray-300 focus:shadow-xl focus:shadow-[--lusso-accent]/5 focus:ring-[--lusso-accent]/30 focus:scale-[1.02] outline-none">
 
                         <!-- Кнопка очистки с анимацией появления (Fade/Scale) -->
                         <button v-if="searchQuery" @click="searchQuery = ''"
@@ -153,12 +153,12 @@
 
                                  <!-- NEW badge -->
     <div v-if="item.isNew"
-        class="absolute top-4 left-4 bg-[#CC7351] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+        class="absolute top-4 left-4 bg-[--lusso-accent] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
         Новинка
     </div>
 
                             <div
-                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[#CC7351] shadow-sm">
+                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[--lusso-accent] shadow-sm">
                                 {{ item.price }} ₽
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                                     <span v-if="getItemQty(item.id) > 0" class="font-black text-xs px-2">{{
                                         getItemQty(item.id) }}</span>
                                     <button @click.stop="changeQty(item, 1)"
-                                        :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[#CC7351] text-white shadow-lg shadow-[#CC7351]/20' : 'bg-white w-full text-[#CC7351] font-black text-[10px] tracking-widest']">
+                                        :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[--lusso-accent] text-white shadow-lg shadow-[--lusso-accent]/20' : 'bg-white w-full text-[--lusso-accent] font-black text-[10px] tracking-widest']">
                                         <span v-if="getItemQty(item.id) === 0">В КОРЗИНУ</span>
                                         <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="4">
@@ -218,7 +218,7 @@
                         </svg>
                     </button>
                     <button @click="openCheckout"
-                        class="flex-1 bg-[#CC7351] text-white rounded-[1.5rem] flex justify-between items-center px-8 shadow-2xl shadow-[#CC7351]/30 active:scale-95 transition-all">
+                        class="flex-1 bg-[--lusso-accent] text-white rounded-[1.5rem] flex justify-between items-center px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all">
                         <span class="font-black text-sm tracking-[0.2em] uppercase">Заказать</span>
                         <span class="font-black text-lg">{{ cartTotalSum }} ₽</span>
                     </button>
@@ -238,7 +238,7 @@
                     <h2 class="text-3xl font-black tracking-tighter uppercase">{{ checkoutMode === 'order' ? 'Заказ' :
                         'Счёт' }}</h2>
                     <button @click="checkoutMode = checkoutMode === 'order' ? 'waiter' : 'order'"
-                        class="text-[9px] font-black px-4 py-2 bg-[#FBF9F2] rounded-full uppercase tracking-widest text-[#A37259]">
+                        class="text-[9px] font-black px-4 py-2 bg-[#FBF9F2] rounded-full uppercase tracking-widest text-[--lusso-brown]">
                         {{ checkoutMode === 'order' ? 'Для официанта' : 'К оформлению' }}
                     </button>
                 </div>
@@ -251,35 +251,35 @@
                             <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{{ item.qty }} шт ×
                                 {{ item.price }} ₽</p>
                         </div>
-                        <span class="font-black w-[60px]  text-sm text-[#CC7351]">{{ item.price * item.qty }} ₽</span>
+                        <span class="font-black w-[60px]  text-sm text-[--lusso-accent]">{{ item.price * item.qty }} ₽</span>
                     </div>
                 </div>
 
                 <div v-if="checkoutMode === 'order'" class="space-y-3 mb-8">
                     <input v-model="form.name" type="text"
-                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all"
+                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
                         placeholder="Ваше Имя">
                     <input v-model="form.phone" type="tel"
-                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all"
+                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
                         placeholder="Номер телефона">
                     <div class="flex bg-[#FBF9F2] p-1.5 rounded-2xl gap-2">
                         <button @click="form.type = 'pickup'"
-                            :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'pickup' ? 'bg-white shadow-sm text-[#CC7351]' : 'text-gray-400']">Самовывоз</button>
+                            :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'pickup' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Самовывоз</button>
                         <button @click="form.type = 'delivery'"
-                            :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'delivery' ? 'bg-white shadow-sm text-[#CC7351]' : 'text-gray-400']">Доставка</button>
+                            :class="['flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'delivery' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Доставка</button>
                     </div>
                     <input v-if="form.type === 'delivery'" v-model="form.address" type="text"
-                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[#CC7351]/20 transition-all"
+                        class="w-full bg-[#FBF9F2] border-none rounded-2xl px-5 py-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
                         placeholder="Адрес доставки">
                 </div>
 
                 <div class="pt-6 border-t-2 border-dashed border-gray-100 flex justify-between items-center mb-8">
                     <span class="font-bold text-gray-400 uppercase tracking-widest text-xs">Итого к оплате</span>
-                    <span class="text-3xl font-black text-[#CC7351]">{{ cartTotalSum }} ₽</span>
+                    <span class="text-3xl font-black text-[--lusso-accent]">{{ cartTotalSum }} ₽</span>
                 </div>
 
                 <button v-if="checkoutMode === 'order'" @click="sendToWhatsapp"
-                    class="w-full py-5 bg-[#CC7351] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить
+                    class="w-full py-5 bg-[--lusso-accent] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить
                     в WhatsApp</button>
                 <button v-else @click="closeModal"
                     class="w-full py-5 bg-[--lusso-dark] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
@@ -343,7 +343,7 @@
 
             <!-- NEW -->
             <div v-if="selectedItem.isNew"
-                 class="absolute top-4 left-4 bg-[#CC7351] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                 class="absolute top-4 left-4 bg-[--lusso-accent] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
                 Новинка
             </div>
 
@@ -412,7 +412,7 @@
         <!-- ACTION BAR -->
         <div class="p-6 border-t border-black/5 bg-white">
             <button @click="addFromModal"
-                    class="w-full py-5 bg-[#CC7351] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl">
+                    class="w-full py-5 bg-[--lusso-accent] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl">
                 В корзину · {{ selectedItem.price }} ₽
             </button>
         </div>
@@ -426,7 +426,7 @@
             <div v-if="showNotice"
                 class="fixed top-24 left-1/2 -translate-x-1/2 z-[300] w-[90%] max-w-md bg-[--lusso-dark] text-[#F4F1DE] p-5 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/10">
                 <div
-                    class="w-8 h-8 bg-[#CC7351] rounded-full flex items-center justify-center font-bold text-white text-xs">
+                    class="w-8 h-8 bg-[--lusso-accent] rounded-full flex items-center justify-center font-bold text-white text-xs">
                     !</div>
                 <p class="text-xs font-bold uppercase tracking-widest">{{ noticeText }}</p>
             </div>

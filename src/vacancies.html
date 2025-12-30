@@ -28,7 +28,7 @@
     <section class="py-14 md:py-20 px-4 md:px-6">
       <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[3fr,2fr] gap-10 items-center fade-section" ref="whyRef">
         <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-[#CC7351] mb-4">Почему LUSSO</p>
+          <p class="text-xs uppercase tracking-[0.3em] text-[--lusso-accent] mb-4">Почему LUSSO</p>
           <h3 class="text-3xl md:text-4xl font-black mb-4">Команда, где важен каждый гость и каждый шот эспрессо.</h3>
           <p class="text-sm md:text-base text-gray-600 mb-6">
             LUSSO — это не сеть «про поток». Это кофейни, где ценят ремесло, аккуратность и спокойный, но сильный сервис.
@@ -36,21 +36,21 @@
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div>
-              <p class="text-2xl font-black text-[#CC7351] mb-1">1:1</p>
+              <p class="text-2xl font-black text-[--lusso-accent] mb-1">1:1</p>
               <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Обучение бариста</p>
             </div>
             <div>
-              <p class="text-2xl font-black text-[#CC7351] mb-1">Гибко</p>
+              <p class="text-2xl font-black text-[--lusso-accent] mb-1">Гибко</p>
               <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Графики смен</p>
             </div>
             <div>
-              <p class="text-2xl font-black text-[#CC7351] mb-1">Рост</p>
+              <p class="text-2xl font-black text-[--lusso-accent] mb-1">Рост</p>
               <p class="text-[11px] uppercase text-gray-400 font-bold tracking-[0.15em]">Карьерные переходы</p>
             </div>
           </div>
         </div>
         <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5 floating">
-          <p class="text-[11px] uppercase tracking-[0.25em] text-[#A37259] mb-3">Философия команды</p>
+          <p class="text-[11px] uppercase tracking-[0.25em] text-[--lusso-brown] mb-3">Философия команды</p>
           <p class="text-sm text-gray-600 mb-4">
             Мы не делим роли на «важные» и «вспомогательные». Каждый человек в команде влияет на то, каким гости запомнят свой день.
           </p>
@@ -67,7 +67,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
             <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-2">Открытые позиции</h3>
-            <div class="w-16 h-1 bg-[#CC7351]"></div>
+            <div class="w-16 h-1 bg-[--lusso-accent]"></div>
           </div>
           <p class="text-sm text-gray-500 max-w-md">
             Выберите позицию, изучите требования и отправьте отклик через форму ниже — мы свяжемся с вами.
@@ -78,16 +78,16 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div v-for="job in jobs" :key="job.id" 
          @click="openJobModal(job)"
-         class="group text-left bg-white rounded-[2rem] p-8 border border-black/5 hover:border-[#CC7351]/30 transition-all cursor-pointer shadow-sm hover:shadow-2xl">
+         class="group text-left bg-white rounded-[2rem] p-8 border border-black/5 hover:border-[--lusso-accent]/30 transition-all cursor-pointer shadow-sm hover:shadow-2xl">
         <div class="flex justify-between items-start mb-6">
-            <div class="w-12 h-1 bg-[#CC7351] group-hover:w-20 transition-all duration-500"></div>
-            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-[#FBF9F2] text-[#A37259] uppercase tracking-widest">
+            <div class="w-12 h-1 bg-[--lusso-accent] group-hover:w-20 transition-all duration-500"></div>
+            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-[#FBF9F2] text-[--lusso-brown] uppercase tracking-widest">
                 {{ job.type }}
             </span>
         </div>
         <h4 class="text-2xl font-black text-[#2B3B2B] mb-2 tracking-tighter">{{ job.title }}</h4>
         <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">{{ job.location }}</p>
-        <div class="flex items-center gap-2 text-[10px] font-bold text-[#CC7351] uppercase tracking-[0.2em]">
+        <div class="flex items-center gap-2 text-[10px] font-bold text-[--lusso-accent] uppercase tracking-[0.2em]">
             <span>Подробнее</span>
             <span class="group-hover:translate-x-2 transition-transform">→</span>
         </div>
@@ -99,7 +99,7 @@
         <!-- <div v-if="selectedJob" class="mt-10 bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5">
           <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
             <div>
-              <p class="text-xs font-bold uppercase tracking-[0.25em] text-[#A37259] mb-2">{{ selectedJob.location }}</p>
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-[--lusso-brown] mb-2">{{ selectedJob.location }}</p>
               <h4 class="text-2xl md:text-3xl font-black mb-2">{{ selectedJob.title }}</h4>
               <p class="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold mb-3">{{ selectedJob.type }}</p>
             </div>
@@ -132,7 +132,7 @@
     <section id="form-vacan" class="py-16 md:py-20 px-4 md:px-6">
       <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 fade-section" ref="formRef">
         <div>
-          <p class="text-xs uppercase tracking-[0.3em] text-[#CC7351] mb-4">Отклик на вакансию</p>
+          <p class="text-xs uppercase tracking-[0.3em] text-[--lusso-accent] mb-4">Отклик на вакансию</p>
           <h3 class="text-3xl md:text-4xl font-black mb-4">Присоединяйтесь к команде.</h3>
           <p class="text-sm md:text-base text-gray-600 mb-6">
             Заполните короткую форму, выберите интересующую позицию — и мы свяжемся с вами, чтобы назначить встречу в одной из кофейен LUSSO.
@@ -151,7 +151,7 @@
               <input
                 v-model="form.name"
                 type="text"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="Как к вам обращаться?"
               />
             </div>
@@ -160,7 +160,7 @@
               <input
                 v-model="form.phone"
                 type="text"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="+7 (___) ___-__-__"
               />
             </div>
@@ -168,7 +168,7 @@
               <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Желаемая позиция</label>
               <select
                 v-model="form.position"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
               >
                 <option value="">Выберите из списка</option>
                 <option v-for="job in jobs" :key="job.id" :value="job.title">{{ job.title }}</option>
@@ -179,13 +179,13 @@
               <textarea
                 v-model="form.message"
                 rows="4"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#CC7351]/30"
+                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="Расскажите о себе, опыте и графике, который вам удобен."
               ></textarea>
             </div>
             <button
               type="submit"
-              class="w-full py-3.5 bg-[#2B3B2B] text-[#F4F1DE] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[#CC7351] transition-all"
+              class="w-full py-3.5 bg-[#2B3B2B] text-[#F4F1DE] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[--lusso-accent] transition-all"
             >
               Отправить отклик
             </button>
@@ -208,7 +208,7 @@
             <!-- Шапка модалки -->
             <div class="p-8 md:p-12 pb-0 flex justify-between items-start">
                 <div>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#CC7351] mb-2 block">Вакансия</span>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[--lusso-accent] mb-2 block">Вакансия</span>
                     <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-[#2B3B2B]">{{ activeJobModal.title }}</h3>
                 </div>
                 <button @click="closeJobModal" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 transition-all">
@@ -241,7 +241,7 @@
                             <h5 class="text-sm font-black uppercase tracking-widest mb-4 border-b border-black/5 pb-2">Что нужно делать</h5>
                             <ul class="space-y-3">
                                 <li v-for="res in activeJobModal.responsibilities" class="text-sm text-gray-600 flex gap-3">
-                                    <span class="text-[#CC7351]">•</span> {{ res }}
+                                    <span class="text-[--lusso-accent]">•</span> {{ res }}
                                 </li>
                             </ul>
                         </div>
@@ -249,7 +249,7 @@
                             <h5 class="text-sm font-black uppercase tracking-widest mb-4 border-b border-black/5 pb-2">Кого мы ищем</h5>
                             <ul class="space-y-3">
                                 <li v-for="req in activeJobModal.requirements" class="text-sm text-gray-600 flex gap-3">
-                                    <span class="text-[#CC7351]">•</span> {{ req }}
+                                    <span class="text-[--lusso-accent]">•</span> {{ req }}
                                 </li>
                             </ul>
                         </div>
@@ -260,7 +260,7 @@
             <!-- Подвал модалки с кнопкой отклика -->
             <div class="p-8 md:p-10 bg-white/50 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-xs text-gray-400 max-w-sm text-center md:text-left">Нажмите кнопку, чтобы перейти к форме отклика. Мы рассмотрим вашу анкету в течение 24 часов.</p>
-                <button @click="scrollToApply" class="w-full md:w-auto px-12 py-4 bg-[#2B3B2B] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[#CC7351] transition-all shadow-xl shadow-black/10">
+                <button @click="scrollToApply" class="w-full md:w-auto px-12 py-4 bg-[#2B3B2B] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[--lusso-accent] transition-all shadow-xl shadow-black/10">
                     Откликнуться на вакансию
                 </button>
             </div>

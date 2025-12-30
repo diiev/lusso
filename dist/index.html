@@ -3,6 +3,7 @@
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
     <title>LUSSO Coffee | Искусство Кофе</title>
     <link rel="stylesheet" href="assets/css/fonts.css">
     <link rel="stylesheet" href="assets/css/animate.min.css"/>
@@ -36,9 +37,9 @@
         
         <!-- Кнопка Бургера (только для мобилок) -->
         <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[#A37259] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
         </button>
     </div>
 <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
@@ -82,7 +83,7 @@
             <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
                 <div class="flex justify-between items-end">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-brown] mb-1">Наш адрес</p>
                         <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
                     </div>
                     <div class="flex gap-2">
@@ -108,21 +109,21 @@
                         <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter animate__animated animate__fadeInUp">
                             {{ slide.title }}
                         </h2>
-                        <div class="w-20 h-1 bg-[#CC7351] animate__animated animate__zoomIn"></div>
+                        <div class="w-20 h-1 bg-[--lusso-accent] animate__animated animate__zoomIn"></div>
                     </div>
                 </div>
             </transition-group>
             <!-- Slider Controls -->
             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-4">
                 <button v-for="(_, i) in slides" @click="currentSlide = i" 
-                        :class="['w-12 h-1 transition-all', currentSlide === i ? 'bg-[#CC7351]' : 'bg-white/30']"></button>
+                        :class="['w-12 h-1 transition-all', currentSlide === i ? 'bg-[--lusso-accent]' : 'bg-white/30']"></button>
             </div>
         </section>
 
         <!-- MISSION SECTION -->
         <section id="mission" class="py-24 px-6 text-center bg-[#2B3B2B] text-[#F4F1DE] relative overflow-hidden">
             <div class="max-w-4xl mx-auto relative z-10">
-                <p class="text-[#CC7351] font-bold uppercase tracking-widest text-xs mb-6">Наше призвание</p>
+                <p class="text-[--lusso-accent] font-bold uppercase tracking-widest text-xs mb-6">Наше призвание</p>
                 <h3 class="text-3xl md:text-5xl font-black mb-10 leading-tight mission-text">
                     Создавать исключительный опыт в каждой чашке, объединяя традиции и инновации обжарки.
                 </h3>
@@ -139,7 +140,7 @@
     <div class="max-w-6xl mx-auto">
         <div class="flex flex-col items-center mb-10 md:mb-16">
             <h2 class="text-3xl md:text-4xl font-black tracking-tighter uppercase mb-2">Наши хиты</h2>
-            <div class="w-16 h-1 bg-[#CC7351]"></div>
+            <div class="w-16 h-1 bg-[--lusso-accent]"></div>
         </div>
 
         <!-- Контейнер слайдера с обработкой свайпов -->
@@ -149,7 +150,7 @@
             
             <div class="flex items-center justify-between">
                 <!-- Кнопка Назад (на мобилках - поверх изображения слева) -->
-                <button @click="prevMenu" class="absolute left-2 md:left-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[#CC7351] hover:text-white transition-all z-30 shadow-md md:shadow-none">
+                <button @click="prevMenu" class="absolute left-2 md:left-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[--lusso-accent] hover:text-white transition-all z-30 shadow-md md:shadow-none">
                     ←
                 </button>
 
@@ -162,7 +163,7 @@
                             </div>
                             <!-- Текст -->
                             <div class="w-full md:w-1/2 text-center md:text-left px-2">
-                                <span class="text-[#CC7351] font-bold text-[10px] md:text-xs uppercase tracking-widest">
+                                <span class="text-[--lusso-accent] font-bold text-[10px] md:text-xs uppercase tracking-widest">
                                     {{ menuItems[currentMenuIndex].category }}
                                 </span>
                                 <h3 class="text-2xl md:text-4xl font-black my-2 md:my-4 text-[#2B3B2B]">
@@ -171,10 +172,10 @@
                                 <p class="text-sm md:text-base text-gray-400 mb-6 md:mb-8 leading-relaxed">
                                     {{ menuItems[currentMenuIndex].desc }}
                                 </p>
-                                <div class="text-2xl md:text-3xl font-bold text-[#A37259]">
+                                <div class="text-2xl md:text-3xl font-bold text-[--lusso-brown]">
                                     {{ menuItems[currentMenuIndex].price }} ₽
                                 </div>
-                                <a href="menu.html" class="inline-block mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-[#2B3B2B] text-white rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[#CC7351] transition-all uppercase tracking-widest w-full md:w-auto">
+                                <a href="menu.html" class="inline-block mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-[#2B3B2B] text-white rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[--lusso-accent] transition-all uppercase tracking-widest w-full md:w-auto">
                                     ЗАКАЗАТЬ
                                 </a>
                             </div>
@@ -183,7 +184,7 @@
                 </div>
 
                 <!-- Кнопка Вперед (на мобилках - поверх изображения справа) -->
-                <button @click="nextMenu" class="absolute right-2 md:right-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[#CC7351] hover:text-white transition-all z-30 shadow-md md:shadow-none">
+                <button @click="nextMenu" class="absolute right-2 md:right-0 md:relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white/80 md:bg-transparent border border-gray-200 hover:bg-[--lusso-accent] hover:text-white transition-all z-30 shadow-md md:shadow-none">
                     →
                 </button>
             </div>
@@ -193,7 +194,7 @@
                 <div v-for="(_, i) in menuItems" 
                      :key="i" 
                      @click="currentMenuIndex = i" 
-                     :class="['h-2 rounded-full transition-all cursor-pointer', currentMenuIndex === i ? 'w-8 bg-[#CC7351]' : 'w-2 bg-gray-200']">
+                     :class="['h-2 rounded-full transition-all cursor-pointer', currentMenuIndex === i ? 'w-8 bg-[--lusso-accent]' : 'w-2 bg-gray-200']">
                 </div>
             </div>
         </div>
@@ -212,9 +213,9 @@
                             LUSSO зародился в самом сердце города как место для истинных ценителей. Мы не просто варим кофе, мы контролируем каждый этап: от выбора фермы в Эфиопии до профиля обжарки в нашей лаборатории.
                         </p>
                         <div class="flex gap-8">
-                            <div><p class="text-3xl font-black text-[#CC7351]">10+</p><p class="text-[10px] text-white/50 uppercase">Сортов кофе</p></div>
-                            <div><p class="text-3xl font-black text-[#CC7351]">2</p><p class="text-[10px] text-white/50 uppercase">Локации</p></div>
-                            <div><p class="text-3xl font-black text-[#CC7351]">100%</p><p class="text-[10px] text-white/50 uppercase">Арабика</p></div>
+                            <div><p class="text-3xl font-black text-[--lusso-accent]">10+</p><p class="text-[10px] text-white/50 uppercase">Сортов кофе</p></div>
+                            <div><p class="text-3xl font-black text-[--lusso-accent]">2</p><p class="text-[10px] text-white/50 uppercase">Локации</p></div>
+                            <div><p class="text-3xl font-black text-[--lusso-accent]">100%</p><p class="text-[10px] text-white/50 uppercase">Арабика</p></div>
                         </div>
                     </div>
                 </div>
@@ -233,24 +234,24 @@
                 <div class="relative">
                     <transition name="fade" mode="out-in">
                         <div :key="currentReviewIndex" class="flex flex-col items-center">
-                            <div class="text-6xl text-[#CC7351] opacity-20 font-serif mb-4">“</div>
+                            <div class="text-6xl text-[--lusso-accent] opacity-20 font-serif mb-4">“</div>
                             <p class="text-xl md:text-2xl font-medium text-[#2B3B2B] italic leading-relaxed mb-10">
                                 {{ reviews[currentReviewIndex].text }}
                             </p>
                             <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 rounded-full bg-[#CC7351] flex items-center justify-center text-white font-bold text-xl">
+                                <div class="w-14 h-14 rounded-full bg-[--lusso-accent] flex items-center justify-center text-white font-bold text-xl">
                                     {{ reviews[currentReviewIndex].author[0] }}
                                 </div>
                                 <div class="text-left">
                                     <p class="font-black text-sm uppercase">{{ reviews[currentReviewIndex].author }}</p>
-                                    <p class="text-[10px] text-[#A37259] font-bold tracking-widest uppercase">Постоянный гость</p>
+                                    <p class="text-[10px] text-[--lusso-brown] font-bold tracking-widest uppercase">Постоянный гость</p>
                                 </div>
                             </div>
                         </div>
                     </transition>
 
                     <div class="flex justify-center gap-2 mt-12">
-                        <div v-for="(_, i) in reviews" :key="i" @click="currentReviewIndex = i" :class="['w-2 h-2 rounded-full transition-all cursor-pointer', currentReviewIndex === i ? 'bg-[#CC7351] scale-150' : 'bg-gray-300']"></div>
+                        <div v-for="(_, i) in reviews" :key="i" @click="currentReviewIndex = i" :class="['w-2 h-2 rounded-full transition-all cursor-pointer', currentReviewIndex === i ? 'bg-[--lusso-accent] scale-150' : 'bg-gray-300']"></div>
                     </div>
                 </div>
             </div>
@@ -260,15 +261,15 @@
         <footer class="bg-[#2B3B2B] text-white pt-20 pb-10 px-6">
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
                 <div class="md:col-span-2">
-                    <h2 class="text-5xl font-black text-[#CC7351] tracking-tighter mb-6">LUSSO</h2>
+                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6">LUSSO</h2>
                     <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
                     <div class="flex gap-4">
-                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[#CC7351] hover:border-transparent transition-all">{{ soc }}</a>
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Навигация</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Навигация</h4>
                     <ul class="space-y-4 text-sm text-white/60">
                         <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
@@ -278,10 +279,10 @@
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#A37259]">Контакты</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
                     <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
                     <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
-                    <p class="text-[10px] text-[#CC7351] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
+                    <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
                 </div>
             </div>
             
