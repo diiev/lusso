@@ -72,11 +72,12 @@ function css() {
                 title: "CSS Error",
                 message: "Error: <%= error.message %>"
             })
-        }))
+        })) 
         // здесь уже чистый CSS, ничего не компилируем
         .pipe(autoprefixer())
         .pipe(cssbeautify())
         .pipe(dest(path.build.css))
+        .pipe(browserSync.reload({ stream: true }))
         .pipe(cssnano({
             zindex: false,
             discardComments: { removeAll: true }
@@ -85,7 +86,8 @@ function css() {
         .pipe(rename({
             suffix: ".min",
             extname: ".css"
-        }))
+        })) 
+        
         .pipe(dest(path.build.css))
         .pipe(browserSync.reload({ stream: true }));
 }

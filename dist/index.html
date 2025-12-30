@@ -14,37 +14,37 @@
       
         <header>
          <!-- NAVIGATION -->
-<nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
+<nav  class=" w-full z-50  px-4 md:px-6 py-4 flex bg-[--lusso-dark] justify-between items-center">
     <!-- Логотип -->
-    <h1 class="text-2xl font-black tracking-tighter text-[--lusso-accent] z-[60]">
-        <a href="index.html">LUSSO</a>
+    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-40">
+        <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
     </h1>
 
     <!-- Десктопное меню (скрыто на мобилках) -->
     <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
-        <a href="index.html" class="hover:text-[--lusso-accent] transition-colors">Главная</a>
-        <a href="menu.html" class="hover:text-[--lusso-accent] transition-colors">Наше меню</a>
-        <a href="about.html" class="hover:text-[--lusso-accent] transition-colors">О нас</a>
-        <a href="index.html#reviews" class="hover:text-[--lusso-accent] transition-colors">Отзывы</a>
-        <a href="vacancies.html" class="hover:text-[--lusso-accent] transition-colors">Вакансии</a>
+        <a href="index.html" class="hover:text-[white] text-[--lusso-accent]  transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Наше меню</a>
+        <a href="about.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">О нас</a>
+        <a href="index.html#reviews" class="hover:text-[white] text-[--lusso-accent] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Вакансии</a>
     </div>
 
     <!-- Правая часть: Кнопка и Бургер -->
     <div class="flex items-center gap-4 z-[60]">
-        <a href="menu.html" class="bg-[--lusso-accent] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
+        <a href="menu.html" class="btn-premium text-[--lusso-dark] px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[12px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
             Заказать
         </a>
         
         <!-- Кнопка Бургера (только для мобилок) -->
         <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
         </button>
     </div>
 <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
 <transition name="lusso-menu">
-    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[--lusso-dark] flex flex-col h-screen w-screen md:hidden overflow-hidden">
         
         <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
         <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
@@ -83,7 +83,7 @@
             <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
                 <div class="flex justify-between items-end">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-brown] mb-1">Наш адрес</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
                         <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
                     </div>
                     <div class="flex gap-2">
@@ -98,36 +98,77 @@
 </nav>
 </header>
         <!-- HERO SLIDER -->
-        <section class="relative h-screen overflow-hidden bg-black">
-            <transition-group name="slide-fade" tag="div" class="h-full">
-                <div v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index" 
-                     class="absolute inset-0 w-full h-full">
-                    <div class="absolute inset-0 bg-black/40 z-10"></div>
-                    <img :src="slide.image" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-white text-center px-4">
-                        <span class="text-xs uppercase tracking-[0.5em] mb-4 animate__animated animate__fadeInDown">Specialty Coffee Roasters</span>
-                        <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter animate__animated animate__fadeInUp">
-                            {{ slide.title }}
-                        </h2>
-                        <div class="w-20 h-1 bg-[--lusso-accent] animate__animated animate__zoomIn"></div>
-                    </div>
-                </div>
-            </transition-group>
-            <!-- Slider Controls -->
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-4">
-                <button v-for="(_, i) in slides" @click="currentSlide = i" 
-                        :class="['w-12 h-1 transition-all', currentSlide === i ? 'bg-[--lusso-accent]' : 'bg-white/30']"></button>
+     <section class="relative h-[85vh] overflow-hidden bg-[--lusso-dark]">
+    <transition-group name="hero-fade" tag="div" class="h-full">
+      <div v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index" 
+           class="absolute inset-0 w-full h-full">
+        
+        <!-- Многослойный оверлей для глубины -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[--lusso-dark]/80 z-10"></div>
+        <div class="absolute inset-0 bg-black/20 z-10"></div>
+
+        <!-- Анимированное изображение (эффект легкого зума) -->
+        <img :src="slide.image" 
+             class="w-full h-full object-cover transition-transform duration-[10000ms] scale-110"
+             :class="{ 'scale-100': currentSlide === index }">
+
+        <!-- Контент в стиле Luxury Editorial -->
+        <div class="absolute inset-0 z-20 flex flex-col items-center justify-center px-6">
+          <div class="max-w-5xl w-full text-center">
+            <!-- Надзаголовок с золотым акцентом -->
+            <div class="flex items-center justify-center gap-4 mb-6 animate__animated animate__fadeInDown">
+              <span class="h-[1px] w-8 bg-[--lusso-accent]"></span>
+              <span class="text-[--lusso-gold-light] text-xs md:text-sm uppercase tracking-[0.6em] font-light">
+                Premium Experience
+              </span>
+              <span class="h-[1px] w-8 bg-[--lusso-accent]"></span>
             </div>
-        </section>
+
+            <!-- Заголовок с использованием серифного шрифта (если подключен) -->
+            <h2 class="text-6xl md:text-[7rem] leading-[0.9] text-[--lusso-cream] font-serif italic mb-8 drop-shadow-2xl animate__animated animate__fadeInUp">
+              {{ slide.title }}
+            </h2>
+
+            <!-- Кнопка действия (CTA) -->
+            <div class="animate__animated animate__fadeInUp animate__delay-1s">
+              <button class="group relative px-10 py-4 overflow-hidden border border-[--lusso-accent] text-[--lusso-cream] transition-all">
+                <span class="relative z-10 text-sm uppercase tracking-widest group-hover:text-[--lusso-dark] transition-colors">
+                  Исследовать меню
+                </span>
+                <div class="absolute inset-0 bg-[--lusso-accent] translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Номер слайда (шикарный акцент в углу) -->
+        <div class="absolute bottom-12 right-12 z-30 hidden md:block">
+          <div class="text-[--lusso-gold-light] font-light flex items-end gap-2">
+            <span class="text-4xl leading-none">0{{ index + 1 }}</span>
+            <span class="text-sm opacity-50 mb-1">/ 0{{ slides.length }}</span>
+          </div>
+        </div>
+      </div>
+    </transition-group>
+
+    <!-- Утонченные контроллеры -->
+    <div class="absolute bottom-10 left-12 z-30 flex flex-col gap-6">
+      <button v-for="(_, i) in slides" @click="currentSlide = i" 
+              class="group relative flex items-center gap-4 outline-none">
+        <div :class="['h-[2px] transition-all duration-500', 
+                    currentSlide === i ? 'w-16 bg-[--lusso-accent]' : 'w-8 bg-white/30 group-hover:bg-white/60']"></div>
+      </button>
+    </div>
+  </section>
 
         <!-- MISSION SECTION -->
-        <section id="mission" class="py-24 px-6 text-center bg-[#2B3B2B] text-[#F4F1DE] relative overflow-hidden">
+        <section id="mission" class="py-32 px-6 text-center bg-[--lusso-cream] text-[--lusso-brown] relative overflow-hidden">
             <div class="max-w-4xl mx-auto relative z-10">
-                <p class="text-[--lusso-accent] font-bold uppercase tracking-widest text-xs mb-6">Наше призвание</p>
+                <p class="text-[--lusso-dark] font-bold uppercase tracking-widest text-xs mb-6">Наше призвание</p>
                 <h3 class="text-3xl md:text-5xl font-black mb-10 leading-tight mission-text">
                     Создавать исключительный опыт в каждой чашке, объединяя традиции и инновации обжарки.
                 </h3>
-                <p class="text-lg opacity-60 font-light max-w-2xl mx-auto">
+                <p class="text-lg opacity-60 font-light max-w-2xl mx-auto text-[--lusso-dark]">
                     Мы верим, что кофе — это не просто напиток, а момент спокойствия в городском хаосе. Каждое зерно отобрано нами вручную.
                 </p>
             </div>
@@ -166,16 +207,16 @@
                                 <span class="text-[--lusso-accent] font-bold text-[10px] md:text-xs uppercase tracking-widest">
                                     {{ menuItems[currentMenuIndex].category }}
                                 </span>
-                                <h3 class="text-2xl md:text-4xl font-black my-2 md:my-4 text-[#2B3B2B]">
+                                <h3 class="text-2xl md:text-4xl font-black my-2 md:my-4 text-[--lusso-brown]">
                                     {{ menuItems[currentMenuIndex].name }}
                                 </h3>
                                 <p class="text-sm md:text-base text-gray-400 mb-6 md:mb-8 leading-relaxed">
                                     {{ menuItems[currentMenuIndex].desc }}
                                 </p>
-                                <div class="text-2xl md:text-3xl font-bold text-[--lusso-brown]">
+                                <div class="text-2xl md:text-3xl font-bold text-[#A37259]">
                                     {{ menuItems[currentMenuIndex].price }} ₽
                                 </div>
-                                <a href="menu.html" class="inline-block mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-[#2B3B2B] text-white rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[--lusso-accent] transition-all uppercase tracking-widest w-full md:w-auto">
+                                <a href="menu.html" class="inline-block mt-6 md:mt-8 px-8 md:px-10 py-3 md:py-4 bg-[--lusso-brown] text-white rounded-xl md:rounded-2xl font-bold text-xs md:text-sm hover:bg-[--lusso-accent] transition-all uppercase tracking-widest w-full md:w-auto">
                                     ЗАКАЗАТЬ
                                 </a>
                             </div>
@@ -204,7 +245,7 @@
 
         <!-- ABOUT US (Parallax) -->
         <section id="about" class="relative py-32 parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000');">
-            <div class="absolute inset-0 bg-[#2B3B2B]/80"></div>
+            <div class="absolute inset-0 bg-[--lusso-brown]/80"></div>
             <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row gap-16 items-center">
                 <div class="md:w-1/2">
                     <div class="bg-white/10 backdrop-blur-lg p-12 rounded-[3rem] border border-white/20">
@@ -235,7 +276,7 @@
                     <transition name="fade" mode="out-in">
                         <div :key="currentReviewIndex" class="flex flex-col items-center">
                             <div class="text-6xl text-[--lusso-accent] opacity-20 font-serif mb-4">“</div>
-                            <p class="text-xl md:text-2xl font-medium text-[#2B3B2B] italic leading-relaxed mb-10">
+                            <p class="text-xl md:text-2xl font-medium text-[--lusso-brown] italic leading-relaxed mb-10">
                                 {{ reviews[currentReviewIndex].text }}
                             </p>
                             <div class="flex items-center gap-4">
@@ -244,7 +285,7 @@
                                 </div>
                                 <div class="text-left">
                                     <p class="font-black text-sm uppercase">{{ reviews[currentReviewIndex].author }}</p>
-                                    <p class="text-[10px] text-[--lusso-brown] font-bold tracking-widest uppercase">Постоянный гость</p>
+                                    <p class="text-[10px] text-[#A37259] font-bold tracking-widest uppercase">Постоянный гость</p>
                                 </div>
                             </div>
                         </div>
@@ -258,10 +299,13 @@
         </section>
 
                <!-- FOOTER (ОБНОВЛЕНО) -->
-        <footer class="bg-[#2B3B2B] text-white pt-20 pb-10 px-6">
+        <footer class="bg-[--lusso-dark] text-white pt-20 pb-10 px-6">
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
                 <div class="md:col-span-2">
-                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6">LUSSO</h2>
+                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6 w-40">
+                          <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
+   
+                    </h2>
                     <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
                     <div class="flex gap-4">
                         <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
@@ -269,7 +313,7 @@
                 </div>
                 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Навигация</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-brown]">Навигация</h4>
                     <ul class="space-y-4 text-sm text-white/60">
                         <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
@@ -279,7 +323,7 @@
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-brown]">Контакты</h4>
                     <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
                     <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
                     <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>

@@ -1,23 +1,71 @@
-/* INDEX.HTML */
+/* === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА === */
 :root {
-    --lusso-cream: #EFE6D8;
- /* тёплый сливочно-бежевый */
+    --lusso-cream: #F4F1DE;
+      /* Фон страниц */
     --lusso-accent: #D4AA73;
- /* оставить без изменений */
+     /* Золото / Акценты */
     --lusso-brown: #57453F;
- /* оставить без изменений */
-    --lusso-dark: #3F352F;
- /* тёплый тёмно-коричневый */
+      /* Глубокий шоколад (основной темный) */
+    --lusso-dark: #2B211E;
+       /* Почти черный для контраста */
+    --lusso-gold-light: #E5C697;
+ /* Светлое золото для градиентов */
 }
 
 body {
     background-color: var(--lusso-cream);
-    color: var(--lusso-dark);
+    color: var(--lusso-brown);
     font-family: 'Montserrat', sans-serif;
+    -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
+} 
+
+
+
+/* Премиальная кнопка "Заказать" */
+.btn-premium {
+    background: linear-gradient(45deg, var(--lusso-accent), var(--lusso-gold-light));
+    color: var(--lusso-dark);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 4px 15px rgba(212, 170, 115, 0.2);
 }
 
-/* Parallax Background */
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 170, 115, 0.4);
+    filter: brightness(1.1);
+}
+
+/* Анимация появления меню */
+.lusso-menu-enter-active, .lusso-menu-leave-active {
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lusso-menu-enter-from, .lusso-menu-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+
+/* Общий кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--lusso-cream);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--lusso-accent);
+    border-radius: 10px;
+}
+
+
+
+/* Параллакс фон (index + about) */
 .parallax-bg {
     background-attachment: fixed;
     background-position: center;
@@ -25,14 +73,36 @@ body {
     background-size: cover;
 }
 
-/* Glassmorphism Header */
-.glass-header {
-    background: rgba(244, 241, 222, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(163, 114, 89, 0.1);
+/* Плавающие элементы (index, vacancies, about) */
+.floating {
+    animation: floating 3s ease-in-out infinite;
 }
 
-/* Анимации слайдеров */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Появление секций (vacancies, about) */
+.fade-section {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.8s ease;
+}
+
+.fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === INDEX.HTML СПЕЦИФИКА === */
+
+/* Анимации hero/slider */
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.6s ease;
@@ -59,21 +129,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--lusso-cream);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 10px;
-}
-
-/* Slider Animations */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
     transition: all 0.8s ease-in-out;
@@ -90,14 +145,10 @@ body {
 }
 
 .mission-text {
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 4px 20px rgba(131, 22, 22, 0.068);
 }
 
-.floating {
-    animation: floating 3s ease-in-out infinite;
-}
-
-/* Анимация появления мобильного меню */
+/* INDEX: анимация появления мобильного меню (оверлей) */
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.4s ease, transform 0.4s ease;
@@ -109,7 +160,7 @@ body {
     transform: translateY(-100%);
 }
 
-/* Анимация шторки: теперь она гарантированно на весь экран */
+/* Шторка меню (общая для всех страниц, где используешь lusso-menu) */
 .lusso-menu-enter-active,
 .lusso-menu-leave-active {
     transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
@@ -125,7 +176,7 @@ body {
     transform: translateY(0);
 }
 
-/* Появление текста внутри */
+/* Появление текста внутри шторки */
 .menu-item-anim {
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     transition-delay: var(--delay);
@@ -134,7 +185,6 @@ body {
 .lusso-menu-enter-from .menu-item-anim {
     opacity: 0;
     transform: translateX(-20px);
-    /* Вылетает сбоку, так красивее */
 }
 
 .lusso-menu-enter-to .menu-item-anim {
@@ -142,42 +192,13 @@ body {
     transform: translateX(0);
 }
 
-@keyframes floating {
-    0% {
-        transform: translateY(0px);
-    }
+/* === MENU.HTML СПЕЦИФИКА === */
 
-    50% {
-        transform: translateY(-10px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
-}
- 
-/* END INDEX.HTML */
-
-
-
-
-/* MENU HTML */
-
- 
-body {
-    background-color: var(--lusso-cream);
-    color: var(--lusso-dark);
-    font-family: 'Montserrat', sans-serif;
-    -webkit-tap-highlight-color: transparent;
+#app-menu {
+    touch-action: manipulation;
 }
 
-        /* Элементы стиля LUSSO */
-.glass-header {
-    background: rgba(244, 241, 222, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(163, 114, 89, 0.1);
-}
-
+/* Карточки меню */
 .lusso-card {
     background: white;
     border: 1px solid rgba(0,0,0,0.05);
@@ -186,43 +207,10 @@ body {
 
 .lusso-card:hover {
     transform: translateY(-5px);
-    shadow: 0 20px 40px rgba(0,0,0,0.05);
-}
-        
-        /* Скроллбар */
-::-webkit-scrollbar {
-    width: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
 }
 
-::-webkit-scrollbar-track {
-    background: var(--lusso-cream);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 10px;
-}
-
-        /* Анимация мобильного меню (Шторка) */
-.lusso-menu-enter-active, .lusso-menu-leave-active {
-    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-}
-
-.lusso-menu-enter-from, .lusso-menu-leave-to {
-    transform: translateY(-100%);
-}
-
-.menu-item-anim {
-    transition: all 0.5s ease;
-    transition-delay: var(--delay);
-}
-
-.lusso-menu-enter-from .menu-item-anim {
-    opacity: 0;
-    transform: translateX(-20px);
-}
-
-        /* Категории (без скроллбара) */
+/* Категории без скроллбара (гориз. скролл) */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
@@ -232,194 +220,7 @@ body {
     scrollbar-width: none;
 }
 
-#app-menu {
-    touch-action: manipulation;
-}
-
-/* END MENU HTML */
-
-
-/* VACANCIES HTML */
-
-
-
-body {
-    background-color: var(--lusso-cream);
-    color: var(--lusso-dark);
-    font-family: "Montserrat", sans-serif;
-    -webkit-tap-highlight-color: transparent;
-    overflow-x: hidden;
-}
-
-.glass-header {
-    background: rgba(244, 241, 222, 0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(163, 114, 89, 0.12);
-}
-
-::-webkit-scrollbar {
-    width: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--lusso-cream);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 999px;
-}
-
-.lusso-menu-enter-active,
-    .lusso-menu-leave-active {
-    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-}
-
-.lusso-menu-enter-from,
-    .lusso-menu-leave-to {
-    transform: translateY(-100%);
-}
-
-.menu-item-anim {
-    transition: all 0.5s ease;
-    transition-delay: var(--delay);
-}
-
-.lusso-menu-enter-from .menu-item-anim {
-    opacity: 0;
-    transform: translateX(-20px);
-}
-
-.fade-section {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: all 0.8s ease;
-}
-
-.fade-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.floating {
-    animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-    0%,
-      100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-} 
-
-    /* Анимация появления модального окна */
-.modal-fade-enter-active, .modal-fade-leave-active {
-    transition: all 0.5s cubic-bezier(0.85, 0, 0.15, 1);
-}
-
-.modal-fade-enter-from, .modal-fade-leave-to {
-    opacity: 0;
-    transform: scale(0.95) translateY(20px);
-}
-
-/* Кастомный скролл внутри модалки */
-.modal-scroll::-webkit-scrollbar {
-    width: 4px;
-}
-
-.modal-scroll::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 10px;
-}
-
-/* ABOUT HTML */ 
-
-
-.parallax-bg {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--lusso-cream);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 10px;
-}
-
-.floating {
-    animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-.fade-section {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: all 0.8s ease;
-}
-
-.fade-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
-
-        /*   */ 
-
-
-
-        
-body {
-    background-color: var(--lusso-cream);
-    color: var(--lusso-dark);
-    font-family: 'Montserrat', sans-serif;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.lusso-btn {
-    background-color: var(--lusso-accent);
-    color: white;
-    transition: all 0.3s ease;
-}
-
-.card-glass {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.5);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-        /* Grid optimization */
+/* Grid для меню (about/menu общий блок) */
 .menu-grid {
     display: grid;
     gap: 16px;
@@ -450,13 +251,34 @@ body {
     transform: scale(1.1);
 }
 
-        /* Fixed Modals */
+/* === VACANCIES.HTML СПЕЦИФИКА === */
+
+/* Более плотный скроллбар для модалки вакансий */
+.modal-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+    background: var(--lusso-accent);
+    border-radius: 10px;
+}
+
+/* Анимация модалки */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+    transition: all 0.5s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+}
+
+/* Fixed модалка (общая) */
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(43, 59, 43, 0.85);
     backdrop-filter: blur(10px);
     display: flex;
@@ -477,19 +299,6 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-} 
-             /* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--lusso-cream);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--lusso-accent);
-    border-radius: 10px;
 }
 
 @media (max-width: 360px) {
@@ -507,6 +316,7 @@ body {
     }
 }
 
+/* Инпуты и список заказа */
 .lusso-input {
     width: 100%;
     background: #FBF9F2;
@@ -534,50 +344,24 @@ body {
     text-align: center;
     padding: 32px;
     border-radius: 28px;
-} 
-
-           /* Glassmorphism Header */
-.glass-header {
-    background: rgba(244, 241, 222, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(163, 114, 89, 0.1);
-}    
-
-             /* Анимация появления мобильного меню */
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.fade-enter-from, .fade-leave-to {
-    opacity: 0;
-    transform: translateY(-100%);
-} 
-/* Анимация шторки: теперь она гарантированно на весь экран */
-.lusso-menu-enter-active, .lusso-menu-leave-active {
-    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+/* === ABOUT.HTML / ОБЩИЕ ЭЛЕМЕНТЫ === */
+
+.lusso-btn {
+    background-color: var(--lusso-accent);
+    color: white;
+    transition: all 0.3s ease;
 }
 
-.lusso-menu-enter-from, .lusso-menu-leave-to {
-    transform: translateY(-100%);
-}
-
-.lusso-menu-enter-to, .lusso-menu-leave-from {
-    transform: translateY(0);
-}
-
-/* Появление текста внутри */
-.menu-item-anim {
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    transition-delay: var(--delay);
-}
-
-.lusso-menu-enter-from .menu-item-anim {
-    opacity: 0;
-    transform: translateX(-20px);
- /* Вылетает сбоку, так красивее */
-}
-
-.lusso-menu-enter-to .menu-item-anim {
-    opacity: 1;
-    transform: translateX(0);
+/* Glass-карточка */
+.card-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.5);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }

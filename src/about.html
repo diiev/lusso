@@ -8,13 +8,13 @@
     @@include('template/partials/header.html')
     <!-- HERO ABOUT -->
     <section class="relative h-[70vh] md:h-[80vh] parallax-bg" style="background-image:url('assets/img/lusso_4.webp');">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-[#2B3B2B]/90"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-[--lusso-dark]/90"></div>
         <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center px-6 pt-24">
-            <p class="text-xs uppercase tracking-[0.4em] text-[#F4F1DE]/70 mb-4">О нас</p>
-            <h2 class="text-4xl md:text-6xl font-black text-[#F4F1DE] tracking-tight mb-6">
+            <p class="text-xs uppercase tracking-[0.4em] text-[--lusso-cream]/70 mb-4">О нас</p>
+            <h2 class="text-4xl md:text-6xl font-black text-[--lusso-cream] tracking-tight mb-6">
                 Две точки. Одна философия кофе.
             </h2>
-            <p class="text-sm md:text-base text-[#F4F1DE]/70 max-w-xl">
+            <p class="text-sm md:text-base text-[--lusso-cream]/70 max-w-xl">
                 LUSSO — это сеть specialty-кофеен, где каждая локация сохраняет общий характер бренда, но при этом живет своей собственной атмосферой.
             </p>
         </div>
@@ -44,11 +44,11 @@
                     <div class="grid grid-cols-2 gap-4 text-sm mb-6">
                         <div>
                             <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Телефон</p>
-                            <p class="font-semibold text-[#2B3B2B]">+7 (938) 999 77 88</p>
+                            <p class="font-semibold text-[--lusso-dark]">+7 (938) 999 77 88</p>
                         </div>
                         <div>
                             <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Часы работы</p>
-                            <p class="font-semibold text-[#2B3B2B]">Ежедневно 08:00–23:00</p>
+                            <p class="font-semibold text-[--lusso-dark]">Ежедневно 08:00–23:00</p>
                         </div>
                     </div>
                     <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Как добраться</p>
@@ -72,11 +72,11 @@
                     <div class="grid grid-cols-2 gap-4 text-sm mb-6">
                         <div>
                             <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Телефон</p>
-                            <p class="font-semibold text-[#2B3B2B]">+7 (938) 999 81 18</p>
+                            <p class="font-semibold text-[--lusso-dark]">+7 (938) 999 81 18</p>
                         </div>
                         <div>
                             <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Часы работы</p>
-                            <p class="font-semibold text-[#2B3B2B]">Ежедневно 08:00–23:00</p>
+                            <p class="font-semibold text-[--lusso-dark]">Ежедневно 08:00–23:00</p>
                         </div>
                     </div>
                     <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Как добраться</p>
@@ -93,25 +93,25 @@
     </section>
 
     <!-- HOW TO GET -->
-    <section id="route" class="py-16 md:py-20 px-4 md:px-6 bg-[#2B3B2B] text-[#F4F1DE]">
+    <section id="route" class="py-16 md:py-20 px-4 md:px-6 bg-[--lusso-dark] text-[--lusso-cream]">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-10 items-center fade-section" ref="routeRef">
             <div class="md:w-1/2">
                 <p class="text-xs uppercase tracking-[0.3em] text-[--lusso-accent] mb-4">Как добраться</p>
                 <h3 class="text-3xl md:text-4xl font-black mb-6">
                     Найдите свой маршрут до ближайшего LUSSO.
                 </h3>
-                <p class="text-sm md:text-base text-[#F4F1DE]/75 mb-6">
+                <p class="text-sm md:text-base text-[--lusso-cream]/75 mb-6">
                     Выберите кофейню, и мы покажем вам, как удобнее добраться: пешком, на авто или общественным транспортом.
                 </p>
                 <div class="bg-white/5 rounded-2xl p-3 inline-flex gap-2 mb-4">
-                    <button @click="activePoint = 'lusso'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='lusso' ? 'bg-[#F4F1DE] text-[#2B3B2B]' : 'text-[#F4F1DE]/70']">
+                    <button @click="activePoint = 'lusso'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='lusso' ? 'bg-[--lusso-cream] text-[--lusso-dark]' : 'text-[--lusso-cream]/70']">
                         LUSSO
                     </button>
-                    <button @click="activePoint = 'urban'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='urban' ? 'bg-[#F4F1DE] text-[#2B3B2B]' : 'text-[#F4F1DE]/70']">
+                    <button @click="activePoint = 'urban'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='urban' ? 'bg-[--lusso-cream] text-[--lusso-dark]' : 'text-[--lusso-cream]/70']">
                         URBAN HAVEN
                     </button>
                 </div>
-                <ul class="text-xs md:text-sm text-[#F4F1DE]/75 space-y-1">
+                <ul class="text-xs md:text-sm text-[--lusso-cream]/75 space-y-1">
                     <li v-if="activePoint==='lusso'">— Введите в навигатор: «LUSSO, Кавказская 52».</li>
                     <li v-if="activePoint==='lusso'">— От центральной мечети — около 7–10 минут на авто.</li>
                     <li v-if="activePoint==='urban'">— Введите в навигатор: «LUSSO URBAN HAVEN, Кадырова 28».</li>
@@ -119,14 +119,14 @@
                 </ul>
             </div>
             <div class="md:w-1/2 w-full">
-                <div class="bg-[#F4F1DE] rounded-3xl p-6 shadow-2xl text-[#2B3B2B] floating">
+                <div class="bg-[--lusso-cream] rounded-3xl p-6 shadow-2xl text-[--lusso-dark] floating">
                     <p class="text-xs uppercase tracking-[0.2em] text-[--lusso-brown] mb-3">Навигация</p>
                     <p class="font-black mb-1" v-if="activePoint==='lusso'">LUSSO — Кавказская, 52</p>
                     <p class="font-black mb-1" v-else>LUSSO URBAN HAVEN — Кадырова, 28</p>
                     <p class="text-xs text-gray-500 mb-4">
                         Скопируйте адрес или откройте в любимом навигаторе.
                     </p>
-                    <button class="w-full py-3 rounded-xl bg-[#2B3B2B] text-[#F4F1DE] text-xs font-bold uppercase tracking-[0.2em]">
+                    <button class="w-full py-3 rounded-xl bg-[--lusso-dark] text-[--lusso-cream] text-xs font-bold uppercase tracking-[0.2em]">
                         Открыть в навигаторе
                     </button>
                 </div>
@@ -144,7 +144,7 @@
                     Расскажите о впечатлениях, задайте вопрос по меню или предложите идею для коллаборации — команда LUSSO всегда на связи.
                 </p>
                 <ul class="text-sm text-gray-500 space-y-2 mb-6">
-                    <li>— Почта: <span class="font-semibold text-[#2B3B2B]">hello@lusso.coffee</span></li>
+                    <li>— Почта: <span class="font-semibold text-[--lusso-dark]">hello@lusso.coffee</span></li>
                     <li>— Instagram и WhatsApp — в шапке сайта.</li>
                 </ul>
             </div>
@@ -173,7 +173,7 @@
                         <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
                         <textarea v-model="form.message" rows="4" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40" placeholder="Опишите ваш запрос..."></textarea>
                     </div>
-                    <button type="submit" class="w-full py-3 bg-[#2B3B2B] text-[#F4F1DE] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all">
+                    <button type="submit" class="w-full py-3 bg-[--lusso-dark] text-[--lusso-cream] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all">
                         Отправить сообщение
                     </button>
                     <p v-if="formSent" class="text-[11px] text-green-600 mt-3">

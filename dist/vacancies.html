@@ -15,37 +15,37 @@
     
     <header>
          <!-- NAVIGATION -->
-<nav class="fixed top-0 w-full z-50 glass-header px-4 md:px-6 py-4 flex justify-between items-center">
+<nav  class=" w-full z-50  px-4 md:px-6 py-4 flex bg-[--lusso-dark] justify-between items-center">
     <!-- Логотип -->
-    <h1 class="text-2xl font-black tracking-tighter text-[--lusso-accent] z-[60]">
-        <a href="index.html">LUSSO</a>
+    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-40">
+        <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
     </h1>
 
     <!-- Десктопное меню (скрыто на мобилках) -->
     <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
-        <a href="index.html" class="hover:text-[--lusso-accent] transition-colors">Главная</a>
-        <a href="menu.html" class="hover:text-[--lusso-accent] transition-colors">Наше меню</a>
-        <a href="about.html" class="hover:text-[--lusso-accent] transition-colors">О нас</a>
-        <a href="index.html#reviews" class="hover:text-[--lusso-accent] transition-colors">Отзывы</a>
-        <a href="vacancies.html" class="hover:text-[--lusso-accent] transition-colors">Вакансии</a>
+        <a href="index.html" class="hover:text-[white] text-[--lusso-accent]  transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Наше меню</a>
+        <a href="about.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">О нас</a>
+        <a href="index.html#reviews" class="hover:text-[white] text-[--lusso-accent] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Вакансии</a>
     </div>
 
     <!-- Правая часть: Кнопка и Бургер -->
     <div class="flex items-center gap-4 z-[60]">
-        <a href="menu.html" class="bg-[--lusso-accent] text-white px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
+        <a href="menu.html" class="btn-premium text-[--lusso-dark] px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[12px] font-bold tracking-widest uppercase hover:scale-105 transition-all">
             Заказать
         </a>
         
         <!-- Кнопка Бургера (только для мобилок) -->
         <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-brown] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
         </button>
     </div>
 <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
 <transition name="lusso-menu">
-    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[#F4F1DE] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[--lusso-dark] flex flex-col h-screen w-screen md:hidden overflow-hidden">
         
         <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
         <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
@@ -84,7 +84,7 @@
             <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
                 <div class="flex justify-between items-end">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-brown] mb-1">Наш адрес</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
                         <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
                     </div>
                     <div class="flex gap-2">
@@ -104,13 +104,13 @@
         class="absolute inset-0"
         style="background-image:url('assets/img/lusso_1.jpg'); background-size:cover; background-position:center;"
       ></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-[#2B3B2B]/90"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-[--lusso-dark]/90"></div>
       <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center px-6">
-        <p class="text-xs uppercase tracking-[0.4em] text-[#F4F1DE]/70 mb-4">Вакансии</p>
-        <h2 class="text-4xl md:text-6xl font-black text-[#F4F1DE] tracking-tight mb-4">
+        <p class="text-xs uppercase tracking-[0.4em] text-[--lusso-cream]/70 mb-4">Вакансии</p>
+        <h2 class="text-4xl md:text-6xl font-black text-[--lusso-cream] tracking-tight mb-4">
           Карьера в LUSSO.
         </h2>
-        <p class="text-sm md:text-base text-[#F4F1DE]/75 max-w-xl">
+        <p class="text-sm md:text-base text-[--lusso-cream]/75 max-w-xl">
           Команда, которая любит кофе, детали и людей. Если тебе близка эстетика LUSSO, возможно, мы ищем именно тебя.
         </p>
       </div>
@@ -177,7 +177,7 @@
                 {{ job.type }}
             </span>
         </div>
-        <h4 class="text-2xl font-black text-[#2B3B2B] mb-2 tracking-tighter">{{ job.title }}</h4>
+        <h4 class="text-2xl font-black text-[--lusso-dark] mb-2 tracking-tighter">{{ job.title }}</h4>
         <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">{{ job.location }}</p>
         <div class="flex items-center gap-2 text-[10px] font-bold text-[--lusso-accent] uppercase tracking-[0.2em]">
             <span>Подробнее</span>
@@ -277,7 +277,7 @@
             </div>
             <button
               type="submit"
-              class="w-full py-3.5 bg-[#2B3B2B] text-[#F4F1DE] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[--lusso-accent] transition-all"
+              class="w-full py-3.5 bg-[--lusso-dark] text-[--lusso-cream] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[--lusso-accent] transition-all"
             >
               Отправить отклик
             </button>
@@ -293,15 +293,15 @@
 <transition name="modal-fade">
     <div v-if="activeJobModal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-8">
         <!-- Фон с размытием -->
-        <div class="absolute inset-0 bg-[#2B3B2B]/60 backdrop-blur-xl" @click="closeJobModal"></div>
+        <div class="absolute inset-0 bg-[--lusso-dark]/60 backdrop-blur-xl" @click="closeJobModal"></div>
         
         <!-- Контент модалки -->
-        <div class="relative bg-[#F4F1DE] w-full max-w-4xl max-h-[90vh] rounded-[3rem] overflow-hidden shadow-2xl flex flex-col">
+        <div class="relative bg-[--lusso-cream] w-full max-w-4xl max-h-[90vh] rounded-[3rem] overflow-hidden shadow-2xl flex flex-col">
             <!-- Шапка модалки -->
             <div class="p-8 md:p-12 pb-0 flex justify-between items-start">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-[--lusso-accent] mb-2 block">Вакансия</span>
-                    <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-[#2B3B2B]">{{ activeJobModal.title }}</h3>
+                    <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-[--lusso-dark]">{{ activeJobModal.title }}</h3>
                 </div>
                 <button @click="closeJobModal" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 transition-all">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -352,7 +352,7 @@
             <!-- Подвал модалки с кнопкой отклика -->
             <div class="p-8 md:p-10 bg-white/50 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-xs text-gray-400 max-w-sm text-center md:text-left">Нажмите кнопку, чтобы перейти к форме отклика. Мы рассмотрим вашу анкету в течение 24 часов.</p>
-                <button @click="scrollToApply" class="w-full md:w-auto px-12 py-4 bg-[#2B3B2B] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[--lusso-accent] transition-all shadow-xl shadow-black/10">
+                <button @click="scrollToApply" class="w-full md:w-auto px-12 py-4 bg-[--lusso-dark] text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-[--lusso-accent] transition-all shadow-xl shadow-black/10">
                     Откликнуться на вакансию
                 </button>
             </div>
@@ -361,10 +361,13 @@
 </transition>
     
      <!-- FOOTER (ОБНОВЛЕНО) -->
-        <footer class="bg-[#2B3B2B] text-white pt-20 pb-10 px-6">
+        <footer class="bg-[--lusso-dark] text-white pt-20 pb-10 px-6">
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
                 <div class="md:col-span-2">
-                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6">LUSSO</h2>
+                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6 w-40">
+                          <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
+   
+                    </h2>
                     <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
                     <div class="flex gap-4">
                         <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
@@ -372,7 +375,7 @@
                 </div>
                 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Навигация</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-brown]">Навигация</h4>
                     <ul class="space-y-4 text-sm text-white/60">
                         <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
@@ -382,7 +385,7 @@
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-brown]">Контакты</h4>
                     <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
                     <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
                     <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
