@@ -12,7 +12,10 @@ function menu () {
                 const showCheckout = ref(false);
                 const confirmClear = ref(false);
                 const checkoutMode = ref('order'); 
-                const searchQuery = ref("");
+                const searchQuery = ref(""); 
+                const selectedItem = ref(null)
+                const activeSlide = ref(0)
+
                 const cart = ref([]);
                 const form = ref({ name: '', phone: '', type: 'pickup', address: '' });
 
@@ -23,12 +26,46 @@ function menu () {
 
                 const categories = ['Все', 'Кофе', 'Сендвичи', 'Десерты', 'Завтраки'];
                 const items = [
-                    { id: 1, name: 'Эспрессо', price: 200, desc: 'Такой эспрессо ты точно не пробовал.', category: 'Кофе', image: 'assets/img/espresso.jpg' },
+                    { id: 1, name: 'Эспрессо', price: 200, desc: 'Такой эспрессо ты точно не пробовал.', fullDesc: "dsdsdsdsdsdsdsdsdsdsdsdddddddddddddddddddd", category: 'Кофе', image: 'assets/img/espresso.jpg', 
+                        images: [
+    'assets/img/cap.jpg',
+    'assets/img/espresso.jpg',
+    'assets/img/fletwhite.jpg'
+  ], 
+  isNew: false,  
+   nutrition: {
+    proteins: 6,
+    fats: 7,
+    carbs: 8,
+    calories: 120
+  }
+                      },
                     { id: 2, name: 'Сэндвич с курицей', price: 370, desc: 'С грибным соусом,моцареллой и томатами', category: 'Сендвичи', image: 'assets/img/chikensandwich.jpg' },
                     { id: 3, name: 'Бельгийские вафли с мороженным', price: 320, desc: 'C ягодами и шоколадным соусом.', category: 'Десерты', image: 'assets/img/belg.jpg' },
                     { id: 4, name: 'Флэт Уайт', price: 250, desc: 'Насыщенный кофейный вкус с минимальным слоем пены.', category: 'Кофе', image: 'assets/img/fletwhite.jpg' },
                     { id: 5, name: 'Американо', price: 200, desc: '', category: 'Кофе', image: 'assets/img/americano.jpg' }, 
-                    { id: 6, name: 'Английский завтрак', price: 200, desc: '', category: 'Завтраки', image: 'assets/img/english_morning.jpg' },
+                    { id: 6, name: 'Английский завтрак', price: 200, desc: '', category: 'Завтраки', image: 'assets/img/english_morning.jpg' }, 
+                  {
+  id: 7,
+  name: 'Капучино',
+  desc: 'Классический напиток',
+  fullDesc: 'Классический итальянский капучино на свежем эспрессо и молоке.',
+  image: 'assets/img/cap.jpg',
+  images: [
+    'assets/img/cap.jpg',
+    'assets/img/espresso.jpg'
+  ],
+  price: 250,
+  isNew: true,
+  ingredients: ['Эспрессо', 'Молоко'],
+  allergens: ['Молоко'],
+  nutrition: {
+    proteins: 6,
+    fats: 7,
+    carbs: 8,
+    calories: 120
+  }
+}
                 ];
 
                 const filteredItems = computed(() => {
@@ -76,9 +113,48 @@ const closeModal = () => {
     showCheckout.value = false
     confirmClear.value = false
     unlockScroll()
+}  
+
+const openItemModal = (item) => {
+    selectedItem.value = item
+    activeSlide.value = 0
+    lockScroll()
 }
 
+const closeItemModal = () => {
+    selectedItem.value = null
+    unlockScroll()
+}
 
+ const nextSlide = () => {
+    if (!selectedItem.value?.images?.length) return
+    activeSlide.value =
+        (activeSlide.value + 1) % selectedItem.value.images.length
+}
+
+const prevSlide = () => {
+    if (!selectedItem.value?.images?.length) return
+    activeSlide.value =
+        (activeSlide.value - 1 + selectedItem.value.images.length) %
+        selectedItem.value.images.length
+}   
+
+const addFromModal = () => {
+    changeQty(selectedItem.value, 1)
+    closeItemModal()
+}
+
+const touchStartX = ref(0)
+
+const onTouchStart = (e) => {
+    touchStartX.value = e.touches[0].clientX
+}
+
+const onTouchEnd = (e) => {
+    const diff = e.changedTouches[0].clientX - touchStartX.value
+    if (Math.abs(diff) < 40) return
+    diff < 0 ? nextSlide() : prevSlide()
+}
 
 
   
@@ -100,7 +176,7 @@ const closeModal = () => {
                 }; 
 
 
-                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, closeModal, selectLocation, getItemQty, changeQty, cartTotalSum, sendToWhatsapp, clearCart, openCheckout, removeItem };
+                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, selectedItem, activeSlide,  closeModal, selectLocation, closeItemModal, openItemModal, getItemQty, changeQty, nextSlide, prevSlide, cartTotalSum, sendToWhatsapp, addFromModal, clearCart, openCheckout, removeItem };
             }
         }).mount('#app-menu');
 

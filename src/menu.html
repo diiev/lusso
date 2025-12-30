@@ -146,9 +146,17 @@
                 <!-- Сетка товаров -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                     <div v-for="item in filteredItems" :key="item.id"
+                        @click="openItemModal(item)"
                         class="lusso-card rounded-[1.5rem] overflow-hidden flex flex-col">
-                        <div class="aspect-[5/5] overflow-hidden relative">
-                            <img :src="item.image" class="w-full h-full object-cover">
+                        <div class="aspect-[5/5] overflow-hidden relative cursor-pointer">
+                            <img :src="item.image" class="w-full h-full object-cover"> 
+
+                                 <!-- NEW badge -->
+    <div v-if="item.isNew"
+        class="absolute top-4 left-4 bg-[#CC7351] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
+        Новинка
+    </div>
+
                             <div
                                 class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[#CC7351] shadow-sm">
                                 {{ item.price }} ₽
@@ -162,7 +170,7 @@
                             <div class="mt-auto flex items-center justify-between">
                                 <div
                                     class="flex items-center bg-[#FBF9F2] p-1 rounded-xl w-full justify-between border border-black/[0.03]">
-                                    <button v-if="getItemQty(item.id) > 0" @click="changeQty(item, -1)"
+                                    <button v-if="getItemQty(item.id) > 0" @click.stop="changeQty(item, -1)"
                                         class="w-10 h-10 flex items-center justify-center rounded-lg bg-white shadow-sm hover:text-red-400 transition-colors">
                                         <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                             stroke-width="4">
@@ -171,7 +179,7 @@
                                     </button>
                                     <span v-if="getItemQty(item.id) > 0" class="font-black text-xs px-2">{{
                                         getItemQty(item.id) }}</span>
-                                    <button @click="changeQty(item, 1)"
+                                    <button @click.stop="changeQty(item, 1)"
                                         :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[#CC7351] text-white shadow-lg shadow-[#CC7351]/20' : 'bg-white w-full text-[#CC7351] font-black text-[10px] tracking-widest']">
                                         <span v-if="getItemQty(item.id) === 0">В КОРЗИНУ</span>
                                         <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24"
@@ -294,6 +302,124 @@
                 </div>
             </div>
         </div>
+
+       <!-- Модалка блюда  -->
+<div v-if="selectedItem"
+     class="fixed inset-0 z-[260] flex md:items-center md:justify-center">
+
+    <!-- overlay -->
+    <div class="absolute inset-0 bg-[--lusso-dark]/70 backdrop-blur-md"
+         @click="closeItemModal"></div>
+
+    <!-- modal -->
+    <div
+        class="relative bg-white w-full md:max-w-lg md:rounded-[2.5rem]
+               h-full md:h-auto flex flex-col overflow-hidden
+               animate__animated animate__fadeInUp">
+
+        <!-- HEADER / SLIDER -->
+        <div class="relative h-[45vh] md:h-100 overflow-hidden flex-shrink-0"
+             @touchstart="onTouchStart"
+             @touchend="onTouchEnd">
+
+            <img
+                :src="selectedItem.images?.length
+                    ? selectedItem.images[activeSlide]
+                    : selectedItem.image"
+                class="w-full h-full object-cover">
+
+            <!-- arrows -->
+            <button v-if="selectedItem.images?.length > 1"
+                    @click.stop="prevSlide"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full shadow flex items-center justify-center">
+                ‹
+            </button>
+
+            <button v-if="selectedItem.images?.length > 1"
+                    @click.stop="nextSlide"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full shadow flex items-center justify-center">
+                ›
+            </button>
+
+            <!-- NEW -->
+            <div v-if="selectedItem.isNew"
+                 class="absolute top-4 left-4 bg-[#CC7351] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                Новинка
+            </div>
+
+            <!-- close -->
+            <button @click="closeItemModal"
+                    class="absolute top-4 right-4 w-10 h-10 bg-white/80 rounded-full shadow flex items-center justify-center font-black">
+                ✕
+            </button>
+        </div>
+
+        <!-- CONTENT (SCROLLABLE) -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-8 no-scrollbar">
+
+            <h3 class="text-2xl font-black mb-2">{{ selectedItem.name }}</h3>
+
+            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
+                {{ selectedItem.fullDesc || selectedItem.desc }}
+            </p>
+
+            <!-- INGREDIENTS -->
+            <div v-if="selectedItem.ingredients?.length" class="mb-6">
+                <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
+                    Состав
+                </p>
+                <p class="text-sm text-gray-600">
+                    {{ selectedItem.ingredients.join(', ') }}
+                </p>
+            </div>
+
+            <!-- ALLERGENS -->
+            <div v-if="selectedItem.allergens?.length" class="mb-6">
+                <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
+                    Аллергены
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span v-for="a in selectedItem.allergens"
+                          :key="a"
+                          class="px-3 py-1 bg-red-50 text-red-400 text-[9px] font-black uppercase rounded-full tracking-widest">
+                        {{ a }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- NUTRITION -->
+            <div v-if="selectedItem.nutrition"
+                 class="grid grid-cols-4 gap-3 text-center mb-8">
+                <div>
+                    <p class="text-xs text-gray-400">Белки</p>
+                    <p class="font-black">{{ selectedItem.nutrition.proteins }} г</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400">Жиры</p>
+                    <p class="font-black">{{ selectedItem.nutrition.fats }} г</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400">Углеводы</p>
+                    <p class="font-black">{{ selectedItem.nutrition.carbs }} г</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-400">Ккал</p>
+                    <p class="font-black">{{ selectedItem.nutrition.calories }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION BAR -->
+        <div class="p-6 border-t border-black/5 bg-white">
+            <button @click="addFromModal"
+                    class="w-full py-5 bg-[#CC7351] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl">
+                В корзину · {{ selectedItem.price }} ₽
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- Конец модалки  -->
 
         <!-- УВЕДОМЛЕНИЕ -->
         <transition name="animate__animated animate__fadeInDown">
