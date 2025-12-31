@@ -201,7 +201,7 @@
                     <div class="relative mb-6 group">
                         <!-- Иконка поиска с анимацией цвета -->
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <svg class="h-4 w-4 text-gray-300 transition-colors duration-300 group-focus-within:text-[--lusso-accent]"
+                            <svg class="h-4 w-4 text-gray-300 transition-colors duration-300 group-focus-within:text-[--lusso-dark]"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -210,7 +210,7 @@
 
                         <!-- Поле ввода с эффектом увеличения (scale) -->
                         <input v-model="searchQuery" type="text" placeholder="Поиск любимых блюд..."
-                            class="peer w-full bg-white border border-transparent py-3.5 pl-11 pr-10 rounded-2xl text-[13px] font-medium shadow-sm ring-1 ring-gray-100/50 transition-all duration-500 placeholder:text-gray-300 focus:shadow-xl focus:shadow-[--lusso-accent]/5 focus:ring-[--lusso-accent]/30 focus:scale-[1.02] outline-none">
+                            class="peer w-full bg-white border border-transparent py-3.5 pl-11 pr-10 rounded-2xl text-[13px] font-medium shadow-sm ring-1 ring-gray-100/50 transition-all duration-500 placeholder:text-gray-300 focus:shadow-xl focus:shadow-[--lusso-dark]/5 focus:ring-[--lusso-dark]/30 focus:scale-[1.02] outline-none">
 
                         <!-- Кнопка очистки с анимацией появления (Fade/Scale) -->
                         <button v-if="searchQuery" @click="searchQuery = ''"
@@ -250,7 +250,7 @@
     </div>
 
                             <div
-                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[--lusso-accent] shadow-sm">
+                                class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl font-black text-xs text-[--lusso-brown] shadow-sm">
                                 {{ item.price }} ₽
                             </div>
                         </div>
@@ -272,7 +272,7 @@
                                     <span v-if="getItemQty(item.id) > 0" class="font-black text-xs px-2">{{
                                         getItemQty(item.id) }}</span>
                                     <button @click.stop="changeQty(item, 1)"
-                                        :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[--lusso-accent] text-white shadow-lg shadow-[--lusso-accent]/20' : 'bg-white w-full text-[--lusso-accent] font-black text-[10px] tracking-widest']">
+                                        :class="['w-10 h-10 flex items-center justify-center rounded-lg transition-all', getItemQty(item.id) > 0 ? 'bg-[--lusso-dark] text-white shadow-lg shadow-[--lusso-dark]/20' : 'bg-white w-full text-[--lusso-dark] font-black text-[10px] tracking-widest']">
                                         <span v-if="getItemQty(item.id) === 0">В КОРЗИНУ</span>
                                         <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="4">
@@ -310,7 +310,7 @@
                         </svg>
                     </button>
                     <button @click="openCheckout"
-                        class="flex-1 bg-[--lusso-accent] text-white rounded-[1.5rem] flex justify-between items-center px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all">
+                        class="flex-1 bg-[--lusso-dark] text-white rounded-[1.5rem] flex justify-between items-center px-8 shadow-2xl shadow-[--lusso-dark]/30 active:scale-95 transition-all">
                         <span class="font-black text-sm tracking-[0.2em] uppercase">Заказать</span>
                         <span class="font-black text-lg">{{ cartTotalSum }} ₽</span>
                     </button>
