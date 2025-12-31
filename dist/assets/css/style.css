@@ -234,7 +234,9 @@ body {
     scrollbar-width: none;
 }
 
-
+#app-menu {
+    touch-action: manipulation;
+}
 
 /* END MENU HTML */
 
