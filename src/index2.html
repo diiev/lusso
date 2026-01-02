@@ -1,0 +1,273 @@
+<script setup>
+// Данные для карточек (хитов)
+const hits = [
+  { 
+    name: 'Classic Espresso', 
+    category: 'Rich & Intense', 
+    price: '250', 
+    img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?q=80&w=500&auto=format&fit=crop' 
+  },
+  { 
+    name: 'Gold Cappuccino', 
+    category: 'Velvet Foam', 
+    price: '380', 
+    img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=500&auto=format&fit=crop' 
+  },
+  { 
+    name: 'Lusso Latte', 
+    category: 'Creamy Art', 
+    price: '420', 
+    img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?q=80&w=500&auto=format&fit=crop' 
+  }
+]
+</script>
+
+
+  <div class="lusso-page">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <p class="subtitle">Premium Coffee Roasters</p>
+          <h1 class="title">Открой превосходный <br> <span>вкус</span> в каждом глотке</h1>
+          <p class="description">
+            У нас кофе — это не просто напиток, а искусство. Приглашаем вас на уникальное путешествие, где каждый глоток — встреча с идеалом.
+          </p>
+          <button class="cta-button">Выбрать кофе</button>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="image-wrapper">
+            <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800" alt="Main Coffee">
+          </div>
+          <!-- Декоративные зерна -->
+          <div class="bean bean-1">☕</div>
+          <div class="bean bean-2">☕</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HITS SECTION -->
+    <section class="hits">
+      <div class="container grid">
+        <div v-for="(item, i) in hits" :key="i" class="hit-card">
+          <div class="hit-image">
+            <img :src="item.img" :alt="item.name">
+          </div>
+          <div class="hit-info">
+            <span class="category">{{ item.category }}</span>
+            <h3 class="hit-name">{{ item.name }}</h3>
+            <div class="hit-footer">
+              <span class="price">{{ item.price }} ₽</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION SECTION -->
+    <section class="mission">
+      <h2 class="mission-title">LUSSO <span>ЭТО</span></h2>
+      <div class="container mission-grid">
+        <div class="mission-col text-right">
+          <div class="mission-item">
+            <h4>Высокое качество</h4>
+            <p>Отборные зерна и уникальная обжарка.</p>
+          </div>
+          <div class="mission-item">
+            <h4>Атмосфера</h4>
+            <p>Уют и спокойствие в каждой детали.</p>
+          </div>
+        </div>
+        
+        <div class="mission-center">
+          <img src="https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=600" alt="Coffee Cup">
+        </div>
+
+        <div class="mission-col text-left">
+          <div class="mission-item">
+            <h4>Индивидуальность</h4>
+            <p>Создаем напитки специально для вас.</p>
+          </div>
+          <div class="mission-item">
+            <h4>Бариста</h4>
+            <p>Профессионалы своего дела.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+ы
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap');
+
+/* Цветовые переменные */
+.lusso-page {
+  --lusso-cream: #F4F1DE;
+  --lusso-accent: #D4AA73;
+  --lusso-brown: #57453F;
+  --lusso-dark: #2B211E;
+  --lusso-gold-light: #E5C697;
+  
+  background-color: var(--lusso-dark);
+  color: var(--lusso-cream);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100-vh;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* HERO */
+.hero {
+  padding: 100px 0;
+  position: relative;
+}
+
+.hero .container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.hero-content { flex: 1; min-width: 300px; }
+
+.subtitle {
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: var(--lusso-accent);
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+
+.title span {
+  color: var(--lusso-accent);
+  font-style: italic;
+  font-weight: 900;
+}
+
+.description {
+  opacity: 0.7;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.cta-button {
+  background: var(--lusso-accent);
+  color: var(--lusso-dark);
+  border: none;
+  padding: 18px 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cta-button:hover {
+  background: var(--lusso-gold-light);
+  transform: translateY(-5px);
+}
+
+.hero-visual {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.image-wrapper {
+  width: 100%;
+  max-width: 450px;
+  height: 550px;
+  border-radius: 200px 200px 20px 20px;
+  overflow: hidden;
+  border: 1px solid var(--lusso-accent);
+  animation: float 6s ease-in-out infinite;
+}
+
+.image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+.bean { position: absolute; font-size: 40px; opacity: 0.5; }
+.bean-1 { top: 10%; left: -10%; animation: float 4s infinite; }
+.bean-2 { bottom: 10%; right: -10%; animation: float 5s infinite; }
+
+/* HITS */
+.hits { padding: 80px 0; background: rgba(87, 69, 63, 0.2); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+.hit-card {
+  background: rgba(43, 33, 30, 0.6);
+  padding: 20px;
+  border-radius: 40px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: 0.3s;
+}
+
+.hit-card:hover { border-color: var(--lusso-accent); }
+
+.hit-image { height: 250px; border-radius: 30px; overflow: hidden; margin-bottom: 20px; }
+.hit-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.category { font-size: 10px; color: var(--lusso-accent); text-transform: uppercase; letter-spacing: 2px; }
+.hit-name { font-family: 'Playfair Display', serif; font-size: 24px; margin: 10px 0; }
+.hit-footer { display: flex; justify-content: space-between; align-items: center; }
+.price { font-weight: bold; font-size: 20px; color: var(--lusso-gold-light); }
+
+.add-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--lusso-accent);
+  background: none;
+  color: var(--lusso-accent);
+  cursor: pointer;
+}
+
+/* MISSION */
+.mission { padding: 100px 0; text-align: center; }
+.mission-title { font-size: 50px; margin-bottom: 60px; font-weight: 900; }
+.mission-title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--lusso-accent); }
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.mission-item { margin-bottom: 60px; }
+.mission-item h4 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--lusso-accent); margin-bottom: 10px; }
+.mission-item p { opacity: 0.6; font-size: 14px; }
+.mission-center img { width: 100%; max-width: 300px; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); animation: float 7s infinite; }
+
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@media (max-width: 768px) {
+  .mission-grid { grid-template-columns: 1fr; }
+  .text-right, .text-left { text-align: center; }
+  .mission-center { order: -1; }
+  .hero .container { text-align: center; justify-content: center; }
+  .image-wrapper { height: 400px; }
+}
+</style>

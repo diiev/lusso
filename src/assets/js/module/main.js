@@ -1,5 +1,7 @@
 function indexPage () {
-        const { createApp, ref, onMounted } = Vue;
+        const { createApp, ref, onMounted } = Vue; 
+
+
         createApp({
             setup() {
                 const currentSlide = ref(0);
@@ -10,7 +12,9 @@ function indexPage () {
 
                  // Логика свайпов
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchEndX = 0; 
+
+    
 
     const touchStart = (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -28,7 +32,7 @@ function indexPage () {
         } else if (touchEndX - touchStartX > threshold) {
             prevMenu(); // Свайп вправо -> предыдущий
         }
-    };
+    };  
 
                 const slides = [
                     { title: "ВКУС ЭСТЕТИКИ", image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000" },
@@ -40,12 +44,33 @@ function indexPage () {
                     { name: "Миндальный Круассан", category: "Выпечка", price: 250, desc: "Классический французский рецепт с обилием миндальных лепестков и нежного крема.", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000" },
                     { name: "Матча Латте", category: "Чай", price: 320, desc: "Японский чай высшего сорта на альтернативном молоке с добавлением ванильного сиропа.", img: "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1000" }
                 ];
-
+                
                 const reviews = [
                     { text: "Lusso — это место, где время замедляется. Внимание к деталям и вкус кофе просто поражают. Лучшая атмосфера в городе.", author: "Ваха Мусаев" },
                     { text: "Каждый раз, приходя сюда, чувствую себя особенным гостем. Ребята знают о кофе всё и даже больше!", author: "Лом-Али Якубов" },
                     { text: "Миндальный круассан и флэт уайт здесь — мой обязательный ритуал выходного дня. Идеально.", author: "Делина Вахаева" }
-                ];
+                ];  
+
+              const team = [
+    {
+        name: "Марко Росси",
+        role: "Шеф-бариста",
+        desc: "Чемпион Италии по латте-арту, контролирует качество каждой чашки.",
+        img: "https://images.unsplash.com/photo-1517732359359-51f709b11921?q=80&w=800"
+    },
+    {
+        name: "Анна Соколова",
+        role: "Q-грейдер",
+        desc: "Выбирает лучшие лоты спешелти зерна на плантациях Эфиопии.",
+        img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800"
+    },
+    {
+        name: "Давид ван дер Берг",
+        role: "Мастер обжарки",
+        desc: "Создает уникальные профили обжарки в нашей мануфактуре в Амстердаме.",
+        img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800"
+    }
+];
 
                 const nextMenu = () => { currentMenuIndex.value = (currentMenuIndex.value + 1) % menuItems.length; };
                 const prevMenu = () => { currentMenuIndex.value = (currentMenuIndex.value - 1 + menuItems.length) % menuItems.length; };
@@ -55,7 +80,7 @@ function indexPage () {
                     setInterval(() => { currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length; }, 8000);
                 });
 
-                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, touchStart, nextMenu, prevMenu };
+                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, nextMenu, prevMenu };
             }
         }).mount('#app');
     } 
