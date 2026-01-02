@@ -1,273 +1,539 @@
-<script setup>
-// Данные для карточек (хитов)
-const hits = [
-  { 
-    name: 'Classic Espresso', 
-    category: 'Rich & Intense', 
-    price: '250', 
-    img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?q=80&w=500&auto=format&fit=crop' 
-  },
-  { 
-    name: 'Gold Cappuccino', 
-    category: 'Velvet Foam', 
-    price: '380', 
-    img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?q=80&w=500&auto=format&fit=crop' 
-  },
-  { 
-    name: 'Lusso Latte', 
-    category: 'Creamy Art', 
-    price: '420', 
-    img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?q=80&w=500&auto=format&fit=crop' 
-  }
-]
-</script>
+<!DOCTYPE html>
+<html lang="ru">
+  @@include('template/partials/head.html')
+  <body class="bg-[--lusso-dark] text-[--lusso-cream] antialiased">
+    <div id="app" class="overflow-x-hidden">
+      @@include('template/partials/header.html')
 
-
-  <div class="lusso-page">
-    <!-- HERO SECTION -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <p class="subtitle">Premium Coffee Roasters</p>
-          <h1 class="title">Открой превосходный <br> <span>вкус</span> в каждом глотке</h1>
-          <p class="description">
-            У нас кофе — это не просто напиток, а искусство. Приглашаем вас на уникальное путешествие, где каждый глоток — встреча с идеалом.
-          </p>
-          <button class="cta-button">Выбрать кофе</button>
+      <!-- HERO PARALLAX -->
+      <section
+        class="relative h-[70vh] min-h-[640px] overflow-hidden bg-black"
+      >
+        <!-- Фон с лёгким параллаксом -->
+        <div
+          class="absolute inset-0 parallax-bg will-change-transform"
+          data-speed="0.35"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000"
+            class="w-full h-full object-cover scale-110"
+            alt="Lusso Coffee"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[--lusso-brown]/90"></div>
         </div>
-        
-        <div class="hero-visual">
-          <div class="image-wrapper">
-            <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800" alt="Main Coffee">
-          </div>
-          <!-- Декоративные зерна -->
-          <div class="bean bean-1">☕</div>
-          <div class="bean bean-2">☕</div>
-        </div>
-      </div>
-    </section>
 
-    <!-- HITS SECTION -->
-    <section class="hits">
-      <div class="container grid">
-        <div v-for="(item, i) in hits" :key="i" class="hit-card">
-          <div class="hit-image">
-            <img :src="item.img" :alt="item.name">
+        <!-- Слой зерен поверх (второй план) -->
+        <div
+          class="pointer-events-none absolute inset-x-0 bottom-[-10%] parallax-bg will-change-transform opacity-60 mix-blend-soft-light"
+          data-speed="0.15"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1961"
+            class="w-full object-cover"
+            alt="Coffee Beans"
+          />
+        </div>
+
+        <!-- Контент + слайдер -->
+        <div
+          class="relative z-20 h-full max-w-6xl mx-auto px-6 flex flex-col justify-center"
+        >
+          <transition-group
+            name="slide-fade"
+            tag="div"
+            class="relative h-full"
+          >
+            <div
+              v-for="(slide, index) in slides"
+              :key="index"
+              v-show="currentSlide === index"
+              class="absolute inset-0 flex flex-col justify-center"
+            >
+              <div
+                class="max-w-xl space-y-8 animate__animated animate__fadeIn"
+              >
+                <span
+                  class="text-[10px] md:text-xs uppercase tracking-[0.55em] text-[--lusso-gold-light]/70"
+                >
+                  Specialty Coffee Roasters
+                </span>
+
+                <h1
+                  class="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]"
+                >
+                  {{ slide.title }}
+                </h1>
+
+                <p
+                  class="text-sm md:text-base text-white/70 max-w-md leading-relaxed"
+                >
+                  Мы создаём ритуал, где каждая чашка — тщательно
+                  отрежиссированная сцена вкуса, аромата и тишины утреннего
+                  города.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-6 pt-2">
+                  <a
+                    href="#menu"
+                    class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-[--lusso-accent] text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-white hover:bg-[--lusso-gold-light] transition-colors"
+                  >
+                    Открыть меню
+                  </a>
+                  <button
+                    class="group inline-flex items-center gap-3 text-[--lusso-cream]/70 text-[10px] md:text-xs uppercase tracking-[0.35em]"
+                  >
+                    <span
+                      class="border-b border-white/20 pb-1 group-hover:border-[--lusso-accent] transition-colors"
+                    >
+                      Забронировать стол
+                    </span>
+                    <span
+                      class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[--lusso-accent] to-transparent"
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+
+          <!-- Контролы слайдов -->
+          <div
+            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3"
+          >
+            <button
+              v-for="(_, i) in slides"
+              :key="i"
+              @click="currentSlide = i"
+              :class="[
+                'h-[2px] w-10 md:w-14 transition-all',
+                currentSlide === i
+                  ? 'bg-[--lusso-accent]'
+                  : 'bg-white/25 hover:bg-white/60'
+              ]"
+            ></button>
           </div>
-          <div class="hit-info">
-            <span class="category">{{ item.category }}</span>
-            <h3 class="hit-name">{{ item.name }}</h3>
-            <div class="hit-footer">
-              <span class="price">{{ item.price }} ₽</span>
-              <button class="add-btn">+</button>
+        </div>
+      </section>
+
+      <!-- НАШИ ХИТЫ (ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР) -->
+      <!-- ====== ДАЛЬШЕ ИДЁТ НОВЫЙ КОД ПОСЛЕ HERO-СЕКЦИИ ====== -->
+
+      <!-- SIGNATURE MENU PREVIEW -->
+      <section
+        id="menu"
+        class="relative py-16 md:py-24 bg-[--lusso-cream] text-[--lusso-brown] overflow-hidden"
+      >
+        <!-- Декоративные пятна -->
+        <div
+          class="pointer-events-none absolute -top-24 right-[-5%] w-[260px] h-[260px] rounded-full bg-[--lusso-accent]/12 blur-[90px]"
+        ></div>
+        <div
+          class="pointer-events-none absolute bottom-[-30%] left-[-10%] w-[420px] h-[420px] rounded-full bg-[--lusso-gold-light]/14 blur-[120px]"
+        ></div>
+
+        <div class="relative max-w-6xl mx-auto px-4 md:px-6 z-10">
+          <div class="flex flex-col items-center mb-12 md:mb-16">
+            <span
+              class="text-[10px] md:text-xs tracking-[0.35em] uppercase text-[--lusso-brown]/60"
+            >
+              Signature Selection
+            </span>
+            <h2
+              class="mt-3 text-3xl md:text-4xl font-black tracking-[0.18em] uppercase text-center"
+            >
+              Наши хиты
+            </h2>
+            <div
+              class="mt-4 w-20 h-[1px] bg-gradient-to-r from-transparent via-[--lusso-accent] to-transparent"
+            ></div>
+            <p
+              class="mt-5 text-xs md:text-sm text-[--lusso-brown]/60 max-w-md text-center leading-relaxed"
+            >
+              Короткая курация позиций, через которые лучше всего раскрывается
+              характер обжарки LUSSO.
+            </p>
+          </div>
+
+          <!-- Лента карточек (горизонтальный скролл + клики) -->
+          <div class="relative">
+            <div
+              class="hidden md:flex items-center justify-between mb-8 text-[10px] tracking-[0.35em] uppercase text-[--lusso-brown]/40"
+            >
+              <span>Filter: Espresso / Milk / Filter</span>
+              <span>Roasted in Amsterdam</span>
+            </div>
+
+            <div
+              class="relative flex items-center gap-4 md:gap-8 overflow-x-auto scrollbar-thin scrollbar-thumb-[--lusso-brown]/20 scrollbar-track-transparent pb-4"
+            >
+              <article
+                v-for="(item, i) in menuItems"
+                :key="i"
+                class="min-w-[260px] max-w-[260px] md:min-w-[280px] md:max-w-[280px] rounded-[2rem] bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] overflow-hidden cursor-pointer group transition-transform duration-500 hover:-translate-y-2"
+                @click="currentMenuIndex = i"
+              >
+                <div class="relative h-52 overflow-hidden">
+                  <img
+                    :src="item.img"
+                    class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-[1400ms]"
+                  />
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"
+                  ></div>
+                  <span
+                    class="absolute left-5 bottom-4 text-[9px] tracking-[0.3em] uppercase text-white/80"
+                  >
+                    {{ item.category }}
+                  </span>
+                </div>
+                <div class="p-5 md:p-6">
+                  <h3
+                    class="text-lg md:text-xl font-black tracking-tight mb-1 text-[--lusso-brown]"
+                  >
+                    {{ item.name }}
+                  </h3>
+                  <p
+                    class="text-[11px] md:text-xs text-[--lusso-brown]/60 leading-relaxed mb-4 line-clamp-3"
+                  >
+                    {{ item.desc }}
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs md:text-sm"
+                  >
+                    <span class="font-bold text-[--lusso-accent]">
+                      {{ item.price }} ₽
+                    </span>
+                    <a
+                      href="menu.html"
+                      class="inline-flex items-center gap-2 text-[9px] uppercase tracking-[0.25em] text-[--lusso-brown]/70 group-hover:text-[--lusso-accent] transition-colors"
+                    >
+                      В меню
+                      <span
+                        class="w-6 h-[1px] bg-[--lusso-brown]/30 group-hover:bg-[--lusso-accent]"
+                      ></span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- CTA под лентой -->
+            <div
+              class="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6"
+            >
+              <p
+                class="text-[11px] md:text-xs text-[--lusso-brown]/60 max-w-md leading-relaxed"
+              >
+                Полная карта напитков, десертов и зерна для дома — в разделе
+                <span class="font-semibold text-[--lusso-brown]"
+                  >«Меню»</span
+                >. Для регулярных гостей действует приватный лист сезонных
+                лотов.
+              </p>
+              <a
+                href="menu.html"
+                class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-[--lusso-brown] text-white text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase hover:bg-[--lusso-accent] transition-colors"
+              >
+                Открыть полное меню
+              </a>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- MISSION SECTION -->
-    <section class="mission">
-      <h2 class="mission-title">LUSSO <span>ЭТО</span></h2>
-      <div class="container mission-grid">
-        <div class="mission-col text-right">
-          <div class="mission-item">
-            <h4>Высокое качество</h4>
-            <p>Отборные зерна и уникальная обжарка.</p>
-          </div>
-          <div class="mission-item">
-            <h4>Атмосфера</h4>
-            <p>Уют и спокойствие в каждой детали.</p>
-          </div>
-        </div>
-        
-        <div class="mission-center">
-          <img src="https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=600" alt="Coffee Cup">
+      <!-- EXPERIENCE SECTION (story + reviews, с параллаксом фона) -->
+      <section
+        id="reviews"
+        class="relative py-20 md:py-24 overflow-hidden bg-[--lusso-dark]"
+      >
+        <!-- Фон-паттерн с параллаксом -->
+        <div
+          class="pointer-events-none absolute inset-0 parallax-bg opacity-[0.15]"
+          data-speed="0.18"
+        >
+          <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_20%_0,_rgba(255,255,255,0.14),_transparent_55%),_radial-gradient(circle_at_80%_100%,_rgba(181,138,112,0.4),_transparent_55%)] mix-blend-soft-light"
+          ></div>
         </div>
 
-        <div class="mission-col text-left">
-          <div class="mission-item">
-            <h4>Индивидуальность</h4>
-            <p>Создаем напитки специально для вас.</p>
-          </div>
-          <div class="mission-item">
-            <h4>Бариста</h4>
-            <p>Профессионалы своего дела.</p>
+        <div class="relative max-w-6xl mx-auto px-6 z-10">
+          <div
+            class="grid lg:grid-cols-2 gap-14 lg:gap-20 items-start md:items-center"
+          >
+            <!-- Story -->
+            <div class="space-y-7">
+              <span
+                class="text-[10px] md:text-xs tracking-[0.4em] uppercase text-[--lusso-gold-light]/75"
+              >
+                The Lusso Ritual
+              </span>
+              <h2
+                class="text-3xl md:text-4xl text-[--lusso-cream] font-light leading-tight"
+              >
+                Не просто кофе, <br />
+                а тщательно выстроенный <span class="font-serif italic">ритуал</span>.
+              </h2>
+              <p
+                class="text-sm md:text-base text-[--lusso-cream]/70 leading-relaxed"
+              >
+                В Lusso первая минута посвящена тишине: бариста ловит температуру,
+                воду и помол, гость — своё настроение. Каждый жест — от взвешивания
+                зерна до подачи чашки — подчинён одному сценарию вкуса.
+              </p>
+              <p
+                class="text-xs md:text-sm text-[--lusso-cream]/50 leading-relaxed"
+              >
+                В основе — моносорта из Эфиопии, Кении и Коста-Рики, обжаренные
+                малыми партиями. Фермы, с которыми работаем, известны прозрачной
+                трассируемостью и устойчивыми практиками.
+              </p>
+
+              <div class="pt-2 flex flex-wrap gap-6 text-xs text-[--lusso-cream]/60">
+                <div class="space-y-1">
+                  <p class="font-semibold text-[--lusso-cream]">Slow bar</p>
+                  <p>V60, Chemex, Kalita для тех, кто любит раскрытие во времени.</p>
+                </div>
+                <div class="space-y-1">
+                  <p class="font-semibold text-[--lusso-cream]">
+                    Espresso Lab
+                  </p>
+                  <p>Сбалансированные профили для молока и чистых шотов.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reviews блок как «витрина мнений» -->
+            <div
+              class="bg-white/5 border border-white/10 rounded-[2.4rem] p-7 md:p-8 backdrop-blur-xl shadow-[0_26px_70px_rgba(0,0,0,0.55)]"
+            >
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <p
+                    class="text-[10px] tracking-[0.35em] uppercase text-[--lusso-gold-light]/80"
+                  >
+                    Voices
+                  </p>
+                  <p
+                    class="mt-1 text-sm text-[--lusso-cream]/70"
+                  >
+                    Что говорят постоянные гости.
+                  </p>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-[--lusso-cream]">
+                  <span class="font-semibold">4.9</span>
+                  <span class="text-[--lusso-accent]">★★★★★</span>
+                </div>
+              </div>
+
+              <transition name="fade" mode="out-in">
+                <div :key="currentReviewIndex" class="space-y-6">
+                  <div class="flex items-start gap-3">
+                    <div
+                      class="flex items-center justify-center w-10 h-10 rounded-full bg-[--lusso-accent] text-white font-semibold text-lg"
+                    >
+                      {{ reviews[currentReviewIndex].author[0] }}
+                    </div>
+                    <div>
+                      <p
+                        class="text-sm md:text-base font-medium text-[--lusso-cream] italic leading-relaxed"
+                      >
+                        {{ reviews[currentReviewIndex].text }}
+                      </p>
+                      <div class="mt-3">
+                        <p
+                          class="text-xs font-semibold uppercase tracking-[0.25em] text-[--lusso-cream]/80"
+                        >
+                          {{ reviews[currentReviewIndex].author }}
+                        </p>
+                        <p
+                          class="text-[9px] text-[--lusso-gold-light]/80 uppercase tracking-[0.22em]"
+                        >
+                          Постоянный гость
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between pt-2">
+                    <div class="flex gap-1">
+                      <span
+                        v-for="i in 5"
+                        :key="i"
+                        class="w-3 h-3 rounded-full"
+                        :class="i <= 5 ? 'bg-[--lusso-accent]' : 'bg-white/10'"
+                      ></span>
+                    </div>
+                    <div class="flex gap-2">
+                      <button
+                        @click="currentReviewIndex = (currentReviewIndex - 1 + reviews.length) % reviews.length"
+                        class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] text-xs flex items-center justify-center transition-colors"
+                      >
+                        ←
+                      </button>
+                      <button
+                        @click="currentReviewIndex = (currentReviewIndex + 1) % reviews.length"
+                        class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] text-xs flex items-center justify-center transition-colors"
+                      >
+                        →
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Dots -->
+                  <div class="flex justify-center gap-2 mt-4">
+                    <div
+                      v-for="(_, i) in reviews"
+                      :key="i"
+                      @click="currentReviewIndex = i"
+                      :class="[
+                        'w-2 h-2 rounded-full transition-all cursor-pointer',
+                        currentReviewIndex === i
+                          ? 'bg-[--lusso-accent] scale-150'
+                          : 'bg-white/20 hover:bg-white/40'
+                      ]"
+                    ></div>
+                  </div>
+                </div>
+              </transition>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-ы
+      </section>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap');
+      <!-- ABOUT + TEAM (минимализм, без тяжёлых эффектов) -->
+      <section
+        id="about"
+        class="relative py-24 md:py-28 bg-[--lusso-cream] text-[--lusso-brown]"
+      >
+        <div class="max-w-6xl mx-auto px-6">
+          <div
+            class="grid lg:grid-cols-[1.3fr_1fr] gap-16 lg:gap-20 items-start"
+          >
+            <!-- About текст -->
+            <div>
+              <span
+                class="text-[10px] md:text-xs tracking-[0.35em] uppercase text-[--lusso-brown]/60"
+              >
+                Origin & Craft
+              </span>
+              <h2
+                class="mt-3 text-3xl md:text-4xl font-black tracking-tight mb-5"
+              >
+                История одного зерна
+              </h2>
+              <p
+                class="text-sm md:text-base text-[--lusso-brown]/70 leading-relaxed mb-6"
+              >
+                Lusso вырос из маленькой обжарочной лаборатории в Амстердаме,
+                где несколько энтузиастов решили вернуть кофе статус
+                ручного ремесла. Сегодня мы работаем только с фермами, где
+                прозрачна каждая стадия пути зерна — от сбора до прибытия
+                в наш цех.
+              </p>
+              <p
+                class="text-xs md:text-sm text-[--lusso-brown]/60 leading-relaxed"
+              >
+                Мы обжариваем малыми партиями, экспериментируем с профилями
+                и под каждую партию создаём собственную карту раскрытия
+                во времени и температуре. Так на свет появляются наши
+                signature‑смеси и лимитированные лоты.
+              </p>
 
-/* Цветовые переменные */
-.lusso-page {
-  --lusso-cream: #F4F1DE;
-  --lusso-accent: #D4AA73;
-  --lusso-brown: #57453F;
-  --lusso-dark: #2B211E;
-  --lusso-gold-light: #E5C697;
-  
-  background-color: var(--lusso-dark);
-  color: var(--lusso-cream);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  min-height: 100-vh;
-  overflow-x: hidden;
-}
+              <div class="mt-8 grid grid-cols-3 gap-6 text-center md:text-left">
+                <div>
+                  <p class="text-2xl md:text-3xl font-black text-[--lusso-accent]">
+                    10+
+                  </p>
+                  <p
+                    class="mt-1 text-[10px] uppercase tracking-[0.22em] text-[--lusso-brown]/60"
+                  >
+                    Сортов кофе
+                  </p>
+                </div>
+                <div>
+                  <p class="text-2xl md:text-3xl font-black text-[--lusso-accent]">
+                    2
+                  </p>
+                  <p
+                    class="mt-1 text-[10px] uppercase tracking-[0.22em] text-[--lusso-brown]/60"
+                  >
+                    Локации
+                  </p>
+                </div>
+                <div>
+                  <p class="text-2xl md:text-3xl font-black text-[--lusso-accent]">
+                    100%
+                  </p>
+                  <p
+                    class="mt-1 text-[10px] uppercase tracking-[0.22em] text-[--lusso-brown]/60"
+                  >
+                    Арабика
+                  </p>
+                </div>
+              </div>
+            </div>
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+            <!-- Team mini-grid -->
+            <div id="team" class="space-y-6">
+              <h3 class="text-lg font-semibold tracking-tight">
+                Команда, которая стоит за чашкой
+              </h3>
+              <div class="grid grid-cols-1 gap-4">
+                <div
+                  v-for="(member, index) in team"
+                  :key="index"
+                  class="flex items-center gap-4 p-3 rounded-2xl bg-white shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
+                >
+                  <div class="w-14 h-14 rounded-2xl overflow-hidden">
+                    <img
+                      :src="member.img"
+                      :alt="member.name"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-[--lusso-brown]">
+                      {{ member.name }}
+                    </p>
+                    <p
+                      class="text-[10px] uppercase tracking-[0.25em] text-[--lusso-brown]/60"
+                    >
+                      {{ member.role }}
+                    </p>
+                    <p
+                      class="mt-1 text-[11px] text-[--lusso-brown]/60 line-clamp-2"
+                    >
+                      {{ member.desc }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p
+                class="text-[11px] text-[--lusso-brown]/50 leading-relaxed pt-1"
+              >
+                Мы верим, что гость приходит не только за вкусом, но и за людьми,
+                которые этот вкус создают — от обжарщика до бариста на смене.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-/* HERO */
-.hero {
-  padding: 100px 0;
-  position: relative;
-}
 
-.hero .container {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  flex-wrap: wrap;
-}
+      @@include('template/partials/footer.html')
+    </div>
 
-.hero-content { flex: 1; min-width: 300px; }
+    @@include('template/partials/scripts.html')
 
-.subtitle {
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  color: var(--lusso-accent);
-  font-size: 12px;
-  margin-bottom: 20px;
-}
-
-.title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 30px;
-}
-
-.title span {
-  color: var(--lusso-accent);
-  font-style: italic;
-  font-weight: 900;
-}
-
-.description {
-  opacity: 0.7;
-  margin-bottom: 40px;
-  max-width: 500px;
-}
-
-.cta-button {
-  background: var(--lusso-accent);
-  color: var(--lusso-dark);
-  border: none;
-  padding: 18px 40px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.cta-button:hover {
-  background: var(--lusso-gold-light);
-  transform: translateY(-5px);
-}
-
-.hero-visual {
-  flex: 1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.image-wrapper {
-  width: 100%;
-  max-width: 450px;
-  height: 550px;
-  border-radius: 200px 200px 20px 20px;
-  overflow: hidden;
-  border: 1px solid var(--lusso-accent);
-  animation: float 6s ease-in-out infinite;
-}
-
-.image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-
-.bean { position: absolute; font-size: 40px; opacity: 0.5; }
-.bean-1 { top: 10%; left: -10%; animation: float 4s infinite; }
-.bean-2 { bottom: 10%; right: -10%; animation: float 5s infinite; }
-
-/* HITS */
-.hits { padding: 80px 0; background: rgba(87, 69, 63, 0.2); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-
-.hit-card {
-  background: rgba(43, 33, 30, 0.6);
-  padding: 20px;
-  border-radius: 40px;
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: 0.3s;
-}
-
-.hit-card:hover { border-color: var(--lusso-accent); }
-
-.hit-image { height: 250px; border-radius: 30px; overflow: hidden; margin-bottom: 20px; }
-.hit-image img { width: 100%; height: 100%; object-fit: cover; }
-
-.category { font-size: 10px; color: var(--lusso-accent); text-transform: uppercase; letter-spacing: 2px; }
-.hit-name { font-family: 'Playfair Display', serif; font-size: 24px; margin: 10px 0; }
-.hit-footer { display: flex; justify-content: space-between; align-items: center; }
-.price { font-weight: bold; font-size: 20px; color: var(--lusso-gold-light); }
-
-.add-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--lusso-accent);
-  background: none;
-  color: var(--lusso-accent);
-  cursor: pointer;
-}
-
-/* MISSION */
-.mission { padding: 100px 0; text-align: center; }
-.mission-title { font-size: 50px; margin-bottom: 60px; font-weight: 900; }
-.mission-title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--lusso-accent); }
-
-.mission-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  gap: 40px;
-}
-
-.mission-item { margin-bottom: 60px; }
-.mission-item h4 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--lusso-accent); margin-bottom: 10px; }
-.mission-item p { opacity: 0.6; font-size: 14px; }
-.mission-center img { width: 100%; max-width: 300px; filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); animation: float 7s infinite; }
-
-.text-right { text-align: right; }
-.text-left { text-align: left; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-@media (max-width: 768px) {
-  .mission-grid { grid-template-columns: 1fr; }
-  .text-right, .text-left { text-align: center; }
-  .mission-center { order: -1; }
-  .hero .container { text-align: center; justify-content: center; }
-  .image-wrapper { height: 400px; }
-}
-</style>
+    <!-- Простой JS для вертикального параллакса (фоновые элементы с классом .parallax-bg) -->
+    <script>
+      document.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        document.querySelectorAll(".parallax-bg").forEach((el) => {
+          const speed = parseFloat(el.dataset.speed || 0.3);
+          el.style.transform = `translateY(${scrolled * speed * -1}px)`;
+        });
+      });
+    </script>
+  </body>
+</html>
