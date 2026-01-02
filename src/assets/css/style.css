@@ -35,14 +35,7 @@ body {
     filter: brightness(1.1);
 }
 
-/* Анимация появления меню */
-.lusso-menu-enter-active, .lusso-menu-leave-active {
-    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.lusso-menu-enter-from, .lusso-menu-leave-to {
-    opacity: 0;
-    transform: translateY(-20px);
-}
+
 
 
 /* Общий кастомный скроллбар */
@@ -141,11 +134,13 @@ body {
     transform: translateY(-100%);
 }
 
-/* Шторка меню (общая для всех страниц, где используешь lusso-menu) */
-.lusso-menu-enter-active,
-.lusso-menu-leave-active {
-    transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+/* Шторка меню (общая для всех страниц, где используешь lusso-menu) */ 
+
+/* Анимация появления меню */
+.lusso-menu-enter-active, .lusso-menu-leave-active {
+    transition: opacity 0.6s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .lusso-menu-enter-from,
 .lusso-menu-leave-to {
     transform: translateY(-100%);
@@ -156,7 +151,7 @@ body {
 }
 
 /* Появление текста внутри шторки */
-.menu-item-anim {
+/* .menu-item-anim {
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     transition-delay: var(--delay);
 }
@@ -167,7 +162,7 @@ body {
 .lusso-menu-enter-to .menu-item-anim {
     opacity: 1;
     transform: translateX(0);
-}
+} */
 
 /* === MENU.HTML СПЕЦИФИКА === */
 
@@ -176,15 +171,7 @@ body {
 }
 
 /* Карточки меню */
-.lusso-card {
-    background: white;
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.lusso-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-}
+
 
 /* Категории без скроллбара (гориз. скролл) */
 .no-scrollbar::-webkit-scrollbar {
@@ -329,7 +316,19 @@ body {
     overflow: hidden;
 }
 
+ /* Кастомная карточка с эффектом глубины */
+    .lusso-card {
+        background: white;
+        border: 1px solid rgba(87, 69, 63, 0.05);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px -15px rgba(43, 33, 30, 0.05);
+    }
 
+    .lusso-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px -20px rgba(43, 33, 30, 0.12);
+        border-color: var(--lusso-accent);
+    }
 
 
 

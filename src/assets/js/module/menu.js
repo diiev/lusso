@@ -176,7 +176,29 @@ const onTouchEnd = (e) => {
                 }; 
 
 
-                return { isMobileMenuOpen, selectedLocation, showNotice, noticeText, locations, categories, activeCategory, filteredItems, cart, showCheckout, confirmClear, checkoutMode, searchQuery, form, selectedItem, activeSlide,  closeModal, selectLocation, closeItemModal, openItemModal, getItemQty, changeQty, nextSlide, prevSlide, cartTotalSum, sendToWhatsapp, addFromModal, clearCart, openCheckout, removeItem };
+               return { 
+    // Состояние
+    isMobileMenuOpen, selectedLocation, showNotice, noticeText, 
+    locations, categories, activeCategory, filteredItems, cart, 
+    showCheckout, confirmClear, checkoutMode, searchQuery, form, 
+    selectedItem, activeSlide, touchStartX,
+
+    // Методы управления окнами
+    closeModal, openCheckout, openItemModal, closeItemModal,
+    
+    // Методы корзины и локаций
+    selectLocation, getItemQty, changeQty, clearCart, removeItem,
+    
+    // Слайдер в модалке
+    nextSlide, prevSlide, addFromModal,
+    
+    // Тач-события для слайдера
+    onTouchStart, onTouchEnd,
+    
+    // Расчеты и отправка
+    cartTotalSum, sendToWhatsapp 
+};
+
             }
         }).mount('#app-menu');
 

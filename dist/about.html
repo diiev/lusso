@@ -17,7 +17,7 @@
          <!-- NAVIGATION -->
 <nav  class=" w-full z-50  px-4 md:px-6 py-4 flex bg-[--lusso-dark] justify-between items-center">
     <!-- Логотип -->
-    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-40">
+    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-[95px] md:w-40">
         <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
     </h1>
 
@@ -38,9 +38,9 @@
         
         <!-- Кнопка Бургера (только для мобилок) -->
         <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
-            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
-            <div :class="['w-6 h-0.5 bg-[--lusso-dark] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
         </button>
     </div>
 <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
@@ -48,9 +48,9 @@
     <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[--lusso-dark] flex flex-col h-screen w-screen md:hidden overflow-hidden">
         
         <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
-        <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-black/[0.03] select-none pointer-events-none z-0">
+        <!-- <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-[--lusso-cream]/[0.03] select-none pointer-events-none z-0">
             LUSSO
-        </div>
+        </div> -->
 
         <!-- Контент -->
         <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
@@ -58,7 +58,7 @@
             <!-- Кнопка Закрыть (в углу) -->
             <div class="flex justify-end mb-8">
                 <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B3B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lusso-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
 
@@ -72,8 +72,8 @@
                     {n: '05', t: 'Вакансии', h: 'vacancies.html'}
                 ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
                     <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
-                        <span class="text-[10px] font-bold text-[--lusso-accent] tracking-[0.2em]">{{ link.n }}</span>
-                        <span class="text-2xl font-black tracking-tighter text-[#2B3B2B] uppercase leading-none">
+                        <span class="text-[10px]  text-[--lusso-cream] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-2xl  tracking-tighter text-[--lusso-accent] uppercase leading-none">
                             {{ link.t }}
                         </span>
                     </a>
@@ -81,15 +81,16 @@
             </nav>
 
             <!-- Низ: Информация -->
-            <div class="mt-auto border-t border-black/5 pt-8 menu-item-anim" style="--delay: 0.5s">
+            <div class="mt-auto border-t border-[--lusso-cream]/5 pt-8 menu-item-anim" style="--delay: 0.5s">
                 <div class="flex justify-between items-end">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-[#A37259] mb-1">Наш адрес</p>
-                        <p class="text-xs font-black text-[#2B3B2B]">Грозный, Кавказская 52</p>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-accent] mb-1">Наши адреса</p>
+                        <p class="text-xs  text-[--lusso-cream]"> г. Гудермес, Кавказская 52</p>
+                            <p class="text-xs  text-[--lusso-cream]">г. Гудермес, проспект А.Кадырова 28 </p>
                     </div>
                     <div class="flex gap-2">
-                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">IG</div>
-                        <div class="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[10px] font-black">WA</div>
+                        <div class="w-10 h-10  rounded-full btn-premium flex items-center justify-center text-[10px] font-black">IG</div>
+                        <div class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-black">WA</div>
                     </div>
                 </div>
             </div>
@@ -286,7 +287,7 @@
                     </h2>
                     <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
                     <div class="flex gap-4">
-                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
                     </div>
                 </div>
                 
@@ -302,7 +303,8 @@
 
                 <div>
                     <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
-                    <p class="text-sm text-white/60 mb-2">Грозный, ул. Кавказская 52</p>
+                    <p class="text-sm text-white/60 mb-2">г. Гудермес, ул. Кавказская 52</p>
+                    <p class="text-sm text-white/60 mb-2">г. Гудермес, пр-п. Кадырова 58</p>
                     <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
                     <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
                 </div>
