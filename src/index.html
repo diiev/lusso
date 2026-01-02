@@ -97,7 +97,7 @@
 
         <!-- MISSION SECTION -->
 <!-- MISSION SECTION -->
-<section id="mission" class="relative py-32 md:py-48 px-6 bg-[--lusso-dark] overflow-hidden">
+<section id="mission" class="relative py-12 bg-[--lusso-dark] overflow-hidden">
   
   <!-- Декоративные фоновые элементы (создают глубину) -->
   <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[--lusso-accent]/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -190,7 +190,36 @@
   </div>
 </section>
 
+   <!-- REVIEWS SLIDER (ОБНОВЛЕНО) -->
+        <section id="reviews" class="py-24 bg-[#FBF9F2] overflow-hidden">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-3xl font-black mb-16 uppercase tracking-tighter">Голоса наших гостей</h2>
+                
+                <div class="relative">
+                    <transition name="fade" mode="out-in">
+                        <div :key="currentReviewIndex" class="flex flex-col items-center">
+                            <div class="text-6xl text-[--lusso-accent] opacity-20 font-serif mb-4">“</div>
+                            <p class="text-xl md:text-2xl font-medium text-[--lusso-brown] italic leading-relaxed mb-10">
+                                {{ reviews[currentReviewIndex].text }}
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full bg-[--lusso-accent] flex items-center justify-center text-white font-bold text-xl">
+                                    {{ reviews[currentReviewIndex].author[0] }}
+                                </div>
+                                <div class="text-left">
+                                    <p class="font-black text-sm uppercase">{{ reviews[currentReviewIndex].author }}</p>
+                                    <p class="text-[10px] text-[#A37259] font-bold tracking-widest uppercase">Постоянный гость</p>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
 
+                    <div class="flex justify-center gap-2 mt-12">
+                        <div v-for="(_, i) in reviews" :key="i" @click="currentReviewIndex = i" :class="['w-2 h-2 rounded-full transition-all cursor-pointer', currentReviewIndex === i ? 'bg-[--lusso-accent] scale-150' : 'bg-gray-300']"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
 
@@ -264,36 +293,7 @@
 </section>
 
 
-        <!-- REVIEWS SLIDER (ОБНОВЛЕНО) -->
-        <section id="reviews" class="py-24 bg-[#FBF9F2] overflow-hidden">
-            <div class="max-w-4xl mx-auto px-6 text-center">
-                <h2 class="text-3xl font-black mb-16 uppercase tracking-tighter">Голоса наших гостей</h2>
-                
-                <div class="relative">
-                    <transition name="fade" mode="out-in">
-                        <div :key="currentReviewIndex" class="flex flex-col items-center">
-                            <div class="text-6xl text-[--lusso-accent] opacity-20 font-serif mb-4">“</div>
-                            <p class="text-xl md:text-2xl font-medium text-[--lusso-brown] italic leading-relaxed mb-10">
-                                {{ reviews[currentReviewIndex].text }}
-                            </p>
-                            <div class="flex items-center gap-4">
-                                <div class="w-14 h-14 rounded-full bg-[--lusso-accent] flex items-center justify-center text-white font-bold text-xl">
-                                    {{ reviews[currentReviewIndex].author[0] }}
-                                </div>
-                                <div class="text-left">
-                                    <p class="font-black text-sm uppercase">{{ reviews[currentReviewIndex].author }}</p>
-                                    <p class="text-[10px] text-[#A37259] font-bold tracking-widest uppercase">Постоянный гость</p>
-                                </div>
-                            </div>
-                        </div>
-                    </transition>
-
-                    <div class="flex justify-center gap-2 mt-12">
-                        <div v-for="(_, i) in reviews" :key="i" @click="currentReviewIndex = i" :class="['w-2 h-2 rounded-full transition-all cursor-pointer', currentReviewIndex === i ? 'bg-[--lusso-accent] scale-150' : 'bg-gray-300']"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+     
 
               @@include('template/partials/footer.html')
     </div>
