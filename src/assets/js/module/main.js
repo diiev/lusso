@@ -70,7 +70,9 @@ function indexPage () {
         desc: "Создает уникальные профили обжарки в нашей мануфактуре в Амстердаме.",
         img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800"
     }
-];
+];   
+
+
 
                 const nextMenu = () => { currentMenuIndex.value = (currentMenuIndex.value + 1) % menuItems.length; };
                 const prevMenu = () => { currentMenuIndex.value = (currentMenuIndex.value - 1 + menuItems.length) % menuItems.length; };
@@ -78,10 +80,27 @@ function indexPage () {
                 onMounted(() => {
                     setInterval(() => { currentSlide.value = (currentSlide.value + 1) % slides.length; }, 6000);
                     setInterval(() => { currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length; }, 8000);
-                });
+                });  
 
-                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, nextMenu, prevMenu };
-            }
+
+                
+const transitionName = ref('slide-next');
+
+const nextReview = () => {
+    transitionName.value = 'slide-next';
+    currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length;
+};
+
+const prevReview = () => {
+    transitionName.value = 'slide-prev';
+    currentReviewIndex.value = (currentReviewIndex.value - 1 + reviews.length) % reviews.length;
+}; 
+
+
+
+
+                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, nextMenu, prevMenu, transitionName, nextReview, prevReview };
+            } 
         }).mount('#app');
     } 
     export default indexPage;

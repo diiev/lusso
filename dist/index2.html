@@ -104,7 +104,7 @@
       >
         <!-- Фон с лёгким параллаксом -->
         <div
-          class="absolute inset-0 parallax-bg will-change-transform"
+          class="absolute inset-0 will-change-transform"
           data-speed="0.35"
         >
           <img
@@ -249,20 +249,15 @@
 
           <!-- Лента карточек (горизонтальный скролл + клики) -->
           <div class="relative">
-            <div
-              class="hidden md:flex items-center justify-between mb-8 text-[10px] tracking-[0.35em] uppercase text-[--lusso-brown]/40"
-            >
-              <span>Filter: Espresso / Milk / Filter</span>
-              <span>Roasted in Amsterdam</span>
-            </div>
+        
 
             <div
-              class="relative flex items-center gap-4 md:gap-8 overflow-x-auto scrollbar-thin scrollbar-thumb-[--lusso-brown]/20 scrollbar-track-transparent pb-4"
+              class="relative pt-5 justify-center flex items-center gap-4 md:gap-8 overflow-x-auto scrollbar-thin scrollbar-thumb-[--lusso-brown]/20 scrollbar-track-transparent pb-4"
             >
               <article
                 v-for="(item, i) in menuItems"
                 :key="i"
-                class="min-w-[260px] max-w-[260px] md:min-w-[280px] md:max-w-[280px] rounded-[2rem] bg-white shadow-[0_18px_45px_rgba(0,0,0,0.12)] overflow-hidden cursor-pointer group transition-transform duration-500 hover:-translate-y-2"
+                class="min-w-[260px] max-w-[260px] min-h-[400px] md:min-w-[280px] md:max-w-[280px] rounded-[1.5rem] bg-white  overflow-hidden cursor-pointer group transition-transform duration-500 hover:-translate-y-2"
                 @click="currentMenuIndex = i"
               >
                 <div class="relative h-52 overflow-hidden">
@@ -409,7 +404,7 @@
                   <p
                     class="mt-1 text-sm text-[--lusso-cream]/70"
                   >
-                    Что говорят постоянные гости.
+                    Голоса наших гостей.
                   </p>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-[--lusso-cream]">
@@ -418,76 +413,47 @@
                 </div>
               </div>
 
-              <transition name="fade" mode="out-in">
-                <div :key="currentReviewIndex" class="space-y-6">
-                  <div class="flex items-start gap-3">
-                    <div
-                      class="flex items-center justify-center w-10 h-10 rounded-full bg-[--lusso-accent] text-white font-semibold text-lg"
-                    >
-                      {{ reviews[currentReviewIndex].author[0] }}
-                    </div>
-                    <div>
-                      <p
-                        class="text-sm md:text-base font-medium text-[--lusso-cream] italic leading-relaxed"
-                      >
-                        {{ reviews[currentReviewIndex].text }}
-                      </p>
-                      <div class="mt-3">
-                        <p
-                          class="text-xs font-semibold uppercase tracking-[0.25em] text-[--lusso-cream]/80"
-                        >
-                          {{ reviews[currentReviewIndex].author }}
-                        </p>
-                        <p
-                          class="text-[9px] text-[--lusso-gold-light]/80 uppercase tracking-[0.22em]"
-                        >
-                          Постоянный гость
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+            <transition :name="transitionName" mode="out-in"> 
+    <div :key="currentReviewIndex" class="space-y-6">
+        <!-- Контент отзыва остается прежним -->
+        <div class="flex items-start gap-3">
+            <div class="flex items-center justify-center w-15 h-15 p-1 rounded-full bg-[--lusso-accent] text-white font-semibold text-lg">
+                {{ reviews[currentReviewIndex].author.split(' ').map(n => n[0]).join('') }}
 
-                  <div class="flex items-center justify-between pt-2">
-                    <div class="flex gap-1">
-                      <span
-                        v-for="i in 5"
-                        :key="i"
-                        class="w-3 h-3 rounded-full"
-                        :class="i <= 5 ? 'bg-[--lusso-accent]' : 'bg-white/10'"
-                      ></span>
-                    </div>
-                    <div class="flex gap-2">
-                      <button
-                        @click="currentReviewIndex = (currentReviewIndex - 1 + reviews.length) % reviews.length"
-                        class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] text-xs flex items-center justify-center transition-colors"
-                      >
-                        ←
-                      </button>
-                      <button
-                        @click="currentReviewIndex = (currentReviewIndex + 1) % reviews.length"
-                        class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] text-xs flex items-center justify-center transition-colors"
-                      >
-                        →
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Dots -->
-                  <div class="flex justify-center gap-2 mt-4">
-                    <div
-                      v-for="(_, i) in reviews"
-                      :key="i"
-                      @click="currentReviewIndex = i"
-                      :class="[
-                        'w-2 h-2 rounded-full transition-all cursor-pointer',
-                        currentReviewIndex === i
-                          ? 'bg-[--lusso-accent] scale-150'
-                          : 'bg-white/20 hover:bg-white/40'
-                      ]"
-                    ></div>
-                  </div>
+            </div>
+            <div>
+                <p class="text-sm md:text-base font-medium text-[--lusso-cream] italic leading-relaxed">
+                    "{{ reviews[currentReviewIndex].text }}"
+                </p>
+                <div class="mt-3">
+                    <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[--lusso-cream]/80">
+                        {{ reviews[currentReviewIndex].author }}
+                    </p>
                 </div>
-              </transition>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+            <!-- Звезды -->
+            <div class="flex gap-1">
+               
+            </div>
+            
+            <!-- Кнопки управления (вызывают функции с направлением) -->
+            <div class="flex gap-2">
+                <button @click="prevReview"
+                    class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] transition-all">
+                    ←
+                </button>
+                <button @click="nextReview"
+                    class="w-8 h-8 rounded-full border border-white/15 text-[--lusso-cream]/70 hover:border-[--lusso-accent] hover:text-[--lusso-accent] transition-all">
+                    →
+                </button>
+            </div>
+        </div>
+    </div>
+</transition>
+
             </div>
           </div>
         </div>
@@ -618,7 +584,7 @@
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
                 <div class="md:col-span-2">
                     <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6 w-40">
-                          <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
+                          <a href="index.html"><img  src="assets/img/Лого.png" alt="" style="margin-left: -15px;"></a>
    
                     </h2>
                     <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
@@ -661,15 +627,6 @@
 <script src="assets/js/libs/tailwind.js"></script>
 <script src="assets/js/script.js"></script>
 
-    <!-- Простой JS для вертикального параллакса (фоновые элементы с классом .parallax-bg) -->
-    <script>
-      document.addEventListener("scroll", () => {
-        const scrolled = window.pageYOffset;
-        document.querySelectorAll(".parallax-bg").forEach((el) => {
-          const speed = parseFloat(el.dataset.speed || 0.3);
-          el.style.transform = `translateY(${scrolled * speed * -1}px)`;
-        });
-      });
-    </script>
+   
   </body>
 </html>

@@ -334,3 +334,23 @@ body {
 
 /* философия */
 
+/* Контейнер для отзывов должен иметь относительное позиционирование */
+.reviews-container {
+    position: relative;
+    overflow: hidden;
+    min-height: 200px; /* Укажите примерную высоту, чтобы футер не прыгал */
+}
+
+/* Анимация SLIDE */
+.slide-next-enter-active, .slide-next-leave-active,
+.slide-prev-enter-active, .slide-prev-leave-active {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Вперед: Входит справа (50px), уходит влево (-50px) */
+.slide-next-enter-from { opacity: 0; transform: translateX(50px); }
+.slide-next-leave-to { opacity: 0; transform: translateX(-50px); }
+
+/* Назад: Входит слева (-50px), уходит вправо (50px) */
+.slide-prev-enter-from { opacity: 0; transform: translateX(-50px); }
+.slide-prev-leave-to { opacity: 0; transform: translateX(50px); }
