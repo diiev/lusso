@@ -99,7 +99,7 @@ const prevReview = () => {
 
 
 
-                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, nextMenu, prevMenu, transitionName, nextReview, prevReview };
+                return { currentSlide, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, touchEnd, nextMenu, prevMenu, transitionName, nextReview, prevReview };
             } 
         }).mount('#app');
     } 

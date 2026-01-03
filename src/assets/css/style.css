@@ -1,9 +1,9 @@
 /* === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА === */
 :root {
-    --lusso-cream: #F4F1DE;      /* Фон страниц */
+    --lusso-cream: #FBF9F2;      /* Фон страниц */
   --lusso-accent: #D4AA73;     /* Золото / Акценты */
   --lusso-brown: #57453F;      /* Глубокий шоколад (основной темный) */
-  --lusso-dark: #2B211E;       /* Почти черный для контраста */
+  --lusso-dark: #2b211e;       /* Почти черный для контраста */
   --lusso-gold-light: #E5C697; /* Светлое золото для градиентов */
 }
 
@@ -272,7 +272,7 @@ body {
 /* Инпуты и список заказа */
 .lusso-input {
     width: 100%;
-    background: #FBF9F2;
+    background: var(--lusso-cream);
     border: 2px solid #F0EDE4;
     border-radius: 14px;
     padding: 12px 16px;
@@ -325,7 +325,7 @@ body {
     }
 
     .lusso-card:hover {
-        transform: translateY(-8px);
+        cursor: pointer;
         box-shadow: 0 25px 50px -20px rgba(43, 33, 30, 0.12);
         border-color: var(--lusso-accent);
     }
