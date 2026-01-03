@@ -129,7 +129,7 @@
                          <!-- NEW badge in Modal -->
 <div v-if="item.isNew" 
      class="absolute top-0 left-0 z-10">
-    <div class="bg-[red] text-white text-[11px] font-black px-6 py-3 uppercase tracking-widest rounded-br-3xl shadow-xl">
+    <div class="bg-[red] text-white text-[10px] font-black px-6 py-3 uppercase tracking-widest rounded-br-2xl shadow-xl">
         Новинка
     </div>
 </div>
@@ -141,7 +141,7 @@
                         </div>
 
                         <div class="p-6 flex-grow flex flex-col">
-                            <h3 class="font-black text-lg mb-2 text-[--lusso-dark] group-hover:text-[--lusso-accent] transition-colors leading-tight">{{ item.name }}</h3>
+                            <h3 class="font-black text-base mb-2 text-[--lusso-dark] group-hover:text-[--lusso-accent] transition-colors leading-tight">{{ item.name }}</h3>
                             <p class="text-[11px] text-[--lusso-brown] opacity-60 font-medium line-clamp-2 mb-6">{{ item.desc }}</p>
 
                             <div class="mt-auto">
@@ -207,7 +207,7 @@
             <div v-if="showCheckout"
                 class="relative bg-white w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl animate__animated animate__zoomIn">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-black tracking-tighter uppercase">{{ checkoutMode === 'order' ? 'Заказ' :
+                    <h2 class="text-2xl font-black tracking-tighter uppercase">{{ checkoutMode === 'order' ? 'Заказ' :
                         'Счёт' }}</h2>
                     <button @click="checkoutMode = checkoutMode === 'order' ? 'waiter' : 'order'"
                         class="text-[9px] font-black px-4 py-2 bg-[#FBF9F2] rounded-full uppercase tracking-widest text-[--lusso-brown]">
