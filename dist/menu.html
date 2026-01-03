@@ -99,11 +99,11 @@
 </transition>
 </nav>
 </header>
-        <div class="max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-24">
+        <div class="max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-10 md:pt-24">
 
             <!-- 1. ВЫБОР ЛОКАЦИИ (В стиле Home) -->
            <div v-if="!selectedLocation"
-                class="animate__animated animate__fadeIn flex flex-col items-center py-10 md:py-20">
+                class="animate__animated animate__fadeIn flex flex-col items-center">
                <div class="text-center mb-16">
                     <p class="text-[--lusso-accent] font-bold uppercase tracking-[0.4em] text-xs mb-3">LUSSO EXPERIENCE</p>
                     <h1 class="text-4xl md:text-5xl font-black text-[--lusso-brown] tracking-tighter uppercase">Выберите кофейню</h1>
@@ -280,12 +280,12 @@
           <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
 <transition name="animate__animated animate__fadeInUp">
     <div v-if="cart.length > 0"
-        class="fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 w-[94%] max-w-[450px] z-[100] flex gap-2 md:gap-3">
+        class="  fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 w-[300px] md:w-[450px] z-[100] flex gap-2 md:gap-3">
         
         <!-- Кнопка очистки -->
         <button @click="confirmClear = true"
-            class="w-12 h-12 md:w-16 md:h-16 bg-white border border-black/5 rounded-xl md:rounded-[1.5rem] flex items-center justify-center shadow-2xl active:scale-90 transition-all text-red-400 flex-shrink-0">
-            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            class=" w-12 h-12 md:w-16 md:h-16 bg-white border border-black/5 rounded-xl md:rounded-[1.5rem] flex items-center justify-center shadow-2xl active:scale-90 transition-all text-red-400 flex-shrink-0">
+            <svg class="w-5 h-5 md:w-6 md:h-6 " fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
             </svg>
@@ -293,7 +293,7 @@
 
         <!-- Основная кнопка Заказать -->
         <button @click="openCheckout"
-            class="flex-1 bg-[--lusso-accent] text-[--lusso-cream] rounded-xl md:rounded-[1.5rem] flex justify-between items-center px-5 md:px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all h-12 md:h-16">
+            class="  flex-1 bg-[--lusso-accent] text-[--lusso-cream] rounded-xl md:rounded-[1.5rem] flex justify-between items-center px-5 md:px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all h-12 md:h-16">
             <span class="font-black text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase">Заказать</span>
             <span class="font-black text-sm md:text-lg">{{ cartTotalSum }} ₽</span>
         </button>
@@ -401,7 +401,7 @@
                animate__animated animate__fadeInUp max-h-[100vh]">
 
         <!-- HEADER / SLIDER (Слайдер полностью на месте) -->
-        <div class="relative h-[35vh] sm:h-[45vh] md:h-[400px] overflow-hidden flex-shrink-0"
+        <div class="  h-[35vh] sm:h-[45vh] md:h-[400px] overflow-hidden flex-shrink-0"
              @touchstart="onTouchStart"
              @touchend="onTouchEnd">
 
