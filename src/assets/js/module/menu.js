@@ -139,6 +139,8 @@ const prevSlide = () => {
         selectedItem.value.images.length
 }   
 
+
+
 const addFromModal = () => {
     changeQty(selectedItem.value, 1)
     closeItemModal()
