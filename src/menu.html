@@ -216,7 +216,7 @@
 
     <!-- Оформление -->
     <div v-if="showCheckout"
-        class="relative bg-white w-full max-w-md rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-8 shadow-2xl animate__animated animate__zoomIn max-h-[96vh] flex flex-col">
+        class="relative bg-white w-full max-w-md rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-8 shadow-2xl animate__animated animate__zoomIn max-h-[90vh] flex flex-col">
         
         <!-- Заголовок модалки -->
         <div class="flex justify-between items-center mb-4 md:mb-8 flex-shrink-0">
@@ -228,13 +228,13 @@
         </div>
 
         <!-- Список товаров с внутренней прокруткой -->
-        <div class="overflow-y-auto pr-2 mb-4 md:mb-10 custom-scroll flex-grow min-h-[100px]">
+        <div class="overflow-y-auto pr-2 mb-4 md:mb-10 custom-scroll flex-grow max-h-[50vh]">
             <div v-for="item in cart" :key="item.id"
                 class="flex justify-between items-center mb-3 md:mb-5 pb-3 md:pb-5 border-b border-[--lusso-brown]/5">
                 <div class="flex items-center gap-3 md:gap-4">
                     <img :src="item.image" class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl object-cover">
                     <div class="min-w-0">
-                        <p class="font-bold text-xs md:text-sm truncate max-w-[120px] md:max-w-none">{{ item.name }}</p>
+                        <p class="font-bold text-xs md:text-sm  max-w-[200px] md:max-w-none">{{ item.name }}</p>
                         <p class="text-[9px] md:text-[10px] text-[--lusso-accent] font-black uppercase tracking-tighter">{{ item.qty }} × {{ item.price }} ₽</p>
                     </div>
                 </div>
