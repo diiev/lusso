@@ -387,105 +387,102 @@
 
 <!-- Модалка блюда -->
 
-<div v-if="selectedItem"
-     class="fixed inset-0 z-[260] flex md:items-center md:justify-center">
 
-    <!-- overlay -->
-    <div class="absolute inset-0 bg-[--lusso-brown]/70 backdrop-blur-md"
-         @click="closeItemModal"></div>
+<div v-if="selectedItem" class="fixed inset-0 z-[260] flex md:items-center md:justify-center">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-[--lusso-dark]/80 backdrop-blur-md" @click="closeItemModal"></div>
 
-    <!-- modal -->
-    <div
-        class="relative bg-white w-full md:max-w-lg md:rounded-[2.5rem]
-               h-full md:h-auto flex flex-col overflow-hidden
-               animate__animated animate__fadeInUp max-h-[100vh]">
+    <!-- Modal Container (Адаптив: h-full на моб / h-auto на ПК) -->
+    <div class="relative bg-white w-full md:max-w-lg h-full md:h-auto md:max-h-[90vh] md:rounded-[3rem] flex flex-col overflow-hidden shadow-2xl animate__animated animate__fadeInUp">
+        
+        <!-- SLIDER SECTION (Адаптивная высота h-[35vh]) -->
+        <div class="relative h-[35vh] sm:h-[45vh] md:h-[400px] bg-[#F8F5F2] overflow-hidden flex-shrink-0" 
+             @touchstart="onTouchStart" @touchend="onTouchEnd">
+            
+            <img :src="selectedItem.images?.length ? selectedItem.images[activeSlide] : selectedItem.image" 
+                 class="w-full h-full object-cover transition-transform duration-700">
 
-        <!-- HEADER / SLIDER (Слайдер полностью на месте) -->
-        <div class="  h-[35vh] sm:h-[45vh] md:h-[400px] overflow-hidden flex-shrink-0"
-             @touchstart="onTouchStart"
-             @touchend="onTouchEnd">
+            <!-- Кнопки управления (Скрыты или уменьшены на моб) -->
+            <div v-if="selectedItem.images?.length > 1" class="absolute inset-x-2 md:inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
+                <button @click.stop="prevSlide" 
+                        class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">
+                    ‹
+                </button>
+                <button @click.stop="nextSlide" 
+                        class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">
+                    ›
+                </button>
+            </div>
 
-            <img
-                :src="selectedItem.images?.length
-                    ? selectedItem.images[activeSlide]
-                    : selectedItem.image"
-                class="w-full h-full object-cover transition-all duration-500">
-
-            <!-- Кнопки управления слайдером (Стрелки) -->
-            <button v-if="selectedItem.images?.length > 1"
-                    @click.stop="prevSlide"
-                    class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-xl z-20 active:scale-90 transition-transform">
-                ‹
-            </button>
-
-            <button v-if="selectedItem.images?.length > 1"
-                    @click.stop="nextSlide"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center text-xl z-20 active:scale-90 transition-transform">
-                ›
-            </button>
-
-            <!-- Индикаторы слайдов (точки снизу картинки) -->
-            <div v-if="selectedItem.images?.length > 1" 
-                 class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+            <!-- Индикаторы слайдов -->
+            <div v-if="selectedItem.images?.length > 1" class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2">
                 <div v-for="(_, i) in selectedItem.images" :key="i"
-                     class="w-1.5 h-1.5 rounded-full transition-all"
-                     :class="activeSlide === i ? 'bg-white scale-125' : 'bg-white/40'">
+                     class="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-300"
+                     :class="activeSlide === i ? 'bg-white w-4 md:w-5' : 'bg-white/40'">
                 </div>
             </div>
 
-            <!-- Бейджи и кнопка закрытия -->
-            <div v-if="selectedItem.isNew"
-                 class="absolute top-4 left-4 bg-[--lusso-accent] text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest z-20 shadow-md">
+            <!-- Декор и Закрытие (Адаптивные отступы) -->
+            <div v-if="selectedItem.isNew" class="absolute top-4 left-4 md:top-6 md:left-6 bg-[--lusso-accent] text-white text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full uppercase tracking-widest shadow-lg">
                 Новинка
             </div>
-
-            <button @click="closeItemModal"
-                    class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center font-black z-20">
+            <button @click="closeItemModal" 
+                    class="absolute top-4 right-4 md:top-6 md:right-6 w-9 h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white text-xl">
                 ✕
             </button>
         </div>
 
-        <!-- CONTENT (SCROLLABLE) -->
-        <div class="flex-1 overflow-y-auto p-6 md:p-8 no-scrollbar custom-scroll">
-            <h3 class="text-2xl font-black mb-2 text-[--lusso-brown]">{{ selectedItem.name }}</h3>
+        <!-- CONTENT SECTION (Scrollable) -->
+        <div class="flex-1 overflow-y-auto p-5 md:p-10 no-scrollbar custom-scroll bg-white">
+            <div class="flex justify-between items-start mb-4 md:mb-6">
+                <h3 class="text-xl md:text-3xl font-black text-[--lusso-brown] tracking-tighter leading-tight pr-4">{{ selectedItem.name }}</h3>
+                <span class="text-lg md:text-xl font-black text-[--lusso-accent] whitespace-nowrap">{{ selectedItem.price }} ₽</span>
+            </div>
 
-            <p class="text-sm text-gray-500 mb-6 leading-relaxed">
+            <p class="text-xs md:text-base text-[--lusso-brown]/60 leading-relaxed mb-6 md:mb-8">
                 {{ selectedItem.fullDesc || selectedItem.desc }}
             </p>
 
-            <!-- INGREDIENTS -->
-            <div v-if="selectedItem.ingredients?.length" class="mb-6">
-                <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Состав</p>
-                <p class="text-sm text-gray-600">{{ selectedItem.ingredients.join(', ') }}</p>
-            </div>
-
-            <!-- ALLERGENS -->
-            <div v-if="selectedItem.allergens?.length" class="mb-6">
-                <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Аллергены</p>
-                <div class="flex flex-wrap gap-2">
-                    <span v-for="a in selectedItem.allergens" :key="a"
-                          class="px-3 py-1 bg-red-50 text-red-400 text-[9px] font-black uppercase rounded-full tracking-widest">{{ a }}</span>
+            <!-- Характеристики (БЖУ) (Уменьшены для мобильных) -->
+            <div v-if="selectedItem.nutrition" class="grid grid-cols-4 gap-2 md:gap-4 p-3 md:p-5 bg-[--lusso-cream]/30 rounded-2xl md:rounded-[2rem] border border-[--lusso-accent]/10 mb-6 md:mb-8">
+                <div class="text-center">
+                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Белки</p>
+                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.proteins }}г</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Жиры</p>
+                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.fats }}г</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Углев</p>
+                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.carbs }}г</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Ккал</p>
+                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.calories }}</p>
                 </div>
             </div>
 
-            <!-- NUTRITION -->
-            <div v-if="selectedItem.nutrition" class="grid grid-cols-4 gap-3 text-center mb-8 bg-gray-50 p-4 rounded-2xl border border-black/5">
-                <div><p class="text-[9px] text-gray-400 uppercase">Белки</p><p class="font-black text-xs">{{ selectedItem.nutrition.proteins }}г</p></div>
-                <div><p class="text-[9px] text-gray-400 uppercase">Жиры</p><p class="font-black text-xs">{{ selectedItem.nutrition.fats }}г</p></div>
-                <div><p class="text-[9px] text-gray-400 uppercase">Углев</p><p class="font-black text-xs">{{ selectedItem.nutrition.carbs }}г</p></div>
-                <div><p class="text-[9px] text-gray-400 uppercase">Ккал</p><p class="font-black text-xs">{{ selectedItem.nutrition.calories }}</p></div>
+            <!-- Ингредиенты -->
+            <div v-if="selectedItem.ingredients?.length" class="pb-4">
+                <h4 class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-accent] mb-2 md:mb-3">Состав</h4>
+                <p class="text-xs md:text-sm text-[--lusso-brown]/80 leading-relaxed">
+                    {{ selectedItem.ingredients.join(', ') }}
+                </p>
             </div>
         </div>
 
-        <!-- ACTION BAR -->
-        <div class="p-6 border-t border-black/5 bg-white flex-shrink-0">
+        <!-- FOOTER (Action Bar) (Фиксирован снизу) -->
+        <div class="p-5 md:p-8 border-t border-[--lusso-accent]/5 bg-white flex-shrink-0">
             <button @click="addFromModal"
-                    class="w-full py-5 bg-[--lusso-accent] text-white rounded-2xl font-black text-xs tracking-[0.2em] uppercase shadow-xl active:scale-95 transition-all">
-                В корзину · {{ selectedItem.price }} ₽
+                    class="w-full py-4 md:py-5 bg-[--lusso-brown] text-white rounded-xl md:rounded-[1.5rem] font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl active:scale-95 transition-all">
+                Добавить в корзину
             </button>
         </div>
     </div>
 </div>
+
+
 
         <!-- Конец модалки  -->
 
