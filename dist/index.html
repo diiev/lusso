@@ -126,12 +126,12 @@
       <!-- SIGNATURE MENU PREVIEW -->
       <section
         id="menu" 
-       
-        class="relative py-16 md:py-24 bg-[--lusso-cream] text-[--lusso-brown] overflow-hidden "
         
-      > 
-      
-        <!-- Декоративные пятна -->
+        class="relative py-16 md:py-24 bg-[--lusso-cream] text-[--lusso-brown] overflow-hidden"> 
+          <div class="fade-section" ref="refMenu"> 
+
+
+             <!-- Декоративные пятна -->
         <div
           class="pointer-events-none absolute -top-24 right-[-5%] w-[260px] h-[260px] rounded-full bg-[--lusso-accent]/12 blur-[90px]"
         ></div>
@@ -242,14 +242,19 @@
             </div>
           </div>
         </div>
+          
+        </div>
+       
       </section>
 
       <!-- EXPERIENCE SECTION (story + reviews, с параллаксом фона) -->
       <section
         id="reviews"
-        class="relative py-20 md:py-24 overflow-hidden bg-[--lusso-dark]"
-      >
-        <!-- Фон-паттерн с параллаксом -->
+        class=" bg-[--lusso-dark]"
+      > 
+      
+        <div class="relative py-20 md:py-24 overflow-hidden fade-section" ref="refReviews">
+           <!-- Фон-паттерн с параллаксом -->
         <div
           class="pointer-events-none absolute inset-0 parallax-bg opacity-[0.15]"
           data-speed="0.18"
@@ -372,6 +377,8 @@
             </div>
           </div>
         </div>
+
+        </div>
       </section>
 
       <!-- ABOUT + TEAM (минимализм, без тяжёлых эффектов) -->
@@ -379,7 +386,7 @@
         id="about"
         class="relative py-24 md:py-28 bg-[--lusso-cream] text-[--lusso-brown]"
       >
-        <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-6xl mx-auto px-6 fade-section" ref="refAbout">
           <div
             class="grid lg:grid-cols-[1.3fr_1fr] gap-16 lg:gap-20 items-start"
           >
