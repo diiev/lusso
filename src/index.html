@@ -6,118 +6,30 @@
       @@include('template/partials/header.html')
 
       <!-- HERO PARALLAX -->
-      <section
-        class="relative h-[70vh] min-h-[640px] overflow-hidden bg-black"
-      >
-        <!-- Фон с лёгким параллаксом -->
-        <div
-          class="absolute inset-0 will-change-transform"
-          data-speed="0.35"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000"
-            class="w-full h-full object-cover scale-110"
-            alt="Lusso Coffee"
-          />
-          <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[--lusso-brown]/90"></div>
-        </div>
-
-        <!-- Слой зерен поверх (второй план) -->
-        <div
-          class="pointer-events-none absolute inset-x-0 bottom-[-10%] parallax-bg will-change-transform opacity-60 mix-blend-soft-light"
-          data-speed="0.15"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1961"
-            class="w-full object-cover"
-            alt="Coffee Beans"
-          />
-        </div>
-
-        <!-- Контент + слайдер -->
-        <div
-          class="relative z-20 h-full max-w-6xl mx-auto px-6 flex flex-col justify-center"
-        >
-          <transition-group
-            name="slide-fade"
-            tag="div"
-            class="relative h-full"
-          >
-            <div
-              v-for="(slide, index) in slides"
-              :key="index"
-              v-show="currentSlide === index"
-              class="absolute inset-0 flex flex-col justify-center"
-            >
-              <div
-                class="max-w-xl space-y-8 animate__animated animate__fadeIn"
-              >
-                <span
-                  class="text-[10px] md:text-xs uppercase tracking-[0.55em] text-[--lusso-gold-light]/70"
-                >
-                  Specialty Coffee Roasters
-                </span>
-
-                <h1
-                  class="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]"
-                >
-                  {{ slide.title }}
-                </h1>
-
-                <p
-                  class="text-sm md:text-base text-white/70 max-w-md leading-relaxed"
-                >
-                  Мы создаём ритуал, где каждая чашка — тщательно
-                  отрежиссированная сцена вкуса, аромата и тишины утреннего
-                  города.
-                </p>
-
-                <div class="flex flex-wrap items-center gap-6 pt-2">
-                  <a
-                    href="#menu"
-                    class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-[--lusso-accent] text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-white hover:bg-[--lusso-gold-light] transition-colors"
-                  >
-                    Открыть меню
-                  </a>
-                  <button
-                    class="group inline-flex items-center gap-3 text-[--lusso-cream]/70 text-[10px] md:text-xs uppercase tracking-[0.35em]"
-                  >
-                    <span
-                      class="border-b border-white/20 pb-1 group-hover:border-[--lusso-accent] transition-colors"
-                    >
-                      Забронировать стол
-                    </span>
-                    <span
-                      class="w-8 h-[1px] bg-gradient-to-r from-transparent via-[--lusso-accent] to-transparent"
-                    ></span>
-                  </button>
+<section class="relative  h-[70vh] overflow-hidden bg-black">
+            <transition-group name="slide-fade" tag="div" class="h-full">
+                <div v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index"
+                     class="absolute inset-0 w-full h-full">
+                    <div class="absolute inset-0 bg-black/40 z-10"></div>
+                    <img :src="slide.image" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-white text-center px-4">
+                        <span class="text-xs uppercase tracking-[0.5em] mb-4 animate__animated animate__fadeInDown">Specialty Coffee Roasters</span>
+                        <h2 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter animate__animated animate__fadeInUp">
+                            {{ slide.title }}
+                        </h2>
+                        <div class="w-20 h-1 bg-[--lusso-accent] animate__animated animate__zoomIn"></div>
+                    </div>
                 </div>
-              </div>
+            </transition-group>
+            <!-- Slider Controls -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-4">
+                <button v-for="(_, i) in slides" @click="currentSlide = i"
+                        :class="['w-12 h-1 transition-all', currentSlide === i ? 'bg-[--lusso-accent]' : 'bg-white/30']"></button>
             </div>
-          </transition-group>
+        </section> 
 
-          <!-- Контролы слайдов -->
-          <div
-            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3"
-          >
-            <button
-              v-for="(_, i) in slides"
-              :key="i"
-              @click="currentSlide = i"
-              :class="[
-                'h-[2px] w-10 md:w-14 transition-all',
-                currentSlide === i
-                  ? 'bg-[--lusso-accent]'
-                  : 'bg-white/25 hover:bg-white/60'
-              ]"
-            ></button>
-          </div>
-        </div>
-      </section>
 
-      <!-- НАШИ ХИТЫ (ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР) -->
-      <!-- ====== ДАЛЬШЕ ИДЁТ НОВЫЙ КОД ПОСЛЕ HERO-СЕКЦИИ ====== -->
-
+    
       <!-- SIGNATURE MENU PREVIEW -->
       <section
         id="menu" 

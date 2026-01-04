@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUSSO Pro Admin</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root { --lusso-cream: #F4F1DE; --lusso-accent: #CC7351; --lusso-brown: #A37259; --lusso-dark: #2B3B2B; }
+        body { background-color: #F9F8F3; color: var(--lusso-dark); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .admin-card { background: white; border-radius: 24px; border: 1px solid #EFEBE0; padding: 24px; }
+        .sidebar-item { padding: 14px 20px; border-radius: 16px; transition: 0.3s; cursor: pointer; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+        .sidebar-item.active { background: var(--lusso-accent); color: white; box-shadow: 0 10px 20px -5px rgba(204, 115, 81, 0.4); }
+        .btn-lusso { background: var(--lusso-accent); color: white; padding: 12px 24px; border-radius: 14px; font-weight: 800; transition: 0.3s; white-space: nowrap; }
+        .input-lusso { width: 100%; border: 2px solid #F0EDE4; border-radius: 14px; padding: 14px; outline: none; transition: 0.3s; background: --lusso-cream; }
+        .toggle { width: 44px; height: 24px; background: #E5E7EB; border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
+        .toggle.on { background: #4ADE80; }
+        .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: 0.3s; }
+        .toggle.on::after { left: 22px; }
+        .modal-bg { position: fixed; inset: 0; background: rgba(43, 59, 43, 0.8); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; display: none; }
+        .sidebar-overlay.active { display: block; }
+        @media (max-width: 1024px) {
+            .sidebar-fixed { position: fixed; left: -300px; top: 0; bottom: 0; width: 280px; z-index: 50; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+            .sidebar-fixed.open { left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="flex min-h-screen relative">
+        <!-- Mobile Header -->
+        <div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b flex items-center justify-between px-6 z-30">
+            <h1 class="text-xl font-black text-[#A37259] italic">LUSSO</h1>
+            <button @click="isMobileMenuOpen = true" class="p-2 bg-gray-50 rounded-lg">
+                <span class="text-2xl">☰</span>
+            </button>
+        </div>
+
+        <!-- Sidebar Overlay (Mobile) -->
+        <div :class="['sidebar-overlay lg:hidden', { active: isMobileMenuOpen }]" @click="isMobileMenuOpen = false"></div>
+
+        <!-- Sidebar -->
+        <aside :class="['sidebar-fixed w-72 bg-white border-r p-8 flex flex-col lg:static', { open: isMobileMenuOpen }]">
+            <div class="mb-12 flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-black text-[#A37259] italic tracking-tighter">LUSSO</h1>
+                    <p class="text-[10px] font-black opacity-30 tracking-widest uppercase">Management System</p>
+                </div>
+                <button @click="isMobileMenuOpen = false" class="lg:hidden text-2xl opacity-30">✕</button>
+            </div>
+            <nav class="flex-grow">
+                <div v-for="t in tabs" :key="t.id" @click="selectTab(t.id)" :class="['sidebar-item', activeTab === t.id ? 'active' : 'text-gray-400']">
+                    <span>{{ t.icon }}</span> {{ t.name }}
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto mt-16 lg:mt-0">
+            <div class="max-w-5xl mx-auto">
+                <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 gap-4">
+                    <h2 class="text-3xl md:text-4xl font-black tracking-tighter">{{ tabs.find(t=>t.id===activeTab).name }}</h2>
+                    <div class="bg-white px-6 py-3 rounded-2xl border border-gray-100 shadow-sm font-bold text-sm">
+                        {{ new Date().toLocaleDateString('ru-RU', {month:'long', day:'numeric'}) }}
+                    </div>
+                </header>
+
+                <!-- STATS TAB -->
+                <div v-if="activeTab === 'stats'" class="animate__animated animate__fadeIn space-y-6 md:space-y-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                        <div v-for="s in summaryStats" :key="s.label" class="admin-card p-4 md:p-6">
+                            <p class="text-[9px] md:text-[10px] font-black opacity-30 uppercase mb-2">{{ s.label }}</p>
+                            <p class="text-xl md:text-3xl font-black text-[#CC7351]">{{ s.value }}</p>
+                            <p class="text-[10px] font-bold text-green-500 mt-2">↑ {{ s.trend }}%</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div class="admin-card overflow-hidden">
+                            <h3 class="font-black mb-6 text-sm md:text-base">Динамика заказов по точкам</h3>
+                            <canvas id="orderChart"></canvas>
+                        </div>
+                        <div class="admin-card overflow-hidden">
+                            <h3 class="font-black mb-6 text-sm md:text-base">Выручка по точкам</h3>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ITEMS TAB -->
+                <div v-if="activeTab === 'items'" class="animate__animated animate__fadeIn">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                        <button @click="openModal('item')" class="btn-lusso w-full sm:w-auto">+ Добавить блюдо</button>
+                        <div class="relative w-full sm:w-64">
+                            <select v-model="filterCat" class="w-full bg-white border-2 border-[#F0EDE4] rounded-xl px-4 py-3 font-bold text-sm appearance-none outline-none focus:border-[#CC7351]">
+                                <option value="all">Все категории</option>
+                                <option v-for="c in categories" :key="c.id" :value="c.name">{{ c.name }}</option>
+                            </select>
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-30">▼</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div v-for="item in filteredItems" :key="item.id" class="admin-card flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:border-[#CC7351] transition-all">
+                            <div class="flex items-center gap-4 md:gap-6">
+                                <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gray-100 overflow-hidden border flex-shrink-0">
+                                    <img :src="item.image" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-base md:text-lg leading-tight">{{ item.name }}</h4>
+                                    <div class="flex flex-wrap gap-2 mt-1">
+                                        <span class="text-[9px] font-black px-2 py-1 bg-[--lusso-cream] rounded-md text-[#A37259] uppercase">{{ item.category }}</span>
+                                        <span class="text-[9px] font-black px-2 py-1 bg-green-50 rounded-md text-green-600 uppercase">Точек: {{ item.points.length }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-end gap-4 md:gap-8 border-t sm:border-t-0 pt-4 sm:pt-0">
+                                <div class="text-left sm:text-right">
+                                    <p class="text-[10px] font-bold opacity-30 uppercase">Цена</p>
+                                    <p class="font-black text-lg md:text-xl">{{ item.price }} ₽</p>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <div @click="item.available = !item.available" :class="['toggle', {on: item.available}]"></div>
+                                    <div class="flex gap-2">
+                                        <button @click="editEntity('item', item)" class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-[#CC7351] hover:text-white transition-all">✎</button>
+                                        <button @click="confirmDelete('item', item.id)" class="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-300">✕</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CATEGORIES TAB -->
+                <div v-if="activeTab === 'categories'" class="animate__animated animate__fadeIn">
+                    <button @click="openModal('cat')" class="btn-lusso w-full sm:w-auto mb-8">+ Новая категория</button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div v-for="cat in categories" :key="cat.id" class="admin-card flex justify-between items-center p-6 md:p-8">
+                            <div>
+                                <h4 class="text-xl md:text-2xl font-black tracking-tight">{{ cat.name }}</h4>
+                                <p class="text-[10px] font-bold opacity-30 mt-1 uppercase">{{ cat.count }} Позиций</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button @click="editEntity('cat', cat)" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-400">✎</button>
+                                <button @click="confirmDelete('cat', cat.id)" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-2xl bg-red-50 text-red-400">✕</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POINTS TAB -->
+                <div v-if="activeTab === 'points'" class="animate__animated animate__fadeIn">
+                    <button @click="openModal('point')" class="btn-lusso w-full sm:w-auto mb-8">+ Добавить кофейню</button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div v-for="p in points" :key="p.id" class="admin-card overflow-hidden p-0 group">
+                            <img :src="p.image" class="w-full h-40 md:h-48 object-cover">
+                            <div class="p-6 md:p-8">
+                                <h4 class="text-xl md:text-2xl font-black mb-1">{{ p.name }}</h4>
+                                <p class="text-xs font-medium opacity-40 mb-6">{{ p.addr }}</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-[#CC7351]">Заказов: {{ p.orders }}</span>
+                                    <div class="flex gap-4">
+                                        <button @click="editEntity('point', p)" class="text-xs font-bold opacity-30 underline">Изменить</button>
+                                        <button @click="confirmDelete('point', p.id)" class="text-xs font-bold text-red-400 underline">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- MODAL SYSTEM -->
+        <div v-if="modal" class="modal-bg p-4" @click.self="modal = null">
+            <div class="admin-card w-full max-w-md animate__animated animate__zoomIn shadow-2xl overflow-y-auto max-h-[90vh]">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-2xl md:text-3xl font-black tracking-tighter">{{ modalTitle }}</h3>
+                    <button @click="modal = null" class="text-2xl opacity-20">✕</button>
+                </div>
+
+                <div v-if="modal === 'item'" class="space-y-4">
+                    <input v-model="form.item.name" class="input-lusso" placeholder="Название блюда">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input v-model="form.item.price" type="number" class="input-lusso" placeholder="Цена">
+                        <select v-model="form.item.category" class="input-lusso font-bold">
+                            <option v-for="c in categories" :key="c.id" :value="c.name">{{ c.name }}</option>
+                        </select>
+                    </div>
+                    <div class="p-4 bg-[--lusso-cream] rounded-xl border-2 border-[#F0EDE4]">
+                        <p class="text-[10px] font-black opacity-30 mb-3 uppercase">Доступно в точках:</p>
+                        <div class="space-y-2 max-h-40 overflow-y-auto pr-2">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" :checked="isAllPointsSelected" @change="toggleAllPoints" class="w-5 h-5 accent-[#CC7351]">
+                                <span class="font-bold text-sm">Выбрать все</span>
+                            </label>
+                            <hr class="border-[#F0EDE4] my-2">
+                            <label v-for="p in points" :key="p.id" class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" :value="p.id" v-model="form.item.points" class="w-4 h-4 accent-[#CC7351]">
+                                <span class="text-sm font-medium">{{ p.name }}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <input v-model="form.item.image" class="input-lusso" placeholder="URL изображения">
+                    <button @click="saveItem" class="btn-lusso w-full py-4 mt-4">СОХРАНИТЬ</button>
+                </div>
+
+                <div v-if="modal === 'cat'" class="space-y-4">
+                    <input v-model="form.cat.name" class="input-lusso" placeholder="Название категории">
+                    <button @click="saveCat" class="btn-lusso w-full py-4 mt-4">СОХРАНИТЬ</button>
+                </div>
+
+                <div v-if="modal === 'point'" class="space-y-4">
+                    <input v-model="form.point.name" class="input-lusso" placeholder="Название точки">
+                    <input v-model="form.point.addr" class="input-lusso" placeholder="Адрес">
+                    <input v-model="form.point.image" class="input-lusso" placeholder="URL фото">
+                    <button @click="savePoint" class="btn-lusso w-full py-4 mt-4">СОХРАНИТЬ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONFIRMATION MODAL -->
+        <div v-if="confirmDialog.show" class="modal-bg" style="z-index: 200;">
+            <div class="admin-card max-w-sm w-full animate__animated animate__fadeInUp text-center">
+                <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">✕</div>
+                <h3 class="text-xl font-black mb-2">Вы уверены?</h3>
+                <p class="text-sm opacity-60 mb-8">Это действие нельзя будет отменить. Данные будут удалены навсегда.</p>
+                <div class="flex gap-4">
+                    <button @click="confirmDialog.show = false" class="flex-1 py-4 font-bold text-gray-400 hover:text-gray-600 transition-colors">ОТМЕНА</button>
+                    <button @click="executeDelete" class="flex-1 py-4 bg-red-500 text-white rounded-2xl font-black shadow-lg shadow-red-200">УДАЛИТЬ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script> 
+
+    
+        const { createApp, ref, computed, onMounted, nextTick } = Vue;
+        createApp({
+            setup() {
+                const activeTab = ref('stats');
+                const modal = ref(null);
+                const isEditing = ref(false);
+                const currentEditId = ref(null);
+                const filterCat = ref('all');
+                const isMobileMenuOpen = ref(false);
+                
+                // Track chart instances to destroy them properly
+                let charts = { orders: null, revenue: null };
+
+                // Custom Confirm Dialog State
+                const confirmDialog = ref({ show: false, type: '', id: null });
+
+                const tabs = [
+                    {id:'stats', name:'Аналитика', icon:'📊'},
+                    {id:'items', name:'Блюда', icon:'☕️'},
+                    {id:'categories', name:'Категории', icon:'📁'},
+                    {id:'points', name:'Кофейни', icon:'📍'}
+                ];
+
+                const categories = ref([
+                    {id:1, name:'Кофе', count:12}, {id:2, name:'Выпечка', count:8}, {id:3, name:'Десерты', count:5}
+                ]);
+
+                const points = ref([
+                    {id:1, name:'LUSSO Центр', addr:'ул. Примерная, 10', orders:1240, image:'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800'},
+                    {id:2, name:'LUSSO Парк', addr:'пр. Зеленый, 45', orders:890, image:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800'}
+                ]);
+
+                const items = ref([
+                    {id:1, name:'Капучино', category:'Кофе', price:220, available:true, points: [1, 2], image:'https://images.unsplash.com/photo-1534778101976-62847782c213?w=200'}
+                ]);
+
+                const form = ref({
+                    item: {name:'', desc:'', price:'', category:'Кофе', image:'', points: []},
+                    cat: {name:''},
+                    point: {name:'', addr:'', image:''}
+                });
+
+                const summaryStats = [
+                    {label:'Заказов', value:'2,450', trend:12},
+                    {label:'Средний чек', value:'480 ₽', trend:5},
+                    {label:'Выручка', value:'1.2М ₽', trend:18},
+                    {label:'Лояльность', value:'82%', trend:3}
+                ];
+
+                const filteredItems = computed(() => filterCat.value === 'all' ? items.value : items.value.filter(i => i.category === filterCat.value));
+                const modalTitle = computed(() => isEditing.value ? 'Редактирование' : 'Создание');
+                const isAllPointsSelected = computed(() => form.value.item.points.length === points.value.length);
+
+                const initCharts = () => {
+                    // Destroy previous instances to avoid memory leaks and visual bugs
+                    if (charts.orders) charts.orders.destroy();
+                    if (charts.revenue) charts.revenue.destroy();
+
+                    const ctxOrders = document.getElementById('orderChart')?.getContext('2d');
+                    if (ctxOrders) {
+                        charts.orders = new Chart(ctxOrders, {
+                            type: 'line',
+                            data: {
+                                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+                                datasets: [
+                                    { label: 'LUSSO Центр', data: [65, 59, 80, 81, 95, 120, 110], borderColor: '#CC7351', backgroundColor: 'rgba(204,115,81,0.1)', fill: true, tension: 0.4 },
+                                    { label: 'LUSSO Парк', data: [40, 48, 62, 55, 80, 95, 85], borderColor: '#A37259', backgroundColor: 'rgba(163,114,89,0.1)', fill: true, tension: 0.4 }
+                                ]
+                            },
+                            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                        });
+                    }
+
+                    const ctxRevenue = document.getElementById('revenueChart')?.getContext('2d');
+                    if (ctxRevenue) {
+                        charts.revenue = new Chart(ctxRevenue, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Центр', 'Парк'],
+                                datasets: [{
+                                    label: 'Выручка (₽)',
+                                    data: [750000, 450000],
+                                    backgroundColor: ['#CC7351', '#A37259'],
+                                    borderRadius: 12
+                                }]
+                            },
+                            options: { responsive: true, plugins: { legend: { display: false } } }
+                        });
+                    }
+                };
+
+                const selectTab = (id) => {
+                    activeTab.value = id;
+                    isMobileMenuOpen.value = false;
+                    if(id === 'stats') nextTick(initCharts);
+                };
+
+                const openModal = (type) => {
+                    isEditing.value = false;
+                    modal.value = type;
+                    form.value.item = {name:'', desc:'', price:'', category:categories.value[0]?.name, image:'', points: points.value.map(p => p.id)};
+                    form.value.cat = {name:''};
+                    form.value.point = {name:'', addr:'', image:''};
+                };
+
+                const editEntity = (type, data) => {
+                    isEditing.value = true;
+                    currentEditId.value = data.id;
+                    modal.value = type;
+                    form.value[type] = JSON.parse(JSON.stringify(data));
+                };
+
+                const confirmDelete = (type, id) => {
+                    confirmDialog.value = { show: true, type, id };
+                };
+
+                const executeDelete = () => {
+                    const { type, id } = confirmDialog.value;
+                    if (type === 'item') items.value = items.value.filter(i => i.id !== id);
+                    if (type === 'cat') categories.value = categories.value.filter(c => c.id !== id);
+                    if (type === 'point') points.value = points.value.filter(p => p.id !== id);
+                    confirmDialog.value.show = false;
+                };
+
+                const saveItem = () => {
+                    if(isEditing.value) {
+                        const idx = items.value.findIndex(i => i.id === currentEditId.value);
+                        items.value[idx] = {...form.value.item};
+                    } else {
+                        items.value.push({...form.value.item, id:Date.now(), available:true});
+                    }
+                    modal.value = null;
+                };
+
+                const saveCat = () => {
+                    if(isEditing.value) {
+                        const idx = categories.value.findIndex(c => c.id === currentEditId.value);
+                        categories.value[idx].name = form.value.cat.name;
+                    } else {
+                        categories.value.push({id:Date.now(), name:form.value.cat.name, count:0});
+                    }
+                    modal.value = null;
+                };
+
+                const savePoint = () => {
+                    if(isEditing.value) {
+                        const idx = points.value.findIndex(p => p.id === currentEditId.value);
+                        points.value[idx] = {...points.value[idx], ...form.value.point};
+                    } else {
+                        points.value.push({...form.value.point, id:Date.now(), orders:0});
+                    }
+                    modal.value = null;
+                };
+
+                const toggleAllPoints = (e) => form.value.item.points = e.target.checked ? points.value.map(p => p.id) : [];
+
+                onMounted(() => { if(activeTab.value === 'stats') nextTick(initCharts); });
+
+                return { 
+                    activeTab, tabs, items, categories, points, summaryStats, modal, form, 
+                    filterCat, filteredItems, modalTitle, isEditing, isAllPointsSelected,
+                    isMobileMenuOpen, confirmDialog, selectTab, openModal, editEntity, saveItem, saveCat, savePoint, 
+                    confirmDelete, executeDelete, toggleAllPoints 
+                };
+            }
+        }).mount('#app');
+
+    </script>
+</body>
+</html>

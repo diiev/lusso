@@ -81,7 +81,7 @@
          class="group text-left bg-white rounded-[2rem] p-8 border border-black/5 hover:border-[--lusso-accent]/30 transition-all cursor-pointer shadow-sm hover:shadow-2xl">
         <div class="flex justify-between items-start mb-6">
             <div class="w-12 h-1 bg-[--lusso-accent] group-hover:w-20 transition-all duration-500"></div>
-            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-[#FBF9F2] text-[--lusso-brown] uppercase tracking-widest">
+            <span class="text-[9px] font-black px-3 py-1 rounded-full bg-[--lusso-cream] text-[--lusso-brown] uppercase tracking-widest">
                 {{ job.type }}
             </span>
         </div>
@@ -95,34 +95,7 @@
 </div> 
 
 
-        <!-- выбранная позиция -->
-        <!-- <div v-if="selectedJob" class="mt-10 bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5">
-          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.25em] text-[--lusso-brown] mb-2">{{ selectedJob.location }}</p>
-              <h4 class="text-2xl md:text-3xl font-black mb-2">{{ selectedJob.title }}</h4>
-              <p class="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold mb-3">{{ selectedJob.type }}</p>
-            </div>
-            <div class="text-sm text-gray-500">
-              <p><span class="font-semibold">График:</span> {{ selectedJob.schedule }}</p>
-              <p><span class="font-semibold">Опыт:</span> {{ selectedJob.experience }}</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-600">
-            <div>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Что вы будете делать</p>
-              <ul class="list-disc list-inside space-y-1">
-                <li v-for="(item, i) in selectedJob.responsibilities" :key="i">{{ item }}</li>
-              </ul>
-            </div>
-            <div>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Мы ищем</p>
-              <ul class="list-disc list-inside space-y-1">
-                <li v-for="(item, i) in selectedJob.requirements" :key="i">{{ item }}</li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
+       
       </div>
     </section>   
 
@@ -151,7 +124,7 @@
               <input
                 v-model="form.name"
                 type="text"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
+                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="Как к вам обращаться?"
               />
             </div>
@@ -160,7 +133,7 @@
               <input
                 v-model="form.phone"
                 type="text"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
+                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="+7 (___) ___-__-__"
               />
             </div>
@@ -168,7 +141,7 @@
               <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Желаемая позиция</label>
               <select
                 v-model="form.position"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
+                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
               >
                 <option value="">Выберите из списка</option>
                 <option v-for="job in jobs" :key="job.id" :value="job.title">{{ job.title }}</option>
@@ -179,7 +152,7 @@
               <textarea
                 v-model="form.message"
                 rows="4"
-                class="w-full bg-[#FBF9F2] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
+                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
                 placeholder="Расскажите о себе, опыте и графике, который вам удобен."
               ></textarea>
             </div>
@@ -272,191 +245,6 @@
     @@include('template/partials/scripts.html')
   </div>
   
-  <script>
-    const { createApp, ref, onMounted } = Vue;
 
-    createApp({
-      setup() {
-        const isMobileMenuOpen = ref(false);
-        const mobileLinks = ref([
-          { n: "01", t: "Главная", h: "index.html" },
-          { n: "02", t: "Меню", h: "menu.html" },
-          { n: "03", t: "О нас", h: "about.html" },
-          { n: "04", t: "Вакансии", h: "vacancies.html" },
-        ]);
-
-        const jobs = ref([
-          {
-            id: 1,
-            title: "Бариста",
-            location: "LUSSO · Кавказская, 52",
-            type: "Full-time",
-            short: "Работа с кофемашиной, приготовление напитков по стандартам LUSSO, общение с гостями.",
-            schedule: "5/2, смены по 8 часов",
-            experience: "Опыт работы от 6 месяцев будет плюсом, но не обязателен",
-            responsibilities: [
-              "Приготовление эспрессо и напитков на его основе",
-              "Соблюдение рецептур и стандартов подачи",
-              "Коммуникация с гостями, помощь в выборе напитка",
-              "Поддержание чистоты барной зоны",
-            ],
-            requirements: [
-              "Любовь к кофе и интерес к теме specialty",
-              "Внимательность к деталям и аккуратность",
-              "Умение работать в команде и в ритме кофейни",
-              "Готовность обучаться и развиваться",
-            ],
-          },
-          {
-            id: 2,
-            title: "Бариста (URBAN HAVEN)",
-            location: "LUSSO URBAN HAVEN · Кадырова, 28",
-            type: "Part-time",
-            short: "Подходит для тех, кто совмещает учебу и работу. Современный ритм, много to-go заказов.",
-            schedule: "Гибкий, от 3 смен в неделю",
-            experience: "Желателен опыт работы с гостями",
-            responsibilities: [
-              "Приготовление напитков на основе эспрессо и фильтра",
-              "Работа с to-go заказами и доставкой",
-              "Поддержание порядка в зале и на баре",
-              "Работа с кассой и терминалами",
-            ],
-            requirements: [
-              "Коммуникабельность и дружелюбие",
-              "Собранность в динамичной среде",
-              "Готовность к сменной работе",
-              "Минимум базовых знаний о кофе — обучаем остальному",
-            ],
-          },
-          {
-            id: 3,
-            title: "Старший бариста",
-            location: "LUSSO · обе локации",
-            type: "Full-time",
-            short: "Ответственность за смену, контроль качества, обучение новых сотрудников.",
-            schedule: "Сменный график, обсуждается индивидуально",
-            experience: "Опыт работы бариста от 1 года",
-            responsibilities: [
-              "Организация работы смены",
-              "Контроль качества напитков и сервиса",
-              "Обучение и ввод новых сотрудников",
-              "Взаимодействие с управляющим",
-            ],
-            requirements: [
-              "Глубокое понимание процессов кофейни",
-              "Лидерские качества и тактичность",
-              "Умение работать с обратной связью",
-              "Желание расти в управленческом направлении",
-            ],
-          },
-        ]);
-
-        const selectedJob = ref(jobs.value[0] || null);
-
-        const form = ref({
-          name: "",
-          phone: "",
-          position: "",
-          message: "",
-        });
-        const formSent = ref(false);
-         const activeJobModal = ref(null); // Состояние открытой модалки
-        const whyRef = ref(null);
-        const jobsRef = ref(null);
-        const formRef = ref(null);
-
-        const handleMobileNav = (href) => {
-          isMobileMenuOpen.value = false;
-          if (href.startsWith("#")) {
-            const el = document.querySelector(href);
-            if (el) {
-              setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 200);
-            }
-          }
-        };
-      
-
-         const openJobModal = (job) => {
-        activeJobModal.value = job;
-        // Блокируем скролл основной страницы при открытой модалке
-        document.body.style.overflow = 'hidden';
-    }; 
-
-      const closeJobModal = () => {
-        activeJobModal.value = null;
-        document.body.style.overflow = '';
-    };
-
-    const scrollToApply = () => {
-        const jobTitle = activeJobModal.value.title;
-        activeJobModal.value = null; // Закрываем модалку
-        document.body.style.overflow = '';
-        
-        // Устанавливаем название вакансии в форму автоматически
-        form.value.position = jobTitle;
-        
-        // Скроллим к форме
-        setTimeout(() => {
-            const formEl = document.querySelector('#form-vacan');
-            if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-    };
-        const selectJob = (job) => {
-          selectedJob.value = job;
-          if (!form.value.position) form.value.position = job.title;
-          const el = document.querySelector("#form");
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-        };
-
-        const handleSubmit = () => {
-          if (!form.value.name || !form.value.phone || !form.value.position) {
-            alert("Пожалуйста, заполните имя, телефон и выберите позицию.");
-            return;
-          }
-          formSent.value = true;
-          setTimeout(() => {
-            formSent.value = false;
-          }, 5000);
-          // Здесь можно добавить отправку на бэкенд или в Telegram
-        };
-
-        onMounted(() => {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("visible");
-                }
-              });
-            },
-            { threshold: 0.2 }
-          );
-
-          [whyRef.value, jobsRef.value, formRef.value].forEach((el) => {
-            if (el) observer.observe(el);
-          });
-        });
-
-        return {
-           activeJobModal,
-        openJobModal,
-        closeJobModal,
-        scrollToApply,
-          isMobileMenuOpen,
-          mobileLinks,
-          jobs,
-          selectedJob,
-          selectJob,
-          form,
-          formSent,
-          handleSubmit,
-          handleMobileNav,
-          whyRef,
-          jobsRef,
-          formRef,
-        };
-      },
-    }).mount("#app-vacan");
-  </script>
 </body>
 </html>
