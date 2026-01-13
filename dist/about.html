@@ -100,7 +100,7 @@
 </nav>
 </header>
     <!-- HERO ABOUT -->
- <section class="relative h-[80vh] md:h-[100vh] flex items-center overflow-hidden bg-[--lusso-dark]">
+ <section class="relative h-[80vh] md:h-[100vh] flex items-center overflow-hidden bg-[--lusso-brown]">
     <!-- Новое атмосферное изображение: Интерьер в темных тонах с золотыми акцентами -->
     <div class="absolute inset-0 parallax-bg" 
          style="background-image:url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1920'); 
@@ -227,7 +227,7 @@
     </section>
 
     <!-- HOW TO GET -->
-    <section id="route" class="py-16 md:py-20 px-4 md:px-6 bg-[--lusso-dark] text-[--lusso-cream]">
+    <section id="route" class="py-16 md:py-20 px-4 md:px-6 bg-[--lusso-brown] text-[--lusso-cream]">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-10 items-center fade-section" ref="routeRef">
             <div class="md:w-1/2">
                 <p class="text-xs uppercase tracking-[0.3em] text-[--lusso-accent] mb-4">Как добраться</p>
@@ -260,7 +260,7 @@
                     <p class="text-xs text-gray-500 mb-4">
                         Скопируйте адрес или откройте в любимом навигаторе.
                     </p>
-                    <button class="w-full py-3 rounded-xl bg-[--lusso-dark] text-[--lusso-cream] text-xs font-bold uppercase tracking-[0.2em]">
+                    <button class="w-full py-3 rounded-xl bg-[--lusso-brown] text-[--lusso-cream] hover:bg-[--lusso-accent] text-xs font-bold uppercase tracking-[0.2em]">
                         Открыть в навигаторе
                     </button>
                 </div>
@@ -307,7 +307,7 @@
                         <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
                         <textarea v-model="form.message" rows="4" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40" placeholder="Опишите ваш запрос..."></textarea>
                     </div>
-                    <button type="submit" class="w-full py-3 bg-[--lusso-dark] text-[--lusso-cream] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all">
+                    <button type="submit" class="w-full py-3 bg-[--lusso-brown] text-[--lusso-cream] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all">
                         Отправить сообщение
                     </button>
                     <p v-if="formSent" class="text-[11px] text-green-600 mt-3">
