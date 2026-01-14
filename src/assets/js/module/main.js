@@ -33,6 +33,27 @@ function indexPage() {
                     prevMenu(); // Свайп вправо -> предыдущий
                 }
             };
+ 
+
+            // 1. Данные для новостей (Минималистичный контент)
+const news = [
+    {
+        id: 1,
+        title: "Экспедиция в Эфиопию: В поисках забытых терруаров",
+        tag: "Origin Trip",
+        date: "12 Янв 2026",
+        img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200" // Горизонтальное фото
+    },
+    {
+        id: 2,
+        title: "Зимнее обновление: Пряный раф и новые десерты",
+        tag: "Seasonal",
+        date: "08 Янв 2026",
+        img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=800" // Вертикальное фото
+    }
+];
+
+// 2. Реф для анимации появления (Intersection Observer)
 
             const slides = [
                 { title: "ВКУС ЭСТЕТИКИ", image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000" },
@@ -76,6 +97,7 @@ function indexPage() {
             const refMenu = ref(null);
             const refReviews = ref(null);
             const refAbout = ref(null);
+            const refJournal = ref(null);
 
 
             onMounted(() => {
@@ -90,7 +112,7 @@ function indexPage() {
                     { threshold: 0.15 }
                 );
 
-                [refMenu.value, refReviews.value, refAbout.value].forEach(el => {
+                [refMenu.value, refJournal.value, refReviews.value, refAbout.value].forEach(el => {
                     if (el) observer.observe(el);
                 });
             });
@@ -121,7 +143,7 @@ function indexPage() {
 
 
 
-            return { currentSlide, refMenu, refReviews, refAbout, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, touchEnd, nextMenu, prevMenu, transitionName, nextReview, prevReview };
+            return { currentSlide, news,refJournal, refMenu, refReviews, refAbout, currentMenuIndex, currentReviewIndex, isMobileMenuOpen, slides, menuItems, reviews, team, touchStart, touchEnd, nextMenu, prevMenu, transitionName, nextReview, prevReview };
         }
     }).mount('#app');
 }

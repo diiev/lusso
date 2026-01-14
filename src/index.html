@@ -29,6 +29,68 @@
         </section> 
 
 
+<!-- JOURNAL (Minimalist Edition) -->
+<section id="journal" class="py-32 bg-white text-[--lusso-brown]">
+  <div class="max-w-6xl mx-auto px-6 fade-section" ref="refJournal">
+    
+    <!-- Заголовок: Строгий и лаконичный -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 border-b border-[--lusso-brown]/10 pb-8">
+      <div>
+        <span class="text-[10px] uppercase tracking-[0.4em] text-[--lusso-brown]/40 font-bold block mb-4">Journal</span>
+        <h2 class="text-4xl md:text-5xl font-light tracking-tight text-[--lusso-brown]">
+          Заметки <span class="font-serif italic text-[--lusso-accent]">обжарщика</span>
+        </h2>
+      </div>
+      <a href="journal.html" class="hidden md:inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] font-bold text-[--lusso-brown]/60 hover:text-[--lusso-accent] transition-colors group">
+        Все записи <span class="w-8 h-px bg-[--lusso-brown]/20 group-hover:bg-[--lusso-accent] transition-colors"></span>
+      </a>
+    </div>
+
+    <!-- Сетка: Чистая композиция -->
+    <div class="grid md:grid-cols-3 gap-12 md:gap-8">
+      
+      <!-- Карточка 1 (Крупная) -->
+      <article v-if="news[0]" class="group cursor-pointer md:col-span-2">
+        <div class="aspect-[16/9] overflow-hidden bg-gray-100 mb-6">
+          <img :src="news[0].img" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0">
+        </div>
+        <div class="flex items-center gap-4 mb-3">
+          <span class="text-[9px] uppercase tracking-widest font-bold text-[--lusso-accent]">{{ news[0].tag }}</span>
+          <span class="w-px h-3 bg-[--lusso-brown]/20"></span>
+          <time class="text-[9px] uppercase tracking-widest text-[--lusso-brown]/40">{{ news[0].date }}</time>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-light leading-tight group-hover:text-[--lusso-accent] transition-colors">
+          {{ news[0].title }}
+        </h3>
+      </article>
+
+      <!-- Карточка 2 (Вертикальная) -->
+      <article v-if="news[1]" class="group cursor-pointer flex flex-col h-full justify-between">
+        <div>
+           <div class="aspect-[4/5] overflow-hidden bg-gray-100 mb-6">
+             <img :src="news[1].img" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale-[20%] group-hover:grayscale-0">
+           </div>
+           <div class="flex items-center gap-4 mb-3">
+             <span class="text-[9px] uppercase tracking-widest font-bold text-[--lusso-accent]">{{ news[1].tag }}</span>
+             <time class="text-[9px] uppercase tracking-widest text-[--lusso-brown]/40">{{ news[1].date }}</time>
+           </div>
+           <h3 class="text-xl font-light leading-snug group-hover:text-[--lusso-accent] transition-colors">
+             {{ news[1].title }}
+           </h3>
+        </div>
+        
+        <!-- Ссылка "Читать" для мобилок -->
+        <a href="journal.html" class="md:hidden mt-8 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-[--lusso-brown]/60">
+           Читать далее →
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+      
     
       <!-- SIGNATURE MENU PREVIEW -->
       <section
@@ -278,8 +340,11 @@
                 </button>
             </div>
         </div>
-    </div>
-</transition>
+    </div>  
+</transition> 
+ <a href="reviews.html" class="btn-premium text-[--lusso-dark] px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[12px] font-bold tracking-widest uppercase ">
+            Оставить свой отзыв
+        </a>
 
             </div>
           </div>

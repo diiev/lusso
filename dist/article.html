@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <title>LUSSO Coffee | Искусство Кофе</title>
+    <link rel="stylesheet" href="assets/css/style.min.css"> 
+</head>
+  <body class="bg-white text-[--lusso-brown] antialiased">
+    <div id="article-app" class="overflow-x-hidden">
+      <header>
+         <!-- NAVIGATION -->
+<nav  class=" w-full z-50  px-4 md:px-6 py-4 flex bg-[--lusso-dark] justify-between items-center">
+    <!-- Логотип -->
+    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-[95px] md:w-40">
+        <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
+    </h1>
+
+    <!-- Десктопное меню (скрыто на мобилках) -->
+    <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
+        <a href="index.html" class="hover:text-[white] text-[--lusso-accent]  transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Наше меню</a>
+        <a href="about.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">О нас</a>
+        <a href="reviews.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Вакансии</a>
+    </div>
+
+    <!-- Правая часть: Кнопка и Бургер -->
+    <div class="flex items-center gap-4 z-[60]">
+        <a href="menu.html" class="btn-premium text-[--lusso-dark] px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[12px] font-bold tracking-widest uppercase ">
+            Заказать
+        </a>
+        
+        <!-- Кнопка Бургера (только для мобилок) -->
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+        </button>
+    </div>
+<!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
+<transition name="lusso-menu">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[--lusso-dark] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+        
+        <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
+        <!-- <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-[--lusso-cream]/[0.03] select-none pointer-events-none z-0">
+            LUSSO
+        </div> -->
+
+        <!-- Контент -->
+        <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
+            
+            <!-- Кнопка Закрыть (в углу) -->
+            <div class="flex justify-end mb-8">
+                <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lusso-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Центр: Ссылки (Размер текста уменьшен) -->
+            <nav class="flex flex-col gap-4 flex-grow justify-center">
+                <div v-for="(link, index) in [
+                    {n: '01', t: 'Главная', h: 'index.html'},
+                    {n: '02', t: 'Наше меню', h: 'menu.html'},
+                    {n: '03', t: 'О нас', h: 'about.html'},
+                    {n: '04', t: 'Отзывы', h: 'index.html#reviews'},
+                    {n: '05', t: 'Вакансии', h: 'vacancies.html'}
+                ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
+                    <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
+                        <span class="text-[10px]  text-[--lusso-cream] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-2xl  tracking-tighter text-[--lusso-accent] uppercase leading-none">
+                            {{ link.t }}
+                        </span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Низ: Информация -->
+            <div class="mt-auto border-t border-[--lusso-cream]/5 pt-8 menu-item-anim" style="--delay: 0.5s">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-accent] mb-1">Наши адреса</p>
+                        <p class="text-xs  text-[--lusso-cream]"> г. Гудермес, Кавказская 52</p>
+                            <p class="text-xs  text-[--lusso-cream]">г. Гудермес, проспект А.Кадырова 28 </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10  rounded-full btn-premium flex items-center justify-center text-[10px] font-black">IG</div>
+                        <div class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-black">WA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</transition>
+</nav>
+</header>
+
+      <!-- HEADER IMAGE (Parallax) -->
+      <div class="relative h-[60vh] md:h-[80vh] overflow-hidden bg-black">
+         <img :src="article.coverImage" class="absolute inset-0 w-full h-full object-cover opacity-80" style="object-position: center;">
+         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+         
+         <div class="absolute bottom-0 left-0 w-full p-6 md:p-12 pb-16 md:pb-24">
+            <div class="max-w-4xl mx-auto">
+               <div class="flex items-center gap-4 mb-6 text-white/80">
+                  <span class="px-3 py-1 border border-white/30 rounded-full text-[10px] uppercase tracking-widest font-bold">{{ article.tag }}</span>
+                  <span class="w-px h-3 bg-white/30"></span>
+                  <time class="text-[10px] uppercase tracking-widest">{{ article.date }}</time>
+               </div>
+               <h1 class="text-4xl md:text-6xl lg:text-7xl font-light text-white leading-tight tracking-tight mb-8">
+                  {{ article.title }}
+               </h1>
+            </div>
+         </div>
+      </div>
+
+      <!-- CONTENT BODY -->
+      <article class="relative max-w-3xl mx-auto px-6 py-20 md:py-32">
+         
+         <!-- Intro (Lead) -->
+         <p class="text-xl md:text-2xl font-serif italic text-[--lusso-brown]/80 leading-relaxed mb-16 border-l-2 border-[--lusso-accent] pl-8">
+            {{ article.lead }}
+         </p>
+
+         <!-- Main Text -->
+         <div class="prose prose-lg prose-headings:font-light prose-headings:text-[--lusso-brown] prose-p:text-[--lusso-brown]/70 prose-p:leading-loose prose-a:text-[--lusso-accent] max-w-none space-y-12">
+            
+            <p v-for="(paragraph, idx) in article.content" :key="idx" v-html="paragraph"></p>
+
+            <!-- Вставное фото -->
+            <figure class="my-16 -mx-6 md:-mx-20">
+               <img :src="article.contentImage" class="w-full h-auto object-cover grayscale-[10%]">
+               <figcaption class="mt-4 text-center text-xs text-[--lusso-brown]/40 uppercase tracking-widest">{{ article.imageCaption }}</figcaption>
+            </figure>
+
+            <h3 class="text-3xl mt-12 mb-6">Вкус, рожденный в горах</h3>
+            <p>
+               На высоте 2000 метров воздух становится разреженным, а кофейная ягода созревает медленнее. Именно это дает зерну ту самую комплексную кислотность, за которой охотятся обжарщики со всего мира. Мы провели на станции обработки три дня, выбирая лучшие микролоты.
+            </p>
+         </div>
+
+         <!-- Share / Footer of Article -->
+         <div class="mt-24 pt-12 border-t border-[--lusso-brown]/10 flex justify-between items-center">
+            <a href="index.html#journal" class="text-xs uppercase tracking-[0.2em] font-bold text-[--lusso-brown]/40 hover:text-[--lusso-accent] transition-colors">
+               ← Назад к журналу
+            </a>
+            <div class="flex gap-4">
+               <button class="w-10 h-10 rounded-full border border-[--lusso-brown]/10 flex items-center justify-center hover:bg-[--lusso-brown] hover:text-white transition-all text-sm">
+                  <i class="fab fa-telegram-plane"></i> <!-- FontAwesome example -->
+                  Telegram
+               </button>
+            </div>
+         </div>
+
+      </article>
+
+      <!-- RELATED ARTICLES -->
+      <section class="bg-[--lusso-cream] py-24">
+         <div class="max-w-6xl mx-auto px-6">
+            <h3 class="text-xs uppercase tracking-[0.4em] font-bold text-[--lusso-brown]/40 mb-12 text-center">Читайте также</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+               <article v-for="item in related" :key="item.id" class="group cursor-pointer">
+                  <div class="aspect-[4/3] overflow-hidden bg-gray-200 mb-6">
+                     <img :src="item.img" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale-[20%] group-hover:grayscale-0">
+                  </div>
+                  <h4 class="text-xl font-light leading-tight group-hover:text-[--lusso-accent] transition-colors">{{ item.title }}</h4>
+               </article>
+            </div>
+         </div>
+      </section>
+
+       <!-- FOOTER (ОБНОВЛЕНО) -->
+        <footer class="bg-[--lusso-dark] text-white pt-20 pb-10 px-6">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6 w-40">
+                          <a href="index.html"><img  src="assets/img/Лого.png" alt="" style="margin-left: -15px;"></a>
+   
+                    </h2>
+                    <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
+                    <div class="flex gap-4">
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Навигация</h4>
+                    <ul class="space-y-4 text-sm text-white/60">
+                        <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Кейтеринг</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
+                    <p class="text-sm text-white/60 mb-2">г. Гудермес, ул. Кавказская 52</p>
+                    <p class="text-sm text-white/60 mb-2">г. Гудермес, пр-п. Кадырова 58</p>
+                    <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
+                    <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
+                </div>
+            </div>
+            
+            <div class="max-w-6xl mx-auto pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-white/20 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
+                <div class="flex gap-8 text-[10px] text-white/20 uppercase tracking-widest">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </footer> 
+        
+    </div>
+
+     <script src="assets/js/libs/vue.js"></script>
+
+<script src="assets/js/script.js"></script>
+    
+    <!-- Скрипт страницы -->
+    <script>
+       const { createApp, ref } = Vue;
+
+       createApp({
+          setup() {
+             const article = ref({
+                title: "Экспедиция в Эфиопию: В поисках забытых терруаров",
+                tag: "Origin Trip",
+                date: "12 Января 2026",
+                coverImage: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2000",
+                lead: "Мы отправились в регион Гедео, чтобы найти фермеров, сохраняющих древние традиции обработки кофе. То, что мы нашли, изменило наше представление о вкусе.",
+                content: [
+                   "Дорога к станции обработки Челчеле заняла более шести часов по горному серпантину. Пыль, жара и невероятные пейзажи Рифтовой долины сопровождали нас на всем пути. Но усталость исчезла, как только мы почувствовали аромат сушащихся на 'африканских кроватях' кофейных ягод.",
+                   "В этом сезоне мы искали лоты с ярким профилем: жасмин, бергамот и персик. Местные фермеры используют метод натуральной анаэробной ферментации, который позволяет усилить сладость зерна, не теряя его цветочной легкости."
+                ],
+                contentImage: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200",
+                imageCaption: "Сушка зерна на станции обработки Челчеле, Эфиопия"
+             });
+
+             const related = ref([
+                { id: 2, title: "Как мы обжариваем Кению", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600" },
+                { id: 3, title: "Гид по завариванию V60", img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600" },
+                { id: 4, title: "Интервью с шеф-бариста", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600" }
+             ]);
+
+             return { article, related };
+          }
+       }).mount('#article-app');
+    </script>
+  </body>
+</html>

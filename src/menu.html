@@ -17,20 +17,15 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
                     <div v-for="loc in locations" @click="selectLocation(loc.name)"
-                        class="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-400 hover:scale-[1.02] active:scale-[0.99]"
-                        style="background: linear-gradient(135deg, var(--lusso-cream) 0%, #f8f4ee 100%);">
+                        class="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-400 bg-white ">
 
                       
 
                         <!-- Изображение с эффектом наведения -->
                         <div class="overflow-hidden h-56 relative">
                             <img :src="loc.image"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                class="w-full h-full object-cover transition-all">
 
-                            <!-- Наложение на изображение -->
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            </div>
                         </div>
 
                         <!-- Контент карточки -->
