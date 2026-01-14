@@ -18,6 +18,8 @@ const notify = require("gulp-notify")
 const imagewebp = require("gulp-webp")
 const browserSync = require("browser-sync").create();
 const webpack = require("webpack-stream");
+const postcss = require('gulp-postcss');
+
 
 /* Paths */
 const srcPath = "src/"
@@ -66,31 +68,69 @@ function html() {
      .pipe(browserSync.reload({ stream: true }));
 }
 function css() {
+    // dev - без purge/минификации
     return src(path.src.css, { base: srcPath + "assets/css/" })
         .pipe(plumber({
             errorHandler: notify.onError({
                 title: "CSS Error",
                 message: "Error: <%= error.message %>"
             })
-        })) 
-        // здесь уже чистый CSS, ничего не компилируем
-        .pipe(autoprefixer())
-        .pipe(cssbeautify())
-        .pipe(dest(path.build.css))
-        .pipe(browserSync.reload({ stream: true }))
-        .pipe(cssnano({
-            zindex: false,
-            discardComments: { removeAll: true }
         }))
-        .pipe(removeComments())
-        .pipe(rename({
-            suffix: ".min",
-            extname: ".css"
-        })) 
-        
+        .pipe(postcss())  // Tailwind из postcss.config.js
+        .pipe(cssbeautify())
         .pipe(dest(path.build.css))
         .pipe(browserSync.reload({ stream: true }));
 }
+
+function cssProd() {
+    // prod - с purge и минификацией
+    process.env.NODE_ENV = 'production';  // для Tailwind purge
+    
+    return src(path.src.css, { base: srcPath + "assets/css/" })
+        .pipe(plumber({
+            errorHandler: notify.onError({
+                title: "CSS Prod Error",
+                message: "Error: <%= error.message %>"
+            })
+        }))
+        .pipe(postcss([
+            require('tailwindcss'),
+            require('autoprefixer'),
+            require('cssnano')({
+                zindex: false,
+                discardComments: { removeAll: true }
+            })
+        ]))
+        .pipe(removeComments())
+        .pipe(rename({
+            suffix: ".min"
+        }))
+        .pipe(dest(path.build.css));
+}
+
+function cssProd() {
+    return src(path.src.css, { base: srcPath + "assets/css/" })
+        .pipe(plumber({
+            errorHandler: notify.onError({
+                title: "CSS Prod Error",
+                message: "Error: <%= error.message %>"
+            })
+        }))
+        .pipe(postcss([
+            require('tailwindcss'),
+            require('autoprefixer'),
+            require('cssnano')({
+                zindex: false,
+                discardComments: { removeAll: true }
+            })
+        ]))
+        .pipe(removeComments())
+        .pipe(rename({
+            suffix: ".min"
+        }))
+        .pipe(dest(path.build.css));
+}
+
 
 
 
@@ -149,8 +189,14 @@ function watchFiles(done) {  // ← добавлен done callback
     done();  // ← сигнализируем завершение
 }
 
-const build = series(clean, parallel(html, css, libs, js, images, webpImages));
+
+
+const build = series(clean, parallel(html, cssProd, libs, js, images, webpImages));
+
 const watch = series(build, parallel(watchFiles, serve));  // исправлено: series вместо parallel
+
+exports.css = css;  // dev
+exports.cssProd = cssProd;  // новая prod
 
 exports.html = html;
 exports.css = css;
