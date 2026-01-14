@@ -21,7 +21,7 @@ function menu () {
 
                 const locations = [
                     { name: 'LUSSO', addr: 'ул. Кавказская, 52', desc: 'Первая specialty кофейня в городе. Островок тишины и эстетики.', image: 'assets/img/lusso_1.jpg', whatsapp: '79389997788' },
-                    { name: 'LUSSO URBAN HAVEN', addr: 'Проспект А. Кадырова, 28', desc: 'Городское убежище для продуктивной работы и встреч.', image: 'assets/img/lusso_2.jpg', whatsapp: '79389998118' }
+                    { name: 'LUSSO URBAN HAVEN', addr: 'Проспект А. Кадырова, 28', desc: 'Городское убежище для продуктивной работы и встреч.', image: 'assets/img/lusso2.jpg', whatsapp: '79389998118' }
                 ];
 
                 const categories = ['Все', 'Кофе', 'Сендвичи', 'Десерты', 'Завтраки'];
