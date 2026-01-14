@@ -2,22 +2,18 @@
 
 const { src, dest, series, parallel } = require("gulp")
 const gulp = require("gulp")
-const autoprefixer = require("gulp-autoprefixer")
 const cssbeautify = require("gulp-cssbeautify");
 const removeComments = require('gulp-strip-css-comments');
 const rename = require("gulp-rename");
-const sass = require("gulp-sass")(require('sass'));
 const cssnano = require("gulp-cssnano");
-const uglify = require("gulp-uglify");
 const plumber = require("gulp-plumber");
-const panini = require("panini");
 const fileinclude = require('gulp-file-include');
-const imagemin = require("gulp-imagemin");
 const del = require("del");
 const notify = require("gulp-notify")
 const imagewebp = require("gulp-webp")
 const browserSync = require("browser-sync").create();
 const webpack = require("webpack-stream");
+const postcss = require("gulp-postcss");
 
 /* Paths */
 const srcPath = "src/"
@@ -74,7 +70,7 @@ function css() {
             })
         })) 
         // здесь уже чистый CSS, ничего не компилируем
-        .pipe(autoprefixer())
+        .pipe(postcss()) 
         .pipe(cssbeautify())
         .pipe(dest(path.build.css))
         .pipe(browserSync.reload({ stream: true }))

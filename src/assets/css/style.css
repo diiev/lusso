@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА === */
 :root {
     --lusso-cream: #FBF9F2;      /* Фон страниц */
