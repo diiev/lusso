@@ -37,12 +37,12 @@ function indexPage() {
 
             // --- ЛОГИКА НОВОСТЕЙ (LAZY LOAD) ---
             const allNews = [
-                { id: 1, title: "Экспедиция в Эфиопию", tag: "Origin", date: "12 Янв 2026", excerpt: "Поиск идеальных лотов в регионе Гедео.", img: "assets/img/news1.avif", link: "article.html" },
-                { id: 2, title: "Зимнее меню", tag: "Menu", date: "10 Янв 2026", excerpt: "Пряный раф и новые десерты.", img: "assets/img/news2.jpeg", link: "article.html" },
-                { id: 3, title: "Мастер-класс V60", tag: "Event", date: "05 Янв 2026", excerpt: "Учимся заваривать дома.", img: "assets/img/news3.jpeg", link: "article.html" },
-                { id: 4, title: "Интервью с обжарщиком", tag: "People", date: "28 Дек 2025", excerpt: "Философия светлой обжарки.", img: "assets/img/news4.jpeg", link: "article.html" },
-                { id: 5, title: "Новая кофемашина", tag: "Gear", date: "20 Дек 2025", excerpt: "Обновление оборудования в баре.", img: "assets/img/news5.jpeg", link: "article.html" },
-                { id: 6, title: "История фермы", tag: "Story", date: "15 Дек 2025", excerpt: "Как растет наш кофе в Колумбии.", img: "assets/img/news6.avif", link: "article.html" }
+                { id: 1, title: "Экспедиция в Эфиопию", tag: "Origin", date: "12 Янв 2026", excerpt: "Поиск идеальных лотов в регионе Гедео.", img: "assets/img/news1.avif", link: "news-single.html" },
+                { id: 2, title: "Зимнее меню", tag: "Menu", date: "10 Янв 2026", excerpt: "Пряный раф и новые десерты.", img: "assets/img/news2.jpeg", link: "news-single.html" },
+                { id: 3, title: "Мастер-класс V60", tag: "Event", date: "05 Янв 2026", excerpt: "Учимся заваривать дома.", img: "assets/img/news3.jpeg", link: "news-single.html" },
+                { id: 4, title: "Интервью с обжарщиком", tag: "People", date: "28 Дек 2025", excerpt: "Философия светлой обжарки.", img: "assets/img/news4.jpeg", link: "news-single.html" },
+                { id: 5, title: "Новая кофемашина", tag: "Gear", date: "20 Дек 2025", excerpt: "Обновление оборудования в баре.", img: "assets/img/news5.jpeg", link: "news-single.html" },
+                { id: 6, title: "История фермы", tag: "Story", date: "15 Дек 2025", excerpt: "Как растет наш кофе в Колумбии.", img: "assets/img/news6.avif", link: "news-single.html" }
             ];
 
             const visibleNews = ref([]); 
