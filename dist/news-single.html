@@ -191,7 +191,7 @@
                 
                 <!-- Latest News Widget -->
                 <div class="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl lg:rounded-[2rem] shadow-lg md:shadow-xl shadow-[--lusso-brown]/5">
-                  <h3 class="text-lg md:text-xl font-bold mb-6 border-b border-[--lusso-brown]/10 pb-3 md:pb-4">Последнее в журнале</h3>
+                  <h3 class="text-lg md:text-xl font-bold mb-6 border-b border-[--lusso-brown]/10 pb-3 md:pb-4">Последнее новости</h3>
                   
                   <div class="space-y-6 md:space-y-8">
                     <article v-for="news in latestNews" :key="news.id" class="group cursor-pointer">
@@ -209,9 +209,9 @@
                     </article>
                   </div>
 
-                  <a href="journal.html" class="mt-6 md:mt-8 inline-flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.25em] font-bold text-[--lusso-brown]/60 hover:text-[--lusso-accent] transition-colors w-full justify-center">
+                  <!-- <a href="journal.html" class="mt-6 md:mt-8 inline-flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.25em] font-bold text-[--lusso-brown]/60 hover:text-[--lusso-accent] transition-colors w-full justify-center">
                     Все новости →
-                  </a>
+                  </a> -->
                 </div>
 
               
@@ -286,7 +286,7 @@
               title: "Сегодня в отделе обжарки прошел каппинг нового урожая из Колумбии «Эль-Параисо»",
               date: "18.01.2026",
               tag: "Жизнь Lusso",
-              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000",
+              img: "assets/img/news1.avif",
               intro: "В нашей лаборатории в Амстердаме состоялось долгожданное событие — мы открыли первые мешки с лотом от фермера Диего Бермудеса. Это экспериментальная анаэробная ферментация с добавлением винных дрожжей.",
               content: `
                 <p>В мероприятии принимали участие: главный обжарщик Lusso Давид ван дер Берг и Q-грейдер Анна Соколова, а также приглашенные гости из европейской ассоциации спешелти кофе.</p>
@@ -305,9 +305,9 @@
 
             // Данные для сайдбара
             const latestNews = ref([
-              { id: 1, title: "Зимнее меню: Пряный раф и новые десерты", date: "10 Янв 2026", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400" },
-              { id: 2, title: "Мастер-класс V60 для новичков", date: "05 Янв 2026", img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400" },
-              { id: 3, title: "Интервью с нашим шеф-бариста", date: "28 Дек 2025", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400" },
+              { id: 1, title: "Зимнее меню: Пряный раф и новые десерты", date: "10 Янв 2026", img: "assets/img/news2.jpeg" },
+              { id: 2, title: "Мастер-класс V60 для новичков", date: "05 Янв 2026", img: "assets/img/news3.jpeg" },
+              { id: 3, title: "Интервью с нашим шеф-бариста", date: "28 Дек 2025", img: "assets/img/news4.jpeg" },
             ]);
 
             return { article, latestNews };
