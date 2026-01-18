@@ -5,12 +5,7 @@ function vacancies () {
     createApp({
       setup() {
         const isMobileMenuOpen = ref(false);
-        const mobileLinks = ref([
-          { n: "01", t: "Главная", h: "index.html" },
-          { n: "02", t: "Меню", h: "menu.html" },
-          { n: "03", t: "О нас", h: "about.html" },
-          { n: "04", t: "Вакансии", h: "vacancies.html" },
-        ]);
+
 
         const jobs = ref([
           {
@@ -170,7 +165,6 @@ function vacancies () {
         closeJobModal,
         scrollToApply,
           isMobileMenuOpen,
-          mobileLinks,
           jobs,
           selectedJob,
           selectJob,

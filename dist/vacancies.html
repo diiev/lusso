@@ -101,7 +101,7 @@
     <section class="relative h-[70vh] md:h-[80vh]">
       <div
         class="absolute inset-0"
-        style="background-image:url('assets/img/lusso_1.jpg'); background-size:cover; background-position:center;"
+        style="background-image:url('assets/img/vacan.jpg'); background-size:cover; background-position:center; filter: brightness(0.55);"
       ></div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/40 to-[--lusso-brown]/90"></div>
       <div class="relative z-10 max-w-6xl mx-auto h-full flex flex-col justify-center px-6">
@@ -109,7 +109,7 @@
         <h2 class="text-4xl md:text-6xl font-black text-[--lusso-cream] tracking-tight mb-4">
           Карьера в LUSSO.
         </h2>
-        <p class="text-sm md:text-base text-[white] max-w-xl">
+        <p class="text-sm md:text-base text-[--lusso-cream] max-w-xl">
           Команда, которая любит кофе, детали и людей. Если тебе близка эстетика LUSSO, возможно, мы ищем именно тебя.
         </p>
       </div>
@@ -208,56 +208,79 @@
           </ul>
         </div>
 
-        <div  class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5">
-          <form  @submit.prevent="handleSubmit">
-            <div class="mb-4">
-              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Имя</label>
-              <input
-                v-model="form.name"
-                type="text"
-                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
-                placeholder="Как к вам обращаться?"
-              />
-            </div>
-            <div class="mb-4">
-              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Телефон</label>
-              <input
-                v-model="form.phone"
-                type="text"
-                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
-                placeholder="+7 (___) ___-__-__"
-              />
-            </div>
-            <div class="mb-4">
-              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Желаемая позиция</label>
-              <select
-                v-model="form.position"
-                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
-              >
-                <option value="">Выберите из списка</option>
-                <option v-for="job in jobs" :key="job.id" :value="job.title">{{ job.title }}</option>
-              </select>
-            </div>
-            <div class="mb-4">
-              <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
-              <textarea
-                v-model="form.message"
-                rows="4"
-                class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30"
-                placeholder="Расскажите о себе, опыте и графике, который вам удобен."
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              class="w-full py-3.5 bg-[--lusso-brown] text-[--lusso-cream] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[--lusso-accent] transition-all"
-            >
-              Отправить отклик
-            </button>
-            <p v-if="formSent" class="text-[11px] text-green-600 mt-3">
-              Спасибо! Отклик отправлен. Менеджер свяжется с вами в ближайшее время.
-            </p>
-          </form>
+      <div class="bg-white rounded-[2.5rem] p-6 md:p-8 shadow-xl border border-black/5 min-h-[550px] flex items-center justify-center relative overflow-hidden">
+  
+  <transition name="fade-slide" mode="out-in">
+    <!-- ФОРМА ОТКЛИКА -->
+    <form v-if="!formSent" @submit.prevent="handleSubmit" key="form" class="w-full">
+      <div class="mb-4">
+        <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Имя</label>
+        <input
+          v-model="form.name"
+          type="text"
+          class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30 transition-shadow"
+          placeholder="Как к вам обращаться?"
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Телефон</label>
+        <input
+          v-model="form.phone"
+          type="text"
+          class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30 transition-shadow"
+          placeholder="+7 (___) ___-__-__"
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Желаемая позиция</label>
+        <select
+          v-model="form.position"
+          class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30 transition-shadow cursor-pointer"
+        >
+          <option value="">Выберите из списка</option>
+          <option v-for="job in jobs" :key="job.id" :value="job.title">{{ job.title }}</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
+        <textarea
+          v-model="form.message"
+          rows="4"
+          class="w-full bg-[--lusso-cream] border border-gray-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/30 transition-shadow resize-none"
+          placeholder="Расскажите о себе, опыте и графике."
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="w-full py-3.5 bg-[--lusso-brown] text-[--lusso-cream] rounded-2xl text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[--lusso-accent] transition-all transform hover:-translate-y-1 shadow-md"
+      >
+        Отправить отклик
+      </button>
+    </form>
+
+    <!-- УВЕДОМЛЕНИЕ ОБ УСПЕХЕ -->
+    <div v-else key="success" class="text-center w-full animate-in fade-in zoom-in duration-500">
+        <div class="w-20 h-20 rounded-full bg-[--lusso-accent]/10 text-[--lusso-accent] flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
         </div>
+        <h4 class="text-2xl font-black text-[--lusso-brown] mb-2 font-serif">Отклик принят!</h4>
+        <p class="text-sm text-gray-500 max-w-xs mx-auto mb-8 leading-relaxed">
+            Спасибо, {{ form.name }}. Наш HR-менеджер свяжется с вами по указанному телефону.
+        </p>
+        <button 
+            @click="formSent = false; form = { name: '', phone: '', position: '', message: '' }" 
+            class="text-[10px] font-bold uppercase tracking-[0.2em] text-[--lusso-accent] hover:text-[--lusso-brown] transition-colors"
+        >
+            Отправить еще один
+        </button>
+    </div>
+  </transition>
+</div>
+
+
+
       </div>
     </section>
    
@@ -358,9 +381,11 @@
 
                 <div>
                     <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
-                    <p class="text-sm text-white/60 mb-2">г. Гудермес, ул. Кавказская 52</p>
-                    <p class="text-sm text-white/60 mb-2">г. Гудермес, пр-п. Кадырова 58</p>
-                    <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, ул. Кавказская 52</a><br>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, пр-п. Кадырова 58</a><br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white ">+7 (938) 999 77 88</a> 
+                     <br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white">+7 (938) 999 77 88</a>
                     <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
                 </div>
             </div>

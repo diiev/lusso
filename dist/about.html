@@ -102,7 +102,7 @@
     <!-- Новое атмосферное изображение: Интерьер в темных тонах с золотыми акцентами -->
     <div class="absolute inset-0 parallax-bg" 
          style="background-image:url('assets/img/bglusso.jpg'); 
-                background-position: center; filter: brightness(0.4) contrast(1.1);"></div>
+                background-position: center; filter: brightness(0.2) contrast(1.1);"></div>
     
     <!-- Градиентное наложение для глубины и читаемости текста -->
     <div class="absolute inset-0 bg-gradient-to-r from-[--lusso-dark] via-[--lusso-dark]/60 to-transparent"></div>
@@ -132,12 +132,12 @@
                 </p>
                 
                 <!-- Премиальная кнопка -->
-                <div class="mt-12 group">
-                    <button class="relative overflow-hidden px-10 py-5 bg-transparent border border-[--lusso-accent] text-[--lusso-accent] text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-500 hover:text-white">
-                        <span class="absolute inset-0 bg-[--lusso-accent] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></span>
-                        <span class="relative z-10">Наша история</span>
-                    </button>
-                </div>
+             <div class="mt-12 group">
+    <button @click="openHistoryModal" class="relative overflow-hidden px-10 py-5 bg-transparent border border-[--lusso-accent] text-[--lusso-accent] text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-500 hover:text-white cursor-pointer">
+        <span class="absolute inset-0 bg-[--lusso-accent] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></span>
+        <span class="relative z-10">Наша история</span>
+    </button>
+</div>
             </div>
         </div>
     </div>
@@ -281,40 +281,144 @@
                 </ul>
             </div>
 
-            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-black/5">
-                <form @submit.prevent="handleForm">
-                    <div class="mb-4">
-                        <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Ваше имя</label>
-                        <input v-model="form.name" type="text" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40" placeholder="Как к вам обращаться?">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Телефон или e-mail</label>
-                        <input v-model="form.contact" type="text" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40" placeholder="+7 (___) ___-__-__ или почта">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Тема</label>
-                        <select v-model="form.topic" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40">
-                            <option value="">Выберите тему</option>
-                            <option value="feedback">Отзыв о посещении</option>
-                            <option value="collab">Коллаборации</option>
-                            <option value="events">Мероприятия</option>
-                            <option value="other">Другой вопрос</option>
-                        </select>
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
-                        <textarea v-model="form.message" rows="4" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40" placeholder="Опишите ваш запрос..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full py-3 bg-[--lusso-brown] text-[--lusso-cream] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all">
-                        Отправить сообщение
-                    </button>
-                    <p v-if="formSent" class="text-[11px] text-green-600 mt-3">
-                        Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами.
-                    </p>
-                </form>
-            </div>
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-black/5 min-h-[480px] flex items-center justify-center relative overflow-hidden">
+  
+  <!-- ФОРМА (Показываем, пока не отправлено) -->
+  <transition name="fade-slide" mode="out-in">
+    <form v-if="!formSent" @submit.prevent="handleForm" key="form" class="w-full">
+        <div class="mb-4">
+            <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Ваше имя</label>
+            <input v-model="form.name" type="text" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40 transition-shadow" placeholder="Как к вам обращаться?">
         </div>
-    </section>
+        <div class="mb-4">
+            <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Телефон или e-mail</label>
+            <input v-model="form.contact" type="text" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40 transition-shadow" placeholder="+7 (___) ___-__-__ или почта">
+        </div>
+        <div class="mb-4">
+            <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Тема</label>
+            <select v-model="form.topic" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40 transition-shadow cursor-pointer">
+                <option value="">Выберите тему</option>
+                <option value="feedback">Отзыв о посещении</option>
+                <option value="collab">Коллаборации</option>
+                <option value="events">Мероприятия</option>
+                <option value="other">Другой вопрос</option>
+            </select>
+        </div>
+        <div class="mb-6">
+            <label class="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2">Сообщение</label>
+            <textarea v-model="form.message" rows="4" class="w-full bg-[#FBF9F2] border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[--lusso-accent]/40 transition-shadow resize-none" placeholder="Опишите ваш запрос..."></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-[--lusso-brown] text-[--lusso-cream] rounded-xl text-xs font-bold uppercase tracking-[0.2em] hover:bg-[--lusso-accent] transition-all transform hover:-translate-y-1 shadow-md">
+            Отправить сообщение
+        </button>
+    </form>
+
+    <!-- УВЕДОМЛЕНИЕ ОБ УСПЕХЕ (Появляется вместо формы) -->
+    <div v-else key="success" class="text-center w-full animate-in fade-in zoom-in duration-500">
+        <div class="w-20 h-20 rounded-full bg-[--lusso-accent]/10 text-[--lusso-accent] flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <h4 class="text-2xl font-black text-[--lusso-brown] mb-2">Сообщение отправлено!</h4>
+        <p class="text-sm text-gray-500 max-w-xs mx-auto mb-8">
+            Спасибо, {{ form.name }}. Мы получили ваш запрос и ответим в ближайшее время.
+        </p>
+        <button @click="formSent = false; form = {name:'',contact:'',topic:'',message:''}" class="text-xs font-bold uppercase tracking-[0.2em] text-[--lusso-accent] hover:text-[--lusso-brown] transition-colors">
+            Отправить еще одно
+        </button>
+    </div>
+  </transition>
+</div>
+
+
+
+        </div>
+    </section> 
+
+    <!-- HISTORY MODAL -->
+<!-- HISTORY MODAL (Storytelling Design) -->
+<teleport to="body">
+  <transition name="fade">
+    <div v-if="isHistoryModalOpen" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm p-0 md:p-8">
+      
+      <!-- Close Button (Absolute Top Right) -->
+      <button @click="closeHistoryModal" class="absolute top-6 right-6 z-50 group">
+        <div class="flex items-center gap-3 text-white/50 group-hover:text-white transition-colors">
+            <span class="text-[10px] uppercase tracking-widest font-bold hidden md:block">Закрыть</span>
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </div>
+      </button>
+
+      <!-- Main Container -->
+      <div class="w-full max-w-7xl h-full md:h-[85vh] bg-[--lusso-brown] md:rounded-[3rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative">
+        
+        <!-- LEFT: IMAGE (50%) -->
+        <div class="w-full md:w-1/2 h-[45%] md:h-full relative overflow-hidden">
+            <transition name="scale" mode="out-in">
+                <img :key="currentHistorySlide" 
+                     :src="historySlides[currentHistorySlide].img" 
+                     class="absolute inset-0 w-full h-full object-cover">
+            </transition>
+            <!-- Overlay for text readability on mobile if needed -->
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        <!-- RIGHT: CONTENT (50%) -->
+        <div class="w-full md:w-1/2 h-[55%] md:h-full bg-[--lusso-brown] text-[--lusso-cream] p-8 md:p-16 lg:p-20 flex flex-col justify-between relative z-10">
+            
+            <!-- Top: Year / Indicator -->
+            <div class="flex items-center gap-4 border-b border-white/10 pb-6">
+                <span class="text-4xl md:text-6xl font-black text-white/10 font-serif">
+                    0{{ currentHistorySlide + 1 }}
+                </span>
+                <div class="h-[1px] flex-1 bg-white/10">
+                    <div class="h-full bg-[--lusso-accent] transition-all duration-500" 
+                         :style="{ width: ((currentHistorySlide + 1) / historySlides.length * 100) + '%' }"></div>
+                </div>
+                <span class="text-xl md:text-2xl font-bold text-[--lusso-accent] font-serif italic">
+                    {{ historySlides[currentHistorySlide].year }}
+                </span>
+            </div>
+
+            <!-- Middle: Text Content (Animated) -->
+            <div class="flex-1 flex flex-col justify-center py-6 md:py-0">
+                <transition name="slide-fade" mode="out-in">
+                    <div :key="currentHistorySlide" class="space-y-6">
+                        <h3 class="text-3xl md:text-5xl font-black leading-tight text-white">
+                            {{ historySlides[currentHistorySlide].title }}
+                        </h3>
+                        <p class="text-sm md:text-lg font-light leading-relaxed text-white/70 max-w-md">
+                            {{ historySlides[currentHistorySlide].text }}
+                        </p>
+                    </div>
+                </transition>
+            </div>
+
+            <!-- Bottom: Navigation -->
+            <div class="flex items-center justify-between pt-6 border-t border-white/10">
+                <div class="hidden md:block text-[10px] uppercase tracking-[0.3em] text-white/30">
+                    История бренда
+                </div>
+                
+                <div class="flex gap-4">
+                    <button @click="prevHistorySlide" class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[--lusso-accent] hover:border-[--lusso-accent] transition-all">
+                        ←
+                    </button>
+                    <button @click="nextHistorySlide" class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[--lusso-accent] hover:border-[--lusso-accent] transition-all">
+                        →
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </transition>
+</teleport>
+
+
 
          <!-- FOOTER (ОБНОВЛЕНО) -->
         <footer class="bg-[--lusso-dark] text-white pt-20 pb-10 px-6">
@@ -342,9 +446,11 @@
 
                 <div>
                     <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
-                    <p class="text-sm text-white/60 mb-2">г. Гудермес, ул. Кавказская 52</p>
-                    <p class="text-sm text-white/60 mb-2">г. Гудермес, пр-п. Кадырова 58</p>
-                    <p class="text-sm text-white/60 mb-6">+7 (938) 999 77 88</p>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, ул. Кавказская 52</a><br>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, пр-п. Кадырова 58</a><br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white ">+7 (938) 999 77 88</a> 
+                     <br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white">+7 (938) 999 77 88</a>
                     <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
                 </div>
             </div>

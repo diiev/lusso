@@ -17,7 +17,7 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
                     <div v-for="loc in locations" @click="selectLocation(loc.name)"
-                        class="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-400 bg-white ">
+                        class="group relative overflow-hidden border hover:border-[--lusso-accent]   rounded-2xl cursor-pointer transition-all duration-400 bg-white ">
 
                       
 
@@ -96,7 +96,7 @@
                 <div class="space-y-8 mb-12">
                     <div class="relative group max-w-100">
                         <input v-model="searchQuery" type="text" placeholder="Поиск в меню..."
-                            class="w-full bg-white border border-[--lusso-brown]/10 py-5 pl-14 pr-10 rounded-2xl text-sm font-semibold shadow-sm focus:shadow-2xl focus:shadow-[--lusso-accent]/10 focus:border-[--lusso-accent] outline-none transition-all duration-500">
+                            class="w-full bg-white border border-[--lusso-brown]/10 py-3 md:py-5 pl-14 pr-10 rounded-2xl text-sm font-semibold shadow-sm focus:shadow-2xl focus:shadow-[--lusso-accent]/10 focus:border-[--lusso-accent] outline-none transition-all duration-500">
                         <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-[--lusso-accent]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </div>
@@ -324,7 +324,7 @@
             </div>
 
             <!-- Декор и Закрытие (Адаптивные отступы) -->
-            <div v-if="selectedItem.isNew" class="absolute top-4 left-4 md:top-6 md:left-6 bg-[--lusso-accent] text-white text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+            <div v-if="selectedItem.isNew" class="absolute top-4 left-4 md:top-6 md:left-6 bg-[red] text-white text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full uppercase tracking-widest shadow-lg">
                 Новинка
             </div>
             <button @click="closeItemModal" 

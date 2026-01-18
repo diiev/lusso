@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+  @@include('template/partials/head.html')
+  <body class="bg-[--lusso-cream] text-[--lusso-brown] antialiased">
+    <div id="app-news-single" class="overflow-x-hidden flex flex-col min-h-screen">
+      @@include('template/partials/header.html')
+
+      <!-- MAIN CONTENT WRAPPER -->
+      <main class="flex-grow pt-20 pb-20 md:pt-32 md:pb-16 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto w-full">
+          
+          <!-- BREADCRUMBS (Хлебные крошки) -->
+          <nav class="mb-6 md:mb-10">
+            <ul class="flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] text-[--lusso-brown]/40 font-bold flex-wrap">
+              <li><a href="/" class="hover:text-[--lusso-accent] transition-colors">Главная</a></li>
+              <li>/</li>
+              <li><a href="journal.html" class="hover:text-[--lusso-accent] transition-colors">Новости</a></li>
+              <li>/</li>
+             
+            </ul>
+          </nav>
+
+          <!-- GRID LAYOUT: Content (Left) + Sidebar (Right) -->
+          <div class="grid-single gap-8 lg:gap-12 mb-20">
+            
+            <!-- LEFT COLUMN: ARTICLE -->
+            <article class="">
+              
+              <!-- Article Header -->
+              <header class="mb-8 md:mb-10">
+                <div class="flex items-center gap-4 mb-4 md:mb-6 flex-wrap">
+                  <span class="px-3 py-1 rounded-full border border-[--lusso-brown]/20 text-xs md:text-[9px] uppercase tracking-widest font-bold text-[--lusso-accent]">
+                    {{ article.tag }}
+                  </span>
+                  <time class="text-xs md:text-[10px] uppercase tracking-widest text-[--lusso-brown]/40 font-bold">
+                    {{ article.date }}
+                  </time>
+                </div>
+                
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] mb-6 md:mb-8 text-[--lusso-brown]">
+                  {{ article.title }}
+                </h1>
+
+                <!-- Main Image -->
+                <div class="relative w-full aspect-video md:aspect-[16/9] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl mb-8 group">
+                  <img :src="article.img" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1500ms]">
+                  <div class="absolute inset-0 bg-[--lusso-brown]/5"></div>
+                </div>
+              </header>
+
+              <!-- Article Body (Typography) -->
+              <div class="prose prose-sm md:prose-base lg:prose-lg max-w-none 
+                          prose-headings:font-serif prose-headings:font-normal prose-headings:text-[--lusso-brown] 
+                          prose-p:text-[--lusso-brown]/80 prose-p:leading-relaxed prose-p:mb-4 md:prose-p:mb-6 prose-p:font-serif
+                          prose-a:text-[--lusso-accent] prose-a:no-underline hover:prose-a:underline
+                          prose-blockquote:border-l-[--lusso-accent] prose-blockquote:italic prose-blockquote:bg-white/50 prose-blockquote:py-4 prose-blockquote:pr-4">
+                
+                <!-- Вступительный лид (жирный) -->
+                <p class="font-bold text-lg md:text-xl lg:text-2xl !leading-relaxed text-[--lusso-brown] mb-6 md:mb-8">
+                  {{ article.intro }}
+                </p>
+
+                <!-- Основной текст -->
+                <div v-html="article.content"></div>
+
+                <!-- Вставка цитаты -->
+                <blockquote class="my-8 md:my-10 pl-4 md:pl-6 border-l-4 border-[--lusso-accent]">
+                  <p class="text-lg md:text-xl lg:text-2xl font-serif italic mb-2">"{{ article.quote.text }}"</p>
+                  <footer class="text-xs uppercase tracking-widest font-bold text-[--lusso-brown]/50">— {{ article.quote.author }}</footer>
+                </blockquote>
+
+                <!-- Продолжение текста -->
+                <div v-html="article.contentEnd"></div>
+
+              </div>
+
+              <!-- Article Footer (Tags & Share) -->
+              <div class="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-[--lusso-brown]/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs font-bold text-[--lusso-brown]/40 uppercase tracking-widest mr-2">Теги:</span>
+                  <a href="#" class="text-xs font-bold hover:text-[--lusso-accent] transition-colors">#Эфиопия</a>
+                  <a href="#" class="text-xs font-bold hover:text-[--lusso-accent] transition-colors">#Путешествия</a>
+                </div>
+                
+                <div class="flex items-center gap-3 md:gap-4">
+                  <span class="text-xs font-bold text-[--lusso-brown]/40 uppercase tracking-widest">Поделиться:</span>
+                  <button class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-[--lusso-brown]/10 flex items-center justify-center hover:bg-[--lusso-brown] hover:text-white transition-all">
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                  </button>
+                  <button class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-[--lusso-brown]/10 flex items-center justify-center hover:bg-[--lusso-brown] hover:text-white transition-all">
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+            </article>
+  <!-- RIGHT COLUMN: SIDEBAR -->
+            <aside class="">
+              <div class="space-y-6 md:space-y-8 lg:sticky lg:top-24">
+                
+                <!-- Latest News Widget -->
+                <div class="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl lg:rounded-[2rem] shadow-lg md:shadow-xl shadow-[--lusso-brown]/5">
+                  <h3 class="text-lg md:text-xl font-bold mb-6 border-b border-[--lusso-brown]/10 pb-3 md:pb-4">Последнее в журнале</h3>
+                  
+                  <div class="space-y-6 md:space-y-8">
+                    <article v-for="news in latestNews" :key="news.id" class="group cursor-pointer">
+                      <div class="flex gap-3 md:gap-4">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden flex-shrink-0">
+                          <img :src="news.img" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <time class="text-xs md:text-[9px] uppercase tracking-widest text-[--lusso-brown]/40 block mb-1">{{ news.date }}</time>
+                          <h4 class="text-sm font-bold leading-snug group-hover:text-[--lusso-accent] transition-colors line-clamp-2 md:line-clamp-3">
+                            {{ news.title }}
+                          </h4>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <a href="journal.html" class="mt-6 md:mt-8 inline-flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.25em] font-bold text-[--lusso-brown]/60 hover:text-[--lusso-accent] transition-colors w-full justify-center">
+                    Все новости →
+                  </a>
+                </div>
+
+              
+
+              </div>
+            </aside>
+          
+
+          </div>
+        </div>
+      </main>
+
+      @@include('template/partials/footer.html')
+    </div>
+
+    @@include('template/partials/scripts.html')
+    
+    <!-- Local script for this page -->
+    <script>
+      function newsSinglePage() {
+        const { createApp, ref } = Vue;
+        
+        createApp({
+          setup() {
+            // Данные текущей статьи (как в примере, но под Lusso)
+            const article = ref({
+              title: "Сегодня в отделе обжарки прошел каппинг нового урожая из Колумбии «Эль-Параисо»",
+              date: "18.01.2026",
+              tag: "Жизнь Lusso",
+              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000",
+              intro: "В нашей лаборатории в Амстердаме состоялось долгожданное событие — мы открыли первые мешки с лотом от фермера Диего Бермудеса. Это экспериментальная анаэробная ферментация с добавлением винных дрожжей.",
+              content: `
+                <p>В мероприятии принимали участие: главный обжарщик Lusso Давид ван дер Берг и Q-грейдер Анна Соколова, а также приглашенные гости из европейской ассоциации спешелти кофе.</p>
+                <p>Начиная каппинг, Давид отметил, что важнейшей задачей для нас является не просто купить дорогое зерно, а раскрыть его потенциал так, чтобы каждый гость кофейни смог почувствовать ноты личи, персика и клубничного йогурта без профессиональной подготовки.</p>
+                <p>Анна Соколова подробно рассказала участникам о влиянии высоты произрастания (1930 метров над уровнем моря) на плотность зерна. Эксперты обсудили такие вопросы: как профиль обжарки влияет на тактильность напитка и почему для этого лота мы выбрали более светлый цвет, чем обычно.</p>
+              `,
+              contentEnd: `
+                <p>На обсуждение были вынесены следующие вопросы: стоит ли вводить этот лот в основное меню или оставить его как эксклюзив для подписчиков. Для присутствующих бариста Марко Росси провел демонстрацию заваривания в V60.</p>
+                <p>В завершение мероприятия команда решила запустить этот лот в продажу со следующей недели. Мы верим, что такой кофе меняет представление о вкусе.</p>
+              `,
+              quote: {
+                text: "Кофе — это не просто напиток, это мост между трудом фермера на другом конце света и вашей утренней чашкой.",
+                author: "Давид ван дер Берг"
+              }
+            });
+
+            // Данные для сайдбара
+            const latestNews = ref([
+              { id: 1, title: "Зимнее меню: Пряный раф и новые десерты", date: "10 Янв 2026", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400" },
+              { id: 2, title: "Мастер-класс V60 для новичков", date: "05 Янв 2026", img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400" },
+              { id: 3, title: "Интервью с нашим шеф-бариста", date: "28 Дек 2025", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400" },
+            ]);
+
+            return { article, latestNews };
+          }
+        }).mount('#app-news-single');
+      }
+      
+      newsSinglePage();
+    </script>
+  </body>
+</html>

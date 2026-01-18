@@ -1,78 +1,141 @@
-function about () {
+function about() {
+    const { createApp, ref, onMounted } = Vue;
 
+    createApp({
+        setup() {
+            // --- 1. НАВИГАЦИЯ & МОБИЛЬНОЕ МЕНЮ ---
+            const isMobileMenuOpen = ref(false);
+            const mobileLinks = ref([
+                { n: '01', t: 'Главная', h: 'index.html' },
+                { n: '02', t: 'Меню', h: 'menu.html' },
+                { n: '03', t: 'О нас', h: '#locations' },
+                { n: '04', t: 'Связаться', h: '#contact' }
+            ]);
 
-const { createApp, ref, onMounted } = Vue;
-
-createApp({
-    setup() {
-        const isMobileMenuOpen = ref(false);
-        const mobileLinks = ref([
-            { n: '01', t: 'Главная', h: 'index.html' },
-            { n: '02', t: 'Меню', h: 'menu.html' },
-            { n: '03', t: 'О нас', h: '#locations' },
-            { n: '04', t: 'Связаться', h: '#contact' }
-        ]);
-
-        const activePoint = ref('lusso');
-        const form = ref({ name: '', contact: '', topic: '', message: '' });
-        const formSent = ref(false);
-
-        const locationsRef = ref(null);
-        const routeRef = ref(null);
-        const contactRef = ref(null);
-
-        const handleMobileNav = (href) => {
-            isMobileMenuOpen.value = false;
-            if (href.startsWith('#')) {
-                const el = document.querySelector(href);
-                if (el) {
-                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 200);
+            const handleMobileNav = (href) => {
+                isMobileMenuOpen.value = false;
+                if (href.startsWith('#')) {
+                    const el = document.querySelector(href);
+                    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 200);
                 }
-            }
-        };
+            };
 
-        const handleForm = () => {
-            if (!form.value.name || !form.value.contact || !form.value.message) {
-                formSent.value = false;
-                alert('Пожалуйста, заполните имя, контакт и сообщение.');
-                return;
-            }
-            formSent.value = true;
-            setTimeout(() => { formSent.value = false; }, 5000);
-            // Здесь можно подключить отправку на бэкенд или в Telegram
-        };
+            // --- 2. КАРТА / ТАБЫ (Маршруты) ---
+            const activePoint = ref('lusso');
 
-        onMounted(() => {
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                },
-                { threshold: 0.15 }
-            );
+            // --- 3. ФОРМА ОБРАТНОЙ СВЯЗИ ---
+            const form = ref({ name: '', contact: '', topic: '', message: '' });
+            const formSent = ref(false);
 
-            [locationsRef.value, routeRef.value, contactRef.value].forEach(el => {
-                if (el) observer.observe(el);
+            const handleForm = () => {
+                if (!form.value.name || !form.value.contact || !form.value.message) {
+                    alert('Пожалуйста, заполните имя, контакт и сообщение.');
+                    return;
+                }
+                // Имитация отправки
+                formSent.value = true;
+                
+                // Очистка формы (опционально)
+                // form.value = { name: '', contact: '', topic: '', message: '' };
+                
+                setTimeout(() => { formSent.value = false; }, 5000);
+            };
+
+            // --- 4. АНИМАЦИИ ПРИ СКРОЛЛЕ (Intersection Observer) ---
+            const locationsRef = ref(null);
+            const routeRef = ref(null);
+            const contactRef = ref(null);
+
+            onMounted(() => {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) entry.target.classList.add('visible');
+                        });
+                    },
+                    { threshold: 0.15 }
+                );
+                [locationsRef.value, routeRef.value, contactRef.value].forEach(el => {
+                    if (el) observer.observe(el);
+                });
             });
-        });
 
-        return {
-            isMobileMenuOpen,
-            mobileLinks,
-            handleMobileNav,
-            activePoint,
-            form,
-            formSent,
-            handleForm,
-            locationsRef,
-            routeRef,
-            contactRef
-        };
-    }
-}).mount('#app-about');
+            // --- 5. ИСТОРИЯ БРЕНДА (Синхронизированный слайдер) ---
+            const isHistoryModalOpen = ref(false);
+            const currentHistorySlide = ref(0);
+            
+            // ВАЖНО: Используем массив объектов, чтобы менять и фото, и текст
+            const historySlides = [
+                {
+                    year: '2018',
+                    title: 'В поисках смысла',
+                    text: 'Всё началось с поездки в регион Гедео, Эфиопия. Там, на высоте 2000 метров, мы поняли, что настоящий кофе рождается не в машине, а в руках фермера.',
+                    img: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1200&q=80'
+                },
+                {
+                    year: '2019',
+                    title: 'Первый огонь',
+                    text: 'Мы привезли первый ростер Giesen в пустой склад. Месяцы экспериментов, сотни сожженных килограммов зерна, пока мы не нашли тот самый профиль обжарки.',
+                    img: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=1200&q=80'
+                },
+                {
+                    year: '2021',
+                    title: 'Рождение LUSSO',
+                    text: 'Открытие первой кофейни на Кавказской. Мы хотели создать место, где время замедляется, а вкус кофе говорит сам за себя без сиропов и добавок.',
+                    img: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1200&q=80'
+                },
+                {
+                    year: '2024',
+                    title: 'Новая высота',
+                    text: 'Запуск Urban Haven и собственной школы бариста. Мы продолжаем искать редкие лоты и учить людей культуре потребления спешелти зерна.',
+                    img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&q=80'
+                }
+            ];
 
-} 
-export default about
+            const openHistoryModal = () => {
+                isHistoryModalOpen.value = true;
+                document.body.style.overflow = 'hidden'; // Блокируем скролл фона
+            };
+
+            const closeHistoryModal = () => {
+                isHistoryModalOpen.value = false;
+                document.body.style.overflow = ''; // Возвращаем скролл
+            };
+
+            const nextHistorySlide = () => {
+                currentHistorySlide.value = (currentHistorySlide.value + 1) % historySlides.length;
+            };
+
+            const prevHistorySlide = () => {
+                const len = historySlides.length;
+                currentHistorySlide.value = (currentHistorySlide.value - 1 + len) % len;
+            };
+
+            // Управление с клавиатуры
+            window.addEventListener('keydown', (e) => {
+                if (isHistoryModalOpen.value) {
+                    if (e.key === 'Escape') closeHistoryModal();
+                    if (e.key === 'ArrowRight') nextHistorySlide();
+                    if (e.key === 'ArrowLeft') prevHistorySlide();
+                }
+            });
+
+            return {
+                // Навигация
+                isMobileMenuOpen, mobileLinks, handleMobileNav,
+                // Карта
+                activePoint,
+                // Форма
+                form, formSent, handleForm,
+                // Скролл-рефы
+                locationsRef, routeRef, contactRef,
+                // История
+                isHistoryModalOpen, openHistoryModal, closeHistoryModal,
+                currentHistorySlide, nextHistorySlide, prevHistorySlide, 
+                historySlides // <-- Важно: возвращаем именно этот массив
+            };
+        }
+    }).mount('#app-about');
+}
+
+export default about;

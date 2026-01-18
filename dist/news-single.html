@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <title>LUSSO Coffee | Искусство Кофе</title>
+    <link rel="stylesheet" href="assets/css/style.min.css"> 
+</head>
+  <body class="bg-[--lusso-cream] text-[--lusso-brown] antialiased">
+    <div id="app-news-single" class="overflow-x-hidden flex flex-col min-h-screen">
+      <header>
+         <!-- NAVIGATION -->
+<nav  class=" w-full z-50  px-4 md:px-6 py-4 flex bg-[--lusso-dark] justify-between items-center">
+    <!-- Логотип -->
+    <h1 class="text-2xl  font-black tracking-tighter text-[--lusso-accent] z-[60] w-[95px] md:w-40">
+        <a href="index.html"><img  src="assets/img/Лого.png" alt=""></a>
+    </h1>
+
+    <!-- Десктопное меню (скрыто на мобилках) -->
+    <div class="hidden md:flex gap-8 text-[13px] font-bold tracking-[0.2em] uppercase">
+        <a href="index.html" class="hover:text-[white] text-[--lusso-accent]  transition-colors">Главная</a>
+        <a href="menu.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Наше меню</a>
+        <a href="about.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">О нас</a>
+        <a href="reviews.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Отзывы</a>
+        <a href="vacancies.html" class="hover:text-[white] text-[--lusso-accent] transition-colors">Вакансии</a>
+    </div>
+
+    <!-- Правая часть: Кнопка и Бургер -->
+    <div class="flex items-center gap-4 z-[60]">
+        <a href="menu.html" class="btn-premium text-[--lusso-dark] px-5 md:px-6 py-2 rounded-full text-[9px] md:text-[12px] font-bold tracking-widest uppercase ">
+            Заказать
+        </a>
+        
+        <!-- Кнопка Бургера (только для мобилок) -->
+        <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden flex flex-col gap-1.5 p-2">
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'rotate-45 translate-y-2' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? 'opacity-0' : '']"></div>
+            <div :class="['w-6 h-0.5 bg-[--lusso-accent] transition-all', isMobileMenuOpen ? '-rotate-45 -translate-y-2' : '']"></div>
+        </button>
+    </div>
+<!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ -->
+<transition name="lusso-menu">
+    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[9999] bg-[--lusso-dark] flex flex-col h-screen w-screen md:hidden overflow-hidden">
+        
+        <!-- Фоновый текст (Декор) - Сделал меньше, чтобы не мешал -->
+        <!-- <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-[15rem] font-black text-[--lusso-cream]/[0.03] select-none pointer-events-none z-0">
+            LUSSO
+        </div> -->
+
+        <!-- Контент -->
+        <div class="relative flex flex-col h-full w-full p-6 pt-12 pb-10 z-10">
+            
+            <!-- Кнопка Закрыть (в углу) -->
+            <div class="flex justify-end mb-8">
+                <button @click="isMobileMenuOpen = false" class="w-12 h-12 flex items-center justify-center rounded-full bg-black/5 active:scale-90 transition-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lusso-accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- Центр: Ссылки (Размер текста уменьшен) -->
+            <nav class="flex flex-col gap-4 flex-grow justify-center">
+                <div v-for="(link, index) in [
+                    {n: '01', t: 'Главная', h: 'index.html'},
+                    {n: '02', t: 'Наше меню', h: 'menu.html'},
+                    {n: '03', t: 'О нас', h: 'about.html'},
+                    {n: '04', t: 'Отзывы', h: 'reviews.html'},
+                    {n: '05', t: 'Вакансии', h: 'vacancies.html'}
+                ]" :key="index" class="menu-item-anim" :style="{'--delay': (index * 0.1) + 's'}">
+                    <a @click="isMobileMenuOpen = false" :href="link.h" class="group flex items-center gap-4 py-2">
+                        <span class="text-[10px]  text-[--lusso-cream] tracking-[0.2em]">{{ link.n }}</span>
+                        <span class="text-2xl  tracking-tighter text-[--lusso-accent] uppercase leading-none">
+                            {{ link.t }}
+                        </span>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Низ: Информация -->
+            <div class="mt-auto border-t border-[--lusso-cream]/5 pt-8 menu-item-anim" style="--delay: 0.5s">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-[--lusso-accent] mb-1">Наши адреса</p>
+                        <p class="text-xs  text-[--lusso-cream]"> г. Гудермес, Кавказская 52</p>
+                            <p class="text-xs  text-[--lusso-cream]">г. Гудермес, проспект А.Кадырова 28 </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10  rounded-full btn-premium flex items-center justify-center text-[10px] font-black">IG</div>
+                        <div class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-black">WA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</transition>
+</nav>
+</header>
+
+      <!-- MAIN CONTENT WRAPPER -->
+      <main class="flex-grow pt-20 pb-20 md:pt-32 md:pb-16 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto w-full">
+          
+          <!-- BREADCRUMBS (Хлебные крошки) -->
+          <nav class="mb-6 md:mb-10">
+            <ul class="flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] text-[--lusso-brown]/40 font-bold flex-wrap">
+              <li><a href="/" class="hover:text-[--lusso-accent] transition-colors">Главная</a></li>
+              <li>/</li>
+              <li><a href="journal.html" class="hover:text-[--lusso-accent] transition-colors">Новости</a></li>
+              <li>/</li>
+             
+            </ul>
+          </nav>
+
+          <!-- GRID LAYOUT: Content (Left) + Sidebar (Right) -->
+          <div class="grid-single gap-8 lg:gap-12 mb-20">
+            
+            <!-- LEFT COLUMN: ARTICLE -->
+            <article class="">
+              
+              <!-- Article Header -->
+              <header class="mb-8 md:mb-10">
+                <div class="flex items-center gap-4 mb-4 md:mb-6 flex-wrap">
+                  <span class="px-3 py-1 rounded-full border border-[--lusso-brown]/20 text-xs md:text-[9px] uppercase tracking-widest font-bold text-[--lusso-accent]">
+                    {{ article.tag }}
+                  </span>
+                  <time class="text-xs md:text-[10px] uppercase tracking-widest text-[--lusso-brown]/40 font-bold">
+                    {{ article.date }}
+                  </time>
+                </div>
+                
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.1] mb-6 md:mb-8 text-[--lusso-brown]">
+                  {{ article.title }}
+                </h1>
+
+                <!-- Main Image -->
+                <div class="relative w-full aspect-video md:aspect-[16/9] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-xl md:shadow-2xl mb-8 group">
+                  <img :src="article.img" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[1500ms]">
+                  <div class="absolute inset-0 bg-[--lusso-brown]/5"></div>
+                </div>
+              </header>
+
+              <!-- Article Body (Typography) -->
+              <div class="prose prose-sm md:prose-base lg:prose-lg max-w-none 
+                          prose-headings:font-serif prose-headings:font-normal prose-headings:text-[--lusso-brown] 
+                          prose-p:text-[--lusso-brown]/80 prose-p:leading-relaxed prose-p:mb-4 md:prose-p:mb-6 prose-p:font-serif
+                          prose-a:text-[--lusso-accent] prose-a:no-underline hover:prose-a:underline
+                          prose-blockquote:border-l-[--lusso-accent] prose-blockquote:italic prose-blockquote:bg-white/50 prose-blockquote:py-4 prose-blockquote:pr-4">
+                
+                <!-- Вступительный лид (жирный) -->
+                <p class="font-bold text-lg md:text-xl lg:text-2xl !leading-relaxed text-[--lusso-brown] mb-6 md:mb-8">
+                  {{ article.intro }}
+                </p>
+
+                <!-- Основной текст -->
+                <div v-html="article.content"></div>
+
+                <!-- Вставка цитаты -->
+                <blockquote class="my-8 md:my-10 pl-4 md:pl-6 border-l-4 border-[--lusso-accent]">
+                  <p class="text-lg md:text-xl lg:text-2xl font-serif italic mb-2">"{{ article.quote.text }}"</p>
+                  <footer class="text-xs uppercase tracking-widest font-bold text-[--lusso-brown]/50">— {{ article.quote.author }}</footer>
+                </blockquote>
+
+                <!-- Продолжение текста -->
+                <div v-html="article.contentEnd"></div>
+
+              </div>
+
+              <!-- Article Footer (Tags & Share) -->
+              <div class="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-[--lusso-brown]/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs font-bold text-[--lusso-brown]/40 uppercase tracking-widest mr-2">Теги:</span>
+                  <a href="#" class="text-xs font-bold hover:text-[--lusso-accent] transition-colors">#Эфиопия</a>
+                  <a href="#" class="text-xs font-bold hover:text-[--lusso-accent] transition-colors">#Путешествия</a>
+                </div>
+                
+                <div class="flex items-center gap-3 md:gap-4">
+                  <span class="text-xs font-bold text-[--lusso-brown]/40 uppercase tracking-widest">Поделиться:</span>
+                  <button class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-[--lusso-brown]/10 flex items-center justify-center hover:bg-[--lusso-brown] hover:text-white transition-all">
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                  </button>
+                  <button class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-[--lusso-brown]/10 flex items-center justify-center hover:bg-[--lusso-brown] hover:text-white transition-all">
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+            </article>
+  <!-- RIGHT COLUMN: SIDEBAR -->
+            <aside class="">
+              <div class="space-y-6 md:space-y-8 lg:sticky lg:top-24">
+                
+                <!-- Latest News Widget -->
+                <div class="bg-white p-6 md:p-8 rounded-xl md:rounded-2xl lg:rounded-[2rem] shadow-lg md:shadow-xl shadow-[--lusso-brown]/5">
+                  <h3 class="text-lg md:text-xl font-bold mb-6 border-b border-[--lusso-brown]/10 pb-3 md:pb-4">Последнее в журнале</h3>
+                  
+                  <div class="space-y-6 md:space-y-8">
+                    <article v-for="news in latestNews" :key="news.id" class="group cursor-pointer">
+                      <div class="flex gap-3 md:gap-4">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden flex-shrink-0">
+                          <img :src="news.img" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <time class="text-xs md:text-[9px] uppercase tracking-widest text-[--lusso-brown]/40 block mb-1">{{ news.date }}</time>
+                          <h4 class="text-sm font-bold leading-snug group-hover:text-[--lusso-accent] transition-colors line-clamp-2 md:line-clamp-3">
+                            {{ news.title }}
+                          </h4>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <a href="journal.html" class="mt-6 md:mt-8 inline-flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.25em] font-bold text-[--lusso-brown]/60 hover:text-[--lusso-accent] transition-colors w-full justify-center">
+                    Все новости →
+                  </a>
+                </div>
+
+              
+
+              </div>
+            </aside>
+          
+
+          </div>
+        </div>
+      </main>
+
+       <!-- FOOTER (ОБНОВЛЕНО) -->
+        <footer class="bg-[--lusso-dark] text-white pt-20 pb-10 px-6">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <h2 class="text-5xl font-black text-[--lusso-accent] tracking-tighter mb-6 w-40">
+                          <a href="index.html"><img  src="assets/img/Лого.png" alt="" style="margin-left: -15px;"></a>
+   
+                    </h2>
+                    <p class="text-white/50 max-w-sm mb-8">Первая specialty кофейня в городе. Мы верим, что каждая чашка должна быть идеальной.</p>
+                    <div class="flex gap-4">
+                        <a v-for="soc in ['IG', 'WA', 'TG']" href="#" class="w-10 h-10 rounded-full  btn-premium flex items-center justify-center text-[10px] font-bold hover:bg-[--lusso-accent] hover:border-transparent transition-all">{{ soc }}</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Навигация</h4>
+                    <ul class="space-y-4 text-sm text-white/60">
+                        <li><a href="#" class="hover:text-white transition-colors">Меню</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Обжарка</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Кейтеринг</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[--lusso-accent]">Контакты</h4>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, ул. Кавказская 52</a><br>
+                    <a href="" class="text-sm text-white/60 mb-2 hover:text-white ">г. Гудермес, пр-п. Кадырова 58</a><br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white ">+7 (938) 999 77 88</a> 
+                     <br>
+                    <a href="" class="text-sm text-white/60 mb-6 hover:text-white">+7 (938) 999 77 88</a>
+                    <p class="text-[10px] text-[--lusso-accent] font-bold uppercase tracking-widest">Открыты: 08:00 - 23:00</p>
+                </div>
+            </div>
+            
+            <div class="max-w-6xl mx-auto pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-white/20 uppercase tracking-widest">© 2025 LUSSO COFFEE. Crafted with heart.</p>
+                <div class="flex gap-8 text-[10px] text-white/20 uppercase tracking-widest">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+            </div>
+        </footer> 
+        
+    </div>
+
+     <script src="assets/js/libs/vue.js"></script>
+
+<script src="assets/js/script.js"></script>
+    
+    <!-- Local script for this page -->
+    <script>
+      function newsSinglePage() {
+        const { createApp, ref } = Vue;
+        
+        createApp({
+          setup() {
+            // Данные текущей статьи (как в примере, но под Lusso)
+            const article = ref({
+              title: "Сегодня в отделе обжарки прошел каппинг нового урожая из Колумбии «Эль-Параисо»",
+              date: "18.01.2026",
+              tag: "Жизнь Lusso",
+              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000",
+              intro: "В нашей лаборатории в Амстердаме состоялось долгожданное событие — мы открыли первые мешки с лотом от фермера Диего Бермудеса. Это экспериментальная анаэробная ферментация с добавлением винных дрожжей.",
+              content: `
+                <p>В мероприятии принимали участие: главный обжарщик Lusso Давид ван дер Берг и Q-грейдер Анна Соколова, а также приглашенные гости из европейской ассоциации спешелти кофе.</p>
+                <p>Начиная каппинг, Давид отметил, что важнейшей задачей для нас является не просто купить дорогое зерно, а раскрыть его потенциал так, чтобы каждый гость кофейни смог почувствовать ноты личи, персика и клубничного йогурта без профессиональной подготовки.</p>
+                <p>Анна Соколова подробно рассказала участникам о влиянии высоты произрастания (1930 метров над уровнем моря) на плотность зерна. Эксперты обсудили такие вопросы: как профиль обжарки влияет на тактильность напитка и почему для этого лота мы выбрали более светлый цвет, чем обычно.</p>
+              `,
+              contentEnd: `
+                <p>На обсуждение были вынесены следующие вопросы: стоит ли вводить этот лот в основное меню или оставить его как эксклюзив для подписчиков. Для присутствующих бариста Марко Росси провел демонстрацию заваривания в V60.</p>
+                <p>В завершение мероприятия команда решила запустить этот лот в продажу со следующей недели. Мы верим, что такой кофе меняет представление о вкусе.</p>
+              `,
+              quote: {
+                text: "Кофе — это не просто напиток, это мост между трудом фермера на другом конце света и вашей утренней чашкой.",
+                author: "Давид ван дер Берг"
+              }
+            });
+
+            // Данные для сайдбара
+            const latestNews = ref([
+              { id: 1, title: "Зимнее меню: Пряный раф и новые десерты", date: "10 Янв 2026", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400" },
+              { id: 2, title: "Мастер-класс V60 для новичков", date: "05 Янв 2026", img: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=400" },
+              { id: 3, title: "Интервью с нашим шеф-бариста", date: "28 Дек 2025", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400" },
+            ]);
+
+            return { article, latestNews };
+          }
+        }).mount('#app-news-single');
+      }
+      
+      newsSinglePage();
+    </script>
+  </body>
+</html>
