@@ -9,7 +9,7 @@ import vacancies from "./module/vacancies";
 
 
 indexPage() 
-menu()
-about()
-vacancies() 
-feedbackPage() 
+//menu()
+//about()
+//vacancies() 
+//feedbackPage() 

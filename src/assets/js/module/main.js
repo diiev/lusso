@@ -5,35 +5,52 @@ function indexPage() {
         setup() {
             // --- СОСТОЯНИЕ (REFS) ---
             const currentSlide = ref(0);
-            const currentMenuIndex = ref(0);
             const currentReviewIndex = ref(0);
-            const isMobileMenuOpen = ref(false);
             const transitionName = ref('slide-next');
 
-            // Рефы для HTML-элементов (анимация появления)
-            const refMenu = ref(null);
-            const refNews = ref(null);     // Исправлено: добавили объявление
+            // Рефы для анимации появления (Intersection Observer)
+            const refNews = ref(null);
             const refReviews = ref(null);
             const refAbout = ref(null);
 
-            // --- ДАННЫЕ ---
+            // --- ДАННЫЕ: СЛАЙДЕР ГЛАВНЫЙ ---
             const slides = [
                 { title: "ВКУС ЭСТЕТИКИ", image: "assets/img/slider1.jpeg" },
                 { title: "МАГИЯ ОБЖАРКИ", image: "assets/img/slider2.jpeg" }
             ];
 
-          
+            // --- ДАННЫЕ: ОТЗЫВЫ ---
             const reviews = [
                 { text: "Lusso — это место, где время замедляется.", author: "Ваха Мусаев" },
                 { text: "Каждый раз, приходя сюда, чувствую себя особенным.", author: "Лом-Али Якубов" },
                 { text: "Миндальный круассан и флэт уайт здесь — идеал.", author: "Делина Вахаева" }
             ];
 
-            const team = [
-                { name: "Марко Росси", role: "Шеф-бариста", desc: "Чемпион Италии по латте-арту.", img: "assets/img/team1.jpg" },
-                { name: "Анна Соколова", role: "Q-грейдер", desc: "Выбирает лучшие лоты зерна.", img: "assets/img/team2.jpg" },
-                { name: "Давид ван дер Берг", role: "Мастер обжарки", desc: "Создает уникальные профили обжарки.", img: "assets/img/team3.avif" }
-            ];
+            // --- ДАННЫЕ: КОМАНДА ---
+            const team = ref([
+                { 
+                    name: 'Ахмед', 
+                    role: 'Шеф-бариста', 
+                    desc: 'Победитель чемпионата бариста 2023. Знает о кофе всё: от терруара Эфиопии до молекулярной химии экстракции. Любит заваривать V60.', 
+                    img: 'assets/img/team1.jpg' 
+                },
+                { 
+                    name: 'Мадина', 
+                    role: 'Управляющая', 
+                    desc: 'Душа нашего заведения. Следит за тем, чтобы каждая чашка была идеальной, а каждый гость чувствовал себя как дома.', 
+                    img: 'assets/img/team2.jpg' 
+                },
+                { 
+                    name: 'Ислам', 
+                    role: 'Обжарщик', 
+                    desc: 'Человек, который управляет огнем. Именно он создает тот самый уникальный профиль обжарки Lusso, который вы так любите.', 
+                    img: 'assets/img/team3.avif' 
+                }
+            ]);
+
+      
+
+
 
             // --- ЛОГИКА НОВОСТЕЙ (LAZY LOAD) ---
             const allNews = [
@@ -46,12 +63,10 @@ function indexPage() {
             ];
 
             const visibleNews = ref([]); 
-            const itemsPerPage = 2; // Грузим по 2 новости
+            const itemsPerPage = 2; 
             const loading = ref(false);
 
-            const hasMoreNews = computed(() => {
-                return visibleNews.value.length < allNews.length;
-            });
+            const hasMoreNews = computed(() => visibleNews.value.length < allNews.length);
 
             const loadMore = () => {
                 if (loading.value || !hasMoreNews.value) return;
@@ -67,31 +82,10 @@ function indexPage() {
                 }, 600);
             };
 
-            // Загрузка первых новостей при инициализации
+            // Загрузка первых новостей
             loadMore();
 
-            // --- СВАЙПЫ (Touch Events) ---
-            let touchStartX = 0;
-            let touchEndX = 0;
-
-            const touchStart = (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            };
-
-            const touchEnd = (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            };
-
-            const handleSwipe = () => {
-                if (touchStartX - touchEndX > 50) nextMenu(); // Влево
-                else if (touchEndX - touchStartX > 50) prevMenu(); // Вправо
-            };
-
-            // --- НАВИГАЦИЯ ---
-            const nextMenu = () => { currentMenuIndex.value = (currentMenuIndex.value + 1) % menuItems.length; };
-            const prevMenu = () => { currentMenuIndex.value = (currentMenuIndex.value - 1 + menuItems.length) % menuItems.length; };
-
+            // --- НАВИГАЦИЯ ОТЗЫВОВ ---
             const nextReview = () => {
                 transitionName.value = 'slide-next';
                 currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length;
@@ -102,18 +96,19 @@ function indexPage() {
                 currentReviewIndex.value = (currentReviewIndex.value - 1 + reviews.length) % reviews.length;
             };
 
-            // --- Lifecycle Hooks (onMounted) ---
+            // --- Lifecycle Hooks ---
             onMounted(() => {
-                // 1. Intersection Observer для анимации появления секций
+                // 1. Анимация появления при скролле
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
+                            // observer.unobserve(entry.target); // Можно раскомментировать, если анимация нужна только 1 раз
                         }
                     });
                 }, { threshold: 0.15 });
 
-                [refMenu.value, refNews.value, refReviews.value, refAbout.value].forEach(el => {
+                [refNews.value, refReviews.value, refAbout.value].forEach(el => {
                     if (el) observer.observe(el);
                 });
 
@@ -123,16 +118,14 @@ function indexPage() {
                 }, 6000);
                 
                 setInterval(() => { 
-                    currentReviewIndex.value = (currentReviewIndex.value + 1) % reviews.length; 
+                    nextReview(); // Используем функцию для правильной анимации
                 }, 8000);
-            });
+            }); 
 
             return {
                 // Состояние
                 currentSlide,
-                currentMenuIndex,
                 currentReviewIndex,
-                isMobileMenuOpen,
                 transitionName,
                 
                 // Данные
@@ -140,25 +133,21 @@ function indexPage() {
                 reviews,
                 team,
                 
-                // Новости (Lazy Load)
+                // Новости
                 visibleNews,
                 hasMoreNews,
                 loading,
                 loadMore,
 
-                // Refs элементов
-                refMenu,
+                // Refs
                 refNews,
                 refReviews,
                 refAbout,
 
                 // Методы
-                touchStart,
-                touchEnd,
-                nextMenu,
-                prevMenu,
                 nextReview,
-                prevReview
+                prevReview,  
+    
             };
         }
     }).mount('#app');

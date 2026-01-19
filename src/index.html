@@ -328,47 +328,45 @@
             </div>
 
             <!-- Team mini-grid -->
-            <div id="team" class="space-y-6">
-              <h3 class="text-lg font-semibold tracking-tight">
-                Команда, которая стоит за чашкой
-              </h3>
-              <div class="grid grid-cols-1 gap-4">
-                <div
-                  v-for="(member, index) in team"
-                  :key="index"
-                  class="flex items-center gap-4 p-3 rounded-2xl bg-white shadow-[0_10px_35px_rgba(0,0,0,0.08)]"
-                >
-                  <div class="w-14 h-14 rounded-2xl overflow-hidden">
-                    <img
-                      :src="member.img"
-                      :alt="member.name"
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm font-semibold text-[--lusso-brown]">
-                      {{ member.name }}
-                    </p>
-                    <p
-                      class="text-[10px] uppercase tracking-[0.25em] text-[--lusso-brown]/60"
-                    >
-                      {{ member.role }}
-                    </p>
-                    <p
-                      class="mt-1 text-[11px] text-[--lusso-brown]/60 line-clamp-2"
-                    >
-                      {{ member.desc }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <p
-                class="text-[11px] text-[--lusso-brown]/50 leading-relaxed pt-1"
-              >
-                Мы верим, что гость приходит не только за вкусом, но и за людьми,
-                которые этот вкус создают — от обжарщика до бариста на смене.
-              </p>
+<div id="team" class="space-y-6 relative z-10">
+    <h3 class="text-lg font-semibold tracking-tight text-[--lusso-brown]">
+        Команда, которая стоит за чашкой
+    </h3>
+
+    <div class="grid grid-cols-1 gap-4">
+        <div v-for="(member, index) in team" :key="index"
+             class="group relative flex items-start gap-4 p-4 rounded-2xl bg-white border border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:scale-[1.02] hover:border-[--lusso-accent]/20 overflow-hidden">
+            
+            <!-- ФОТО -->
+            <div class="relative flex-shrink-0 w-14 h-14">
+                <img :src="member.img" :alt="member.name" class="w-full h-full object-cover rounded-2xl bg-gray-100 shadow-sm transition-transform duration-500 group-hover:scale-110">
             </div>
+
+            <!-- КОНТЕНТ -->
+            <div class="flex-1 min-w-0">
+                <!-- Заголовок -->
+                <div class="mb-1">
+                    <p class="text-sm font-bold text-[--lusso-brown] leading-tight group-hover:text-[--lusso-accent] transition-colors">
+                        {{ member.name }}
+                    </p>
+                    <p class="text-[9px] font-bold uppercase tracking-[0.2em] text-[--lusso-accent] mt-1 opacity-80 group-hover:opacity-100">
+                        {{ member.role }}
+                    </p>
+                </div>
+                
+                <!-- Описание (всегда видно) -->
+                <p class="text-[11px] text-[--lusso-brown]/70 leading-relaxed">
+                    {{ member.desc }}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <p class="text-[11px] text-[--lusso-brown]/50 leading-relaxed pt-1 px-1">
+        Мы верим, что гость приходит не только за вкусом, но и за людьми, которые этот вкус создают.
+    </p>
+</div>
+
           </div>
         </div>
       </section>
