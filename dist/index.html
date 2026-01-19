@@ -419,14 +419,14 @@
             </div>
 
             <!-- Team mini-grid -->
-<div id="team" class="space-y-6 relative z-10">
+<div id="team" class="space-y-6 relative z-10 cursor-pointer">
     <h3 class="text-lg font-semibold tracking-tight text-[--lusso-brown]">
         Команда, которая стоит за чашкой
     </h3>
 
     <div class="grid grid-cols-1 gap-4">
         <div v-for="(member, index) in team" :key="index"
-             class="group relative flex items-start gap-4 p-4 rounded-2xl bg-white border border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:scale-[1.02] hover:border-[--lusso-accent]/20 overflow-hidden">
+             class="group relative flex items-start gap-4 p-4 rounded-2xl bg-white border border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)]  hover:border-[--lusso-accent] overflow-hidden">
             
             <!-- ФОТО -->
             <div class="relative flex-shrink-0 w-14 h-14">
