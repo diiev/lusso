@@ -112,7 +112,7 @@
                 </div>
                 <!-- Сетка товаров -->
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
-    <div v-for="item in filteredItems" :key="item.id"
+    <div v-for="item in visibleItems" :key="item.id"
         @click="openItemModal(item)"
         class="lusso-card rounded-[1.2rem] md:rounded-[1.5rem] overflow-hidden flex flex-col group bg-white border border-black/5">
         
@@ -164,6 +164,10 @@
             </div>
         </div>
     </div>
+</div> 
+<!-- НОВЫЙ ЭЛЕМЕНТ: Невидимый блок, который триггерит загрузку -->
+<div ref="bottomSentinel" class="h-10 w-full mt-4 flex justify-center opacity-0 pointer-events-none">
+    Загрузка...
 </div>
 
 

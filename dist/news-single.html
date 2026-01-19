@@ -101,15 +101,32 @@
         <div class="max-w-7xl mx-auto w-full">
           
           <!-- BREADCRUMBS (Хлебные крошки) -->
-          <nav class="mb-6 md:mb-10">
-            <ul class="flex items-center gap-2 text-xs md:text-[10px] uppercase tracking-[0.2em] text-[--lusso-brown]/40 font-bold flex-wrap">
-              <li><a href="/" class="hover:text-[--lusso-accent] transition-colors">Главная</a></li>
-              <li>/</li>
-              <li><a href="journal.html" class="hover:text-[--lusso-accent] transition-colors">Новости</a></li>
-              <li>/</li>
-             
-            </ul>
-          </nav>
+      <nav class="mb-6 md:mb-10 inline-block py-2">
+  <ul class="flex items-center gap-2 px-4 py-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-sm text-xs md:text-[10px] uppercase tracking-[0.15em] font-bold text-[--lusso-brown]/60">
+    
+    <li>
+      <a href="/" class="flex items-center hover:text-[--lusso-accent] transition-colors">
+     
+        Главная
+      </a>
+    </li>
+    
+    <li class="text-[--lusso-accent]/40">/</li>
+    
+    <li>
+      <a href="journal.html" class="hover:text-[--lusso-accent] transition-colors">Новости</a>
+    </li>
+    
+    <li class="text-[--lusso-accent]/40">/</li>
+    
+    <!-- Текущая страница (неактивная ссылка) -->
+    <li class="text-[--lusso-brown]">
+      Статья
+    </li>
+
+  </ul>
+</nav>
+
 
           <!-- GRID LAYOUT: Content (Left) + Sidebar (Right) -->
           <div class="grid-single gap-8 lg:gap-12 mb-20">
