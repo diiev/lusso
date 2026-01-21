@@ -471,3 +471,28 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* Анимация теам*/
+/* Анимация списка (list) */
+.list-move, /* для плавного сдвига элементов */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(30px); /* Новые выезжают справа */
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px); /* Старые уезжают влево */
+}
+
+/* Важно: чтобы при уходе элемента он не занимал место и остальные плавно сдвигались */
+.list-leave-active {
+  position: absolute;
+  width: 100%; /* Чтобы ширина сохранялась при absolute */
+}
