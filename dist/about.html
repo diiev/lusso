@@ -105,8 +105,8 @@
                 background-position: center; filter: brightness(0.2) contrast(1.1);"></div>
     
     <!-- Градиентное наложение для глубины и читаемости текста -->
-    <div class="absolute inset-0 bg-gradient-to-r from-[--lusso-dark] via-[--lusso-dark]/60 to-transparent"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[--lusso-dark] via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[--lusso-brown] via-[--lusso-brown]/60 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[--lusso-brown] via-transparent to-transparent"></div>
 
     <div class="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12">
         <div class="max-w-2xl">
@@ -165,169 +165,88 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- LUSSO -->
-              <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-black/5">  
-    <h4 class="text-xl md:text-2xl font-black mb-2">LUSSO</h4>
-    <p class="text-xs font-bold uppercase tracking-[0.2em] text-[--lusso-brown] mb-4">ул. Кавказская, 52</p>
-    <p class="text-sm text-gray-500 mb-4">
-        Первая кофейня LUSSO. Спокойный ритм, много дневного света, акцент на классическом эспрессо и десертах.
-    </p>
-    <div class="grid grid-cols-2 gap-4 text-sm mb-6">
-        <div>
-            <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Телефон</p>
-            <p class="font-semibold text-[--lusso-dark]">+7 (938) 999 77 88</p>
-        </div>
-        <div>
-            <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Часы работы</p>
-            <p class="font-semibold text-[--lusso-dark]">Ежедневно 08:00–23:00</p>
-        </div>
-    </div>
-    <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Как добраться</p>
-    <ul class="text-xs text-gray-500 space-y-1 mb-4">
-        <li>— Остановка «Кавказская» — 3 минуты пешком.</li>
-        <li>— Удобный подъезд на авто, парковка вдоль улицы.</li>
-    </ul>
+          
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8"> 
     
-    <!-- Фотогалерея-карусель -->
-    <div class="rounded-2xl overflow-hidden border border-black/5 h-56 md:h-64 relative group">
-        <!-- Контейнер для слайдов -->
-        <div 
-            class="flex h-full transition-transform duration-500 ease-out"
-            :style="{ transform: `translateX(-${currentLocationSlide * 100}%)` }"
-            @touchstart="handleTouchStart"
-            @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd"
-        >
-            <div 
-                v-for="(photo, index) in locationPhotos" 
-                :key="index"
-                class="w-full h-full flex-shrink-0 "
-            >
-                <img 
-                    :src="photo.src" 
-                    :alt="photo.alt"
-                    class="w-full h-full object-cover"
-                />
+    <!-- v-for проходит по массиву locations -->
+    <div 
+        v-for="(location, locIndex) in locations" 
+        :key="location.id"
+        class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-black/5"
+    >  
+        <h4 class="text-xl md:text-2xl font-black mb-2">{{ location.title }}</h4>
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-[--lusso-brown] mb-4">{{ location.address }}</p>
+        <p class="text-sm text-gray-500 mb-4">{{ location.description }}</p>
+        
+        <div class="grid grid-cols-2 gap-4 text-sm mb-6">
+            <div>
+                <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Телефон</p>
+                <p class="font-semibold text-[--lusso-brown]">{{ location.phone }}</p>
+            </div>
+            <div>
+                <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Часы работы</p>
+                <p class="font-semibold text-[--lusso-brown]">{{ location.hours }}</p>
             </div>
         </div>
         
-        <!-- Кнопки навигации -->
-        <button 
-            @click="prevLocationSlide"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            aria-label="Предыдущее фото"
-        >
-            <svg class="w-5 h-5 text-[--lusso-dark]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </button>
+        <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-4">Фотогалерея</p>
+
+       
         
-        <button 
-            @click="nextLocationSlide"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            aria-label="Следующее фото"
-        >
-            <svg class="w-5 h-5 text-[--lusso-dark]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-            </svg>
-        </button>
-        
-        <!-- Индикаторы слайдов -->
-        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-            <button
-                v-for="(photo, index) in locationPhotos"
-                :key="'dot-' + index"
-                @click="currentLocationSlide = index"
-                class="w-2 h-2 rounded-full transition-all duration-300"
-                :class="currentLocationSlide === index ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'"
-                :aria-label="'Перейти к фото ' + (index + 1)"
-            ></button>
+        <!-- КАРУСЕЛЬ -->
+        <div class="rounded-2xl overflow-hidden border border-black/5 h-56 md:h-64 relative group">
+            
+            <!-- Слайдер -->
+            <div 
+                class="flex h-full transition-transform duration-500 ease-out"
+                :style="{ transform: `translateX(-${location.currentSlide * 100}%)` }"
+                @touchstart="(e) => handleTouchStart(e, locIndex)" 
+                @touchmove="handleTouchMove"
+                @touchend="handleTouchEnd"
+            >
+                <div 
+                    v-for="(photo, pIndex) in location.photos" 
+                    :key="pIndex"
+                    class="w-full flex-shrink-0 h-full"
+                >
+                    <img :src="photo.src" :alt="photo.alt" class="w-full h-full object-cover"/>
+                </div>
+            </div>
+            
+            <!-- Кнопка НАЗАД (передаем locIndex) -->
+            <button 
+                @click="prevSlide(locIndex)"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+            >
+                <svg class="w-5 h-5 text-[--lusso-brown]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            
+            <!-- Кнопка ВПЕРЕД (передаем locIndex) -->
+            <button 
+                @click="nextSlide(locIndex)"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+            >
+                <svg class="w-5 h-5 text-[--lusso-brown]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            
+            <!-- Индикаторы (точки) -->
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                <button
+                    v-for="(photo, pIndex) in location.photos"
+                    :key="'dot-' + locIndex + '-' + pIndex"
+                    @click="location.currentSlide = pIndex"
+                    class="w-2 h-2 rounded-full transition-all duration-300 shadow-sm"
+                    :class="location.currentSlide === pIndex ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'"
+                ></button>
+            </div>
         </div>
     </div>
 </div>
 
 
-                <!-- URBAN HAVEN -->
-                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-black/5">
-                    <h4 class="text-xl md:text-2xl font-black mb-2">LUSSO URBAN HAVEN</h4>
-                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-[--lusso-brown] mb-4">проспект А. Кадырова, 28</p>
-                    <p class="text-sm text-gray-500 mb-4">
-                        Современное городское убежище. Высокие потолки, динамичная посадка и акцент на альтернативных методах заваривания.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4 text-sm mb-6">
-                        <div>
-                            <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Телефон</p>
-                            <p class="font-semibold text-[--lusso-dark]">+7 (938) 999 81 18</p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] uppercase text-gray-400 font-bold mb-1">Часы работы</p>
-                            <p class="font-semibold text-[--lusso-dark]">Ежедневно 08:00–23:00</p>
-                        </div>
-                    </div>
-                    <p class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Как добраться</p>
-                    <ul class="text-xs text-gray-500 space-y-1 mb-4">
-                        <li>— Остановка «Кадырова 28» прямо у фасада.</li>
-                        <li>— Подземная парковка ТЦ поблизости.</li>
-                    </ul>
-                    <!-- Фотогалерея-карусель -->
-    <div class="rounded-2xl overflow-hidden border border-black/5 h-56 md:h-64 relative group">
-        <!-- Контейнер для слайдов -->
-        <div 
-            class="flex h-full transition-transform duration-500 ease-out"
-            :style="{ transform: `translateX(-${currentLocationSlide * 100}%)` }"
-            @touchstart="handleTouchStart"
-            @touchmove="handleTouchMove"
-            @touchend="handleTouchEnd"
-        >
-            <div 
-                v-for="(photo, index) in locationPhotos" 
-                :key="index"
-                class="w-full h-full flex-shrink-0 "
-            >
-                <img 
-                    :src="photo.src" 
-                    :alt="photo.alt"
-                    class="w-full h-full object-cover"
-                />
-            </div>
-        </div>
-        
-        <!-- Кнопки навигации -->
-        <button 
-            @click="prevLocationSlide"
-            class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            aria-label="Предыдущее фото"
-        >
-            <svg class="w-5 h-5 text-[--lusso-dark]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </button>
-        
-        <button 
-            @click="nextLocationSlide"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            aria-label="Следующее фото"
-        >
-            <svg class="w-5 h-5 text-[--lusso-dark]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-            </svg>
-        </button>
-        
-        <!-- Индикаторы слайдов -->
-        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-            <button
-                v-for="(photo, index) in locationPhotos"
-                :key="'dot-' + index"
-                @click="currentLocationSlide = index"
-                class="w-2 h-2 rounded-full transition-all duration-300"
-                :class="currentLocationSlide === index ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/75'"
-                :aria-label="'Перейти к фото ' + (index + 1)"
-            ></button>
-        </div>
-    </div>
-                </div>
-            </div>
+
+         
+            
         </div>
     </section>
 
@@ -343,10 +262,10 @@
                     Выберите кофейню, и мы покажем вам, как удобнее добраться: пешком, на авто или общественным транспортом.
                 </p>
                 <div class="bg-white/5 rounded-2xl p-3 inline-flex gap-2 mb-4">
-                    <button @click="activePoint = 'lusso'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='lusso' ? 'bg-[--lusso-cream] text-[--lusso-dark]' : 'text-[--lusso-cream]/70']">
+                    <button @click="activePoint = 'lusso'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='lusso' ? 'bg-[--lusso-cream] text-[--lusso-brown]' : 'text-[--lusso-cream]/70']">
                         LUSSO
                     </button>
-                    <button @click="activePoint = 'urban'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='urban' ? 'bg-[--lusso-cream] text-[--lusso-dark]' : 'text-[--lusso-cream]/70']">
+                    <button @click="activePoint = 'urban'" :class="['px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-[0.15em]', activePoint==='urban' ? 'bg-[--lusso-cream] text-[--lusso-brown]' : 'text-[--lusso-cream]/70']">
                         URBAN HAVEN
                     </button>
                 </div>
@@ -358,7 +277,7 @@
                 </ul>
             </div>
             <div class="md:w-1/2 w-full">
-                <div class="bg-[--lusso-cream] rounded-3xl p-6 shadow-2xl text-[--lusso-dark] floating">
+                <div class="bg-[--lusso-cream] rounded-3xl p-6 shadow-2xl text-[--lusso-brown] floating">
                     <p class="text-xs uppercase tracking-[0.2em] text-[--lusso-brown] mb-3">Навигация</p>
                     <p class="font-black mb-1" v-if="activePoint==='lusso'">LUSSO — Кавказская, 52</p>
                     <p class="font-black mb-1" v-else>LUSSO URBAN HAVEN — Кадырова, 28</p>
@@ -383,7 +302,7 @@
                     Расскажите о впечатлениях, задайте вопрос по меню или предложите идею для коллаборации — команда LUSSO всегда на связи.
                 </p>
                 <ul class="text-sm text-gray-500 space-y-2 mb-6">
-                    <li>— Почта: <span class="font-semibold text-[--lusso-dark]">hello@lusso.coffee</span></li>
+                    <li>— Почта: <span class="font-semibold text-[--lusso-brown]">hello@lusso.coffee</span></li>
                     <li>— Instagram и WhatsApp — в шапке сайта.</li>
                 </ul>
             </div>
