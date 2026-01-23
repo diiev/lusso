@@ -10,24 +10,65 @@ function about() {
             // --- 2. КАРТА / ТАБЫ (Маршруты) ---
             const activePoint = ref('lusso');
 
-
-              // --- 3. КАРУСЕЛЬ ФОТОГАЛЕРЕИ ЛОКАЦИЙ ---
-            const currentLocationSlide = ref(0);
-            
-            // Массив фотографий для текущей локации
-            const locationPhotos = ref([
-                { src: 'assets/img/lusso_1.jpg', alt: 'LUSSO - интерьер' },
-                { src: 'assets/img/lusso_3.webp', alt: 'LUSSO - зал' },
-                { src: 'assets/img/lusso_5.webp', alt: 'LUSSO - бар' },
-                { src: 'assets/img/vacan.jpg', alt: 'LUSSO - атмосфера' }
+      // --- 1. ЛОКАЦИИ (Данные + Состояние слайдера) ---
+            const locations = ref([
+                {
+                    id: 1,
+                    title: 'LUSSO',
+                    address: 'ул. Кавказская, 52',
+                    description: 'Первая кофейня LUSSO. Спокойный ритм, много дневного света, акцент на классическом эспрессо и десертах.',
+                    phone: '+7 (938) 999 77 88',
+                    hours: 'Ежедневно 08:00–23:00',
+                    mapLink: '...', // Ссылка на маршрут, если нужно
+                    // У каждой карточки СВОЙ счетчик слайда
+                    currentSlide: 0, 
+                    // СВОИ фото
+                    photos: [
+                        { src: 'assets/img/lusso_1.jpg', alt: 'Кавказская интерьер' },
+                        { src: 'assets/img/lusso_3.webp', alt: 'Кавказская зал' },
+                        { src: 'assets/img/lusso_5.webp', alt: 'Кавказская детали' },
+                    ]
+                },
+                {
+                    id: 2,
+                    title: 'LUSSO / URBAN',
+                    address: 'пр. Проспект, 10', // Другой адрес
+                    description: 'Новая точка в центре города. Быстрый ритм, завтраки весь день и альтернативные способы заваривания.',
+                    phone: '+7 (999) 123 45 67',
+                    hours: 'Ежедневно 07:30–22:00',
+                    mapLink: '...',
+                    currentSlide: 0, // Отдельный счетчик для второй карточки
+                    photos: [
+                        // ДРУГИЕ фото
+                        { src: 'assets/img/urban_1.jpg', alt: 'Урбан вход' },
+                        { src: 'assets/img/urban_2.jpg', alt: 'Урбан бар' },
+                        { src: 'assets/img/urban_3.jpg', alt: 'Урбан еда' },
+                    ]
+                }
             ]);
 
-  // Touch события для свайпа
+            // --- Методы навигации (принимают индекс карточки) ---
+            
+            const nextSlide = (index) => {
+                const loc = locations.value[index];
+                loc.currentSlide = (loc.currentSlide + 1) % loc.photos.length;
+            };
+
+            const prevSlide = (index) => {
+                const loc = locations.value[index];
+                const len = loc.photos.length;
+                loc.currentSlide = (loc.currentSlide - 1 + len) % len;
+            };
+
+            // --- Свайпы (Touch Events) ---
+            // Нам нужно знать, на какой карточке начался свайп
             let touchStartX = 0;
             let touchEndX = 0;
+            let activeCardIndex = null; 
 
-            const handleTouchStart = (e) => {
+            const handleTouchStart = (e, index) => {
                 touchStartX = e.touches[0].clientX;
+                activeCardIndex = index; // Запоминаем, какую карточку трогаем
             };
 
             const handleTouchMove = (e) => {
@@ -35,26 +76,21 @@ function about() {
             };
 
             const handleTouchEnd = () => {
-                const threshold = 50; // минимальное расстояние свайпа
+                if (activeCardIndex === null) return;
+                
+                const threshold = 50;
                 const diff = touchStartX - touchEndX;
 
                 if (Math.abs(diff) > threshold) {
                     if (diff > 0) {
-                        nextLocationSlide();
+                        nextSlide(activeCardIndex);
                     } else {
-                        prevLocationSlide();
+                        prevSlide(activeCardIndex);
                     }
                 }
+                activeCardIndex = null; // Сброс
             };
-
-            const nextLocationSlide = () => {
-                currentLocationSlide.value = (currentLocationSlide.value + 1) % locationPhotos.value.length;
-            };
-
-            const prevLocationSlide = () => {
-                const len = locationPhotos.value.length;
-                currentLocationSlide.value = (currentLocationSlide.value - 1 + len) % len;
-            };
+           
             // --- 4. ФОРМА ОБРАТНОЙ СВЯЗИ ---
             const form = ref({ name: '', contact: '', topic: '', message: '' });
             const formSent = ref(false);
@@ -158,10 +194,9 @@ function about() {
                 // Карта
                 activePoint,
                  // Фотогалерея локаций
-                currentLocationSlide,
-                locationPhotos,
-                nextLocationSlide,
-                prevLocationSlide,
+                 locations, // Возвращаем массив локаций
+                nextSlide,
+                prevSlide,
                 handleTouchStart,
                 handleTouchMove,
                 handleTouchEnd,
