@@ -341,7 +341,7 @@
             
             <div v-for="member in visibleTeam" :key="member.id"
                  @click="openMemberModal(member)"
-                 class="group relative flex items-start gap-4 p-4 rounded-2xl bg-white border border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.05)] cursor-pointer transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-[--lusso-accent] hover:scale-[1.01] overflow-hidden">
+                 class="group relative flex items-start gap-4 p-4 rounded-2xl bg-white border border-transparent shadow-[0_4px_15px_rgba(0,0,0,0.05)] cursor-pointer transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:border-[--lusso-accent]  overflow-hidden">
                 
                 <!-- ФОТО -->
                 <div class="relative flex-shrink-0 w-14 h-14">
@@ -396,7 +396,6 @@
       <!-- Кнопка Закрыть -->
       <button @click="closeMemberModal" class="absolute top-6 right-6 z-50 group cursor-pointer">
         <div class="flex items-center gap-3 text-white/50 group-hover:text-white transition-colors">
-            <span class="text-[10px] uppercase tracking-widest font-bold hidden md:block">Закрыть</span>
             <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
         </div>
       </button>

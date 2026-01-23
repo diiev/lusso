@@ -3,7 +3,8 @@ function indexPage() {
 
     createApp({
         setup() {
-            // --- СОСТОЯНИЕ (REFS) ---
+            // --- СОСТОЯНИЕ (REFS) --- 
+            const isMobileMenuOpen = ref(false);
             const currentSlide = ref(0);
             const currentReviewIndex = ref(0);
             const transitionName = ref('slide-next');
@@ -282,7 +283,7 @@ const prevSlide = () => {
                 currentSlide,
                 currentReviewIndex,
                 transitionName,
-                
+                isMobileMenuOpen,
                 // Данные
                 slides,
                 reviews,

@@ -5,25 +5,57 @@ function about() {
         setup() {
             // --- 1. НАВИГАЦИЯ & МОБИЛЬНОЕ МЕНЮ ---
             const isMobileMenuOpen = ref(false);
-            const mobileLinks = ref([
-                { n: '01', t: 'Главная', h: 'index.html' },
-                { n: '02', t: 'Меню', h: 'menu.html' },
-                { n: '03', t: 'О нас', h: '#locations' },
-                { n: '04', t: 'Связаться', h: '#contact' }
-            ]);
-
-            const handleMobileNav = (href) => {
-                isMobileMenuOpen.value = false;
-                if (href.startsWith('#')) {
-                    const el = document.querySelector(href);
-                    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 200);
-                }
-            };
+           
 
             // --- 2. КАРТА / ТАБЫ (Маршруты) ---
             const activePoint = ref('lusso');
 
-            // --- 3. ФОРМА ОБРАТНОЙ СВЯЗИ ---
+
+              // --- 3. КАРУСЕЛЬ ФОТОГАЛЕРЕИ ЛОКАЦИЙ ---
+            const currentLocationSlide = ref(0);
+            
+            // Массив фотографий для текущей локации
+            const locationPhotos = ref([
+                { src: 'assets/img/lusso_1.jpg', alt: 'LUSSO - интерьер' },
+                { src: 'assets/img/lusso_3.webp', alt: 'LUSSO - зал' },
+                { src: 'assets/img/lusso_5.webp', alt: 'LUSSO - бар' },
+                { src: 'assets/img/vacan.jpg', alt: 'LUSSO - атмосфера' }
+            ]);
+
+  // Touch события для свайпа
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            const handleTouchStart = (e) => {
+                touchStartX = e.touches[0].clientX;
+            };
+
+            const handleTouchMove = (e) => {
+                touchEndX = e.touches[0].clientX;
+            };
+
+            const handleTouchEnd = () => {
+                const threshold = 50; // минимальное расстояние свайпа
+                const diff = touchStartX - touchEndX;
+
+                if (Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        nextLocationSlide();
+                    } else {
+                        prevLocationSlide();
+                    }
+                }
+            };
+
+            const nextLocationSlide = () => {
+                currentLocationSlide.value = (currentLocationSlide.value + 1) % locationPhotos.value.length;
+            };
+
+            const prevLocationSlide = () => {
+                const len = locationPhotos.value.length;
+                currentLocationSlide.value = (currentLocationSlide.value - 1 + len) % len;
+            };
+            // --- 4. ФОРМА ОБРАТНОЙ СВЯЗИ ---
             const form = ref({ name: '', contact: '', topic: '', message: '' });
             const formSent = ref(false);
 
@@ -41,7 +73,7 @@ function about() {
                 setTimeout(() => { formSent.value = false; }, 5000);
             };
 
-            // --- 4. АНИМАЦИИ ПРИ СКРОЛЛЕ (Intersection Observer) ---
+            // --- 5. АНИМАЦИИ ПРИ СКРОЛЛЕ (Intersection Observer) ---
             const locationsRef = ref(null);
             const routeRef = ref(null);
             const contactRef = ref(null);
@@ -60,7 +92,7 @@ function about() {
                 });
             });
 
-            // --- 5. ИСТОРИЯ БРЕНДА (Синхронизированный слайдер) ---
+            // ---6. ИСТОРИЯ БРЕНДА (Синхронизированный слайдер) ---
             const isHistoryModalOpen = ref(false);
             const currentHistorySlide = ref(0);
             
@@ -122,9 +154,17 @@ function about() {
 
             return {
                 // Навигация
-                isMobileMenuOpen, mobileLinks, handleMobileNav,
+                isMobileMenuOpen,
                 // Карта
                 activePoint,
+                 // Фотогалерея локаций
+                currentLocationSlide,
+                locationPhotos,
+                nextLocationSlide,
+                prevLocationSlide,
+                handleTouchStart,
+                handleTouchMove,
+                handleTouchEnd,
                 // Форма
                 form, formSent, handleForm,
                 // Скролл-рефы
