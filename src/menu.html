@@ -9,22 +9,22 @@
         <div class="max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-10 md:pt-24">
 
             <!-- 1. ВЫБОР ЛОКАЦИИ (В стиле Home) -->
-           <div v-if="!selectedLocation"
-                class="animate__animated animate__fadeIn flex flex-col items-center">
-               <div class="text-center mb-16">
-                    <p class="text-[--lusso-accent] font-bold uppercase tracking-[0.4em] text-xs mb-3">LUSSO EXPERIENCE</p>
-                    <h1 class="text-4xl md:text-5xl font-black text-[--lusso-brown] tracking-tighter uppercase">Выберите кофейню</h1>
+            <div v-if="!selectedLocation" class="animate__animated animate__fadeIn flex flex-col items-center">
+                <div class="text-center mb-16">
+                    <p class="text-[--lusso-accent] font-bold uppercase tracking-[0.4em] text-xs mb-3">LUSSO EXPERIENCE
+                    </p>
+                    <h1 class="text-4xl md:text-5xl font-black text-[--lusso-brown] tracking-tighter uppercase">Выберите
+                        кофейню</h1>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-4xl">
                     <div v-for="loc in locations" @click="selectLocation(loc.name)"
                         class="group relative overflow-hidden border hover:border-[--lusso-accent]   rounded-2xl cursor-pointer transition-all duration-400 bg-white ">
 
-                      
+
 
                         <!-- Изображение с эффектом наведения -->
                         <div class="overflow-hidden h-56 relative">
-                            <img :src="loc.image"
-                                class="w-full h-full object-cover transition-all">
+                            <img :src="loc.image" class="w-full h-full object-cover transition-all">
 
                         </div>
 
@@ -79,10 +79,12 @@
             </div>
 
             <!-- 2. ГЛАВНОЕ МЕНЮ (Modern Luxe) -->
-            <div  v-else class="animate__animated animate__fadeIn">
+            <div v-else class="animate__animated animate__fadeIn">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
                     <div>
-                        <span class="text-[12px] font-bold uppercase tracking-[0.5em] text-[--lusso-accent] drop-shadow-sm">{{ selectedLocation }} </span>
+                        <span
+                            class="text-[12px] font-bold uppercase tracking-[0.5em] text-[--lusso-accent] drop-shadow-sm">{{
+                            selectedLocation }} </span>
                         <h2 class="text-5xl md:text-6xl font-black tracking-tighter mt-3 text-[--lusso-brown]">МЕНЮ</h2>
                     </div>
                     <button @click="selectedLocation = null"
@@ -92,13 +94,17 @@
                     </button>
                 </div>
 
-        <!-- Поиск и Категории -->
+                <!-- Поиск и Категории -->
                 <div class="space-y-8 mb-12">
                     <div class="relative group max-w-100">
                         <input v-model="searchQuery" type="text" placeholder="Поиск в меню..."
                             class="w-full bg-white border border-[--lusso-brown]/10 py-3 md:py-5 pl-14 pr-10 rounded-2xl text-sm font-semibold shadow-sm focus:shadow-2xl focus:shadow-[--lusso-accent]/10 focus:border-[--lusso-accent] outline-none transition-all duration-500">
                         <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-[--lusso-accent]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <svg class="h-5 w-5 text-[--lusso-accent]" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
                         </div>
                     </div>
 
@@ -110,297 +116,485 @@
                         </button>
                     </div>
                 </div>
+
+
                 <!-- Сетка товаров -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
-    <div v-for="item in visibleItems" :key="item.id"
-        @click="openItemModal(item)"
-        class="lusso-card rounded-[1.2rem] md:rounded-[1.5rem] overflow-hidden flex flex-col group bg-white border border-black/5">
-        
-        <div class="aspect-square overflow-hidden relative">
-            <img :src="item.image" class="w-full h-full object-cover transition-transform duration-700"> 
-            
-            <!-- Badge Новинка (Увеличен до читаемого размера) -->
-            <div v-if="item.isNew" class="absolute top-0 left-0 z-10">
-                <div class="bg-[red] text-white text-[8px] md:text-[10px] font-black px-3 py-1.5 md:px-6 md:py-3 uppercase tracking-widest rounded-br-xl md:rounded-br-2xl shadow-xl">
-                    Новинка
-                </div>
-            </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
+                    <div v-for="item in visibleItems" :key="item.id" @click="openItemModal(item)"
+                        class="lusso-card rounded-[1.2rem] md:rounded-[1.5rem] overflow-hidden flex flex-col group bg-white border border-black/5">
 
-            <!-- Цена -->
-            <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-md px-2.5 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl font-black text-[10px] md:text-sm text-[--lusso-brown] shadow-sm">
-                {{ item.price }} ₽
-            </div>
-        </div>
+                        <div class="aspect-square overflow-hidden relative">
+                            <img :src="item.image" class="w-full h-full object-cover transition-transform duration-700">
 
-        <div class="p-3 md:p-6 flex-grow flex flex-col">
-            <!-- Заголовок (Увеличен шрифт до 13px на мобильных) -->
-            <h3 class="font-black text-[13px] md:text-base mb-1 md:mb-2 text-[--lusso-brown] group-hover:text-[--lusso-accent] transition-colors leading-tight ">
-                {{ item.name }}
-            </h3>
-            <!-- Описание (Увеличен шрифт до 11px на мобильных) -->
-            <p class="text-[11px] md:text-[11px] text-[--lusso-brown] opacity-60 font-medium  mb-4 md:mb-6">
-                {{ item.desc }}
-            </p>
+                            <!-- Badge Новинка -->
+                            <div v-if="item.isNew" class="absolute top-0 left-0 z-10">
+                                <div
+                                    class="bg-[red] text-white text-[8px] md:text-[10px] font-black px-3 py-1.5 md:px-6 md:py-3 uppercase tracking-widest rounded-br-xl md:rounded-br-2xl shadow-xl">
+                                    Новинка
+                                </div>
+                            </div>
 
-            <div class="mt-auto">
-                <!-- Контейнер кнопок (Увеличена высота до 36px на мобильных) -->
-                <div class="flex items-center bg-[--lusso-cream] p-1 md:p-1.5 rounded-xl md:rounded-2xl w-full border border-[--lusso-brown]/5">
-                    <button v-if="getItemQty(item.id) > 0" @click.stop="changeQty(item, -1)"
-                        class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl bg-white text-[--lusso-brown] hover:text-red-500 transition-colors shadow-sm">
-                        <svg class="w-3 h-3 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M20 12H4"/></svg>
-                    </button>
-                    
-                    <span v-if="getItemQty(item.id) > 0" class="flex-1 text-center font-black text-[11px] md:text-xs text-[--lusso-brown]">
-                        {{ getItemQty(item.id) }}
-                    </span>
-                    
-                   <button @click.stop="changeQty(item, 1)"
-                                        :class="['h-10 flex items-center justify-center rounded-xl transition-all font-black uppercase tracking-widest text-[10px]', 
-                                        getItemQty(item.id) > 0 ? 'w-10 bg-[--lusso-brown] text-white' : 'w-full bg-white text-[--lusso-brown] shadow-sm group-hover:bg-[--lusso-accent] group-hover:text-white']">
-                                        <span v-if="getItemQty(item.id) === 0">Добавить</span>
-                                        <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M12 4v16m8-8H4"/></svg>
+                            <!-- Цена -->
+                            <div
+                                class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-md px-2.5 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-2xl font-black text-[10px] md:text-sm text-[--lusso-brown] shadow-sm">
+                                {{ item.price }} ₽
+                            </div>
+                        </div>
+
+                        <div class="p-3 md:p-6 flex-grow flex flex-col">
+                            <h3
+                                class="font-black text-[13px] md:text-base mb-1 md:mb-2 text-[--lusso-brown] group-hover:text-[--lusso-accent] transition-colors leading-tight ">
+                                {{ item.name }}
+                            </h3>
+                            <p
+                                class="text-[11px] md:text-[11px] text-[--lusso-brown] opacity-60 font-medium  mb-4 md:mb-6">
+                                {{ item.desc }}
+                            </p>
+
+                            <div class="mt-auto">
+                                <!-- Контейнер кнопок -->
+                                <div
+                                    class="flex items-center bg-[--lusso-cream] p-1 md:p-1.5 rounded-xl md:rounded-2xl w-full border border-[--lusso-brown]/5">
+
+                                    <!-- Кнопка Минус (Только если кол-во > 0) -->
+                                    <button v-if="getItemQty(item.id) > 0" @click.stop="changeQty(item, -1)"
+                                        class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-lg md:rounded-xl bg-white text-[--lusso-brown] hover:text-red-500 transition-colors shadow-sm">
+                                        <svg class="w-3 h-3 md:w-3 md:h-3" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="4">
+                                            <path d="M20 12H4" />
+                                        </svg>
                                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> 
-<!-- НОВЫЙ ЭЛЕМЕНТ: Невидимый блок, который триггерит загрузку -->
-<div ref="bottomSentinel" class="h-10 w-full mt-4 flex justify-center opacity-0 pointer-events-none">
-    Загрузка...
-</div>
 
+                                    <!-- Кол-во -->
+                                    <span v-if="getItemQty(item.id) > 0"
+                                        class="flex-1 text-center font-black text-[11px] md:text-xs text-[--lusso-brown]">
+                                        {{ getItemQty(item.id) }}
+                                    </span>
 
-
-
-
-
-
-
-
-
-
-            </div>
-
-          <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
-<transition name="animate__animated animate__fadeInUp">
-    <div v-if="cart.length > 0"
-        class="  fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 w-[300px] md:w-[450px] z-[100] flex gap-2 md:gap-3">
-        
-        <!-- Кнопка очистки -->
-        <button @click="confirmClear = true"
-            class=" w-12 h-12 md:w-16 md:h-16 bg-white border border-black/5 rounded-xl md:rounded-[1.5rem] flex items-center justify-center shadow-2xl active:scale-90 transition-all text-red-400 flex-shrink-0">
-            <svg class="w-5 h-5 md:w-6 md:h-6 " fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-        </button>
-
-        <!-- Основная кнопка Заказать -->
-        <button @click="openCheckout"
-            class="  flex-1 bg-[--lusso-accent] text-[--lusso-cream] rounded-xl md:rounded-[1.5rem] flex justify-between items-center px-5 md:px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all h-12 md:h-16">
-            <span class="font-black text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase">Заказать</span>
-            <span class="font-black text-sm md:text-lg">{{ cartTotalSum }} ₽</span>
-        </button>
-    </div>
-</transition>
-
-
-        </div>
-
-        <!-- МОДАЛКИ (Остаются функциональными, но обновляются визуально) -->
-       <div v-if="showCheckout || confirmClear" class="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-4"> 
-    <div class="absolute inset-0 bg-[--lusso-brown]/60 backdrop-blur-md" @click="closeModal"></div>
-
-    <!-- Оформление -->
-    <div v-if="showCheckout"
-        class="relative bg-white w-full max-w-md rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-8 shadow-2xl animate__animated animate__zoomIn max-h-[90vh] flex flex-col">
-        
-        <!-- Заголовок модалки -->
-        <div class="flex justify-between items-center mb-4 md:mb-8 flex-shrink-0">
-            <h2 class="text-xl md:text-2xl font-black tracking-tighter uppercase">{{ checkoutMode === 'order' ? 'Заказ' : 'Счёт' }}</h2>
-            <button @click="checkoutMode = checkoutMode === 'order' ? 'waiter' : 'order'"
-                class="text-[8px] md:text-[9px] font-black px-3 py-1.5 md:px-4 md:py-2 bg-[--lusso-cream] rounded-full uppercase tracking-widest text-[--lusso-brown]">
-                {{ checkoutMode === 'order' ? 'Для официанта' : 'К оформлению' }}
-            </button>
-        </div>
-
-        <!-- Список товаров с внутренней прокруткой -->
-        <div class="overflow-y-auto pr-2 mb-4 md:mb-10 custom-scroll flex-grow max-h-[50vh]">
-            <div v-for="item in cart" :key="item.id"
-                class="flex justify-between items-center mb-3 md:mb-5 pb-3 md:pb-5 border-b border-[--lusso-brown]/5">
-                <div class="flex items-center gap-3 md:gap-4">
-                    <img :src="item.image" class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl object-cover">
-                    <div class="min-w-0">
-                        <p class="font-bold text-xs md:text-sm  max-w-[200px] md:max-w-none">{{ item.name }}</p>
-                        <p class="text-[9px] md:text-[10px] text-[--lusso-accent] font-black uppercase tracking-tighter">{{ item.qty }} × {{ item.price }} ₽</p>
+                                    <!-- Кнопка Плюс / Добавить 
+                         ЛОГИКА ИЗМЕНЕНА: Если есть модификаторы -> открываем модалку. Иначе -> добавляем. -->
+                                    <button
+                                        @click.stop="item.modifiers && item.modifiers.length ? openItemModal(item) : changeQty(item, 1)"
+                                        :class="['h-10 flex items-center justify-center rounded-xl transition-all font-black uppercase tracking-widest text-[10px]', 
+                                getItemQty(item.id) > 0 ? 'w-10 bg-[--lusso-brown] text-white' : 'w-full bg-white text-[--lusso-brown] shadow-sm group-hover:bg-[--lusso-accent] group-hover:text-white']">
+                                        <span v-if="getItemQty(item.id) === 0">Добавить</span>
+                                        <svg v-else class="w-3 h-3" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="4">
+                                            <path d="M12 4v16m8-8H4" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <span class="font-black text-xs md:text-sm text-[--lusso-brown] whitespace-nowrap">{{ item.price * item.qty }} ₽</span>
-            </div>
-        </div>
 
-        <!-- Поля формы -->
-        <div v-if="checkoutMode === 'order'" class="space-y-2 md:space-y-3 mb-4 md:mb-8 flex-shrink-0">
-            <input v-model="form.name" type="text"
-                class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
-                placeholder="Ваше Имя">
-            <input v-model="form.phone" type="tel"
-                class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
-                placeholder="Номер телефона">
-            <div class="flex bg-[--lusso-cream] p-1 rounded-xl md:rounded-2xl gap-1 md:gap-2">
-                <button @click="form.type = 'pickup'"
-                    :class="['flex-1 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'pickup' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Самовывоз</button>
-                <button @click="form.type = 'delivery'"
-                    :class="['flex-1 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'delivery' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Доставка</button>
-            </div>
-            <input v-if="form.type === 'delivery'" v-model="form.address" type="text"
-                class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
-                placeholder="Адрес доставки">
-        </div>
+                <!-- Sentinel -->
+                <div ref="bottomSentinel" class="h-10 w-full mt-4 flex justify-center opacity-0 pointer-events-none">
+                    Загрузка...
+                </div>
 
-        <!-- Итого и кнопка (Фиксированы снизу) -->
-        <div class="flex-shrink-0">
-            <div class="pt-4 md:pt-6 border-t-2 border-dashed border-gray-100 flex justify-between items-center mb-4 md:mb-8">
-                <span class="font-bold text-gray-400 uppercase tracking-widest text-[9px] md:text-xs">Итого к оплате</span>
-                <span class="text-xl md:text-3xl font-black text-[--lusso-accent]">{{ cartTotalSum }} ₽</span>
             </div>
 
-            <button v-if="checkoutMode === 'order'" @click="sendToWhatsapp"
-                class="w-full py-4 md:py-5 bg-[--lusso-brown] text-white rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить в WhatsApp</button>
-            <button v-else @click="closeModal"
-                class="w-full py-4 md:py-5 bg-[--lusso-brown] text-white rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
-        </div>
-    </div>
-
-    <!-- Подтверждение очистки -->
-    <div v-if="confirmClear"
-        class="relative bg-white w-[90%] max-w-xs rounded-[2rem] p-6 md:p-10 text-center shadow-2xl animate__animated animate__bounceIn">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl font-bold">!</div>
-        <h3 class="text-lg md:text-xl font-black mb-2">Очистить?</h3>
-        <p class="text-[10px] md:text-xs text-gray-400 font-medium mb-6 md:mb-8 leading-relaxed">Все товары исчезнут из корзины.</p>
-        <div class="flex gap-2 md:gap-3">
-            <button @click="confirmClear = false"
-                class="flex-1 py-3 md:py-4 bg-gray-100 rounded-xl md:rounded-2xl font-bold text-gray-400 text-[10px] md:text-xs uppercase tracking-widest">Нет</button>
-            <button @click="clearCart"
-                class="flex-1 py-3 md:py-4 bg-red-500 text-white rounded-xl md:rounded-2xl font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-lg shadow-red-500/20">Да</button>
-        </div>
-    </div>
-</div>
 
 
 
-<!-- Модалка блюда -->
+
+            <!-- ПЛАВАЮЩАЯ КНОПКА ЗАКАЗА -->
+            <transition name="animate__animated animate__fadeInUp">
+                <div v-if="cart.length > 0"
+                    class="fixed bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 w-[300px] md:w-[450px] z-[100] flex gap-2 md:gap-3">
+
+                    <!-- Кнопка очистки -->
+                    <button @click="confirmClear = true"
+                        class="w-12 h-12 md:w-16 md:h-16 bg-white border border-black/5 rounded-xl md:rounded-[1.5rem] flex items-center justify-center shadow-2xl active:scale-90 transition-all text-red-400 flex-shrink-0">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 " fill="none" stroke="currentColor" stroke-width="2.5"
+                            viewBox="0 0 24 24">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <!-- Основная кнопка -->
+                    <button @click="openCheckout"
+                        class="flex-1 bg-[--lusso-accent] text-[--lusso-cream] rounded-xl md:rounded-[1.5rem] flex justify-between items-center px-5 md:px-8 shadow-2xl shadow-[--lusso-accent]/30 active:scale-95 transition-all h-12 md:h-16">
+                        <span
+                            class="font-black text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase">Заказать</span>
+                        <span class="font-black text-sm md:text-lg">{{ cartTotalSum }} ₽</span>
+                    </button>
+                </div>
+            </transition>
 
 
-<div v-if="selectedItem" class="fixed inset-0 z-[260] flex md:items-center md:justify-center">
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-[--lusso-brown]/80 backdrop-blur-md" @click="closeItemModal"></div>
 
-    <!-- Modal Container (Адаптив: h-full на моб / h-auto на ПК) -->
-    <div class="relative bg-white w-full md:max-w-lg h-full md:h-auto md:max-h-[90vh] md:rounded-[3rem] flex flex-col overflow-hidden shadow-2xl animate__animated animate__fadeInUp">
-        
-        <!-- SLIDER SECTION (Адаптивная высота h-[35vh]) -->
-        <div class="relative h-[35vh] sm:h-[45vh] md:h-[400px] bg-[#F8F5F2] overflow-hidden flex-shrink-0" 
-             @touchstart="onTouchStart" @touchend="onTouchEnd">
-            
-            <img :src="selectedItem.images?.length ? selectedItem.images[activeSlide] : selectedItem.image" 
-                 class="w-full h-full object-cover transition-transform duration-700">
 
-            <!-- Кнопки управления (Скрыты или уменьшены на моб) -->
-            <div v-if="selectedItem.images?.length > 1" class="absolute inset-x-2 md:inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
-                <button @click.stop="prevSlide" 
-                        class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">
-                    ‹
-                </button>
-                <button @click.stop="nextSlide" 
-                        class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">
-                    ›
-                </button>
-            </div>
 
-            <!-- Индикаторы слайдов -->
-            <div v-if="selectedItem.images?.length > 1" class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2">
-                <div v-for="(_, i) in selectedItem.images" :key="i"
-                     class="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-300"
-                     :class="activeSlide === i ? 'bg-white w-4 md:w-5' : 'bg-white/40'">
+            <!-- МОДАЛКИ КОРЗИНЫ (Без изменений) -->
+            <div v-if="showCheckout || confirmClear"
+                class="fixed inset-0 z-[200] flex items-center justify-center p-2 md:p-4">
+                <div class="absolute inset-0 bg-[--lusso-brown]/60 backdrop-blur-md" @click="closeModal"></div>
+
+                <!-- Оформление -->
+                <div v-if="showCheckout"
+                    class="relative bg-white w-full max-w-md rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-8 shadow-2xl animate__animated animate__zoomIn max-h-[90vh] flex flex-col">
+
+                    <div class="flex justify-between items-center mb-4 md:mb-8 flex-shrink-0">
+                        <h2 class="text-xl md:text-2xl font-black tracking-tighter uppercase">{{ checkoutMode ===
+                            'order' ? 'Заказ' : 'Счёт' }}</h2>
+                        <button @click="checkoutMode = checkoutMode === 'order' ? 'waiter' : 'order'"
+                            class="text-[8px] md:text-[9px] font-black px-3 py-1.5 md:px-4 md:py-2 bg-[--lusso-cream] rounded-full uppercase tracking-widest text-[--lusso-brown]">
+                            {{ checkoutMode === 'order' ? 'Для официанта' : 'К оформлению' }}
+                        </button>
+                    </div>
+
+                    <!-- Список товаров с внутренней прокруткой -->
+                    <div class="overflow-y-auto pr-2 mb-4 md:mb-10 custom-scroll flex-grow max-h-[50vh]">
+                        <div v-for="item in cart" :key="item.cartId"
+                            class="flex justify-between items-center mb-3 md:mb-5 pb-3 md:pb-5 border-b border-[--lusso-brown]/5">
+
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <img :src="item.image"
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl object-cover">
+                                <div class="min-w-0">
+                                    <p class="font-bold text-xs md:text-sm max-w-[200px] md:max-w-none">{{ item.name }}
+                                    </p>
+                                    <!-- Показываем добавки -->
+                                    <p v-if="item.modifiers && item.modifiers.length"
+                                        class="text-[9px] text-[--lusso-brown]/60">
+                                        + {{ item.modifiers.map(m => m.name).join(', ') }}
+                                    </p>
+                                    <p
+                                        class="text-[9px] md:text-[10px] text-[--lusso-accent] font-black uppercase tracking-tighter">
+                                        {{ item.qty }} × {{ item.price }} ₽
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Правая часть: Цена + Кнопка удалить -->
+                            <div class="flex items-center gap-3">
+                                <span class="font-black text-xs md:text-sm text-[--lusso-brown]  whitespace-nowrap">
+                                    {{ (item.finalPrice || item.price) * item.qty }} ₽
+                                </span>
+
+                                <!-- КНОПКА УДАЛИТЬ (НОВОЕ) -->
+                                <button @click.stop="removeItem(item.cartId)"
+                                    class="w-8 h-8 rounded-lg flex items-center justify-center bg-red-50 text-red-500 hover:bg-red-500 hover:text-[--lusso-accent] transition-all active:scale-90">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                        stroke-width="2.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Поля формы -->
+                    <div v-if="checkoutMode === 'order'" class="space-y-2 md:space-y-3 mb-4 md:mb-8 flex-shrink-0">
+                        <input v-model="form.name" type="text"
+                            class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
+                            placeholder="Ваше Имя">
+                        <input v-model="form.phone" type="tel"
+                            class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
+                            placeholder="Номер телефона">
+                        <div class="flex bg-[--lusso-cream] p-1 rounded-xl md:rounded-2xl gap-1 md:gap-2">
+                            <button @click="form.type = 'pickup'"
+                                :class="['flex-1 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'pickup' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Самовывоз</button>
+                            <button @click="form.type = 'delivery'"
+                                :class="['flex-1 py-2 md:py-3 rounded-lg md:rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all', form.type === 'delivery' ? 'bg-white shadow-sm text-[--lusso-accent]' : 'text-gray-400']">Доставка</button>
+                        </div>
+                        <input v-if="form.type === 'delivery'" v-model="form.address" type="text"
+                            class="w-full bg-[--lusso-cream] border-none rounded-xl md:rounded-2xl px-4 py-3 md:px-5 md:py-4 text-xs md:text-sm font-semibold outline-none focus:ring-2 focus:ring-[--lusso-accent]/20 transition-all"
+                            placeholder="Адрес доставки">
+                    </div>
+
+                    <div class="flex-shrink-0">
+                        <div
+                            class="pt-4 md:pt-6 border-t-2 border-dashed border-gray-100 flex justify-between items-center mb-4 md:mb-8">
+                            <span class="font-bold text-gray-400 uppercase tracking-widest text-[9px] md:text-xs">Итого
+                                к оплате</span>
+                            <span class="text-xl md:text-3xl font-black text-[--lusso-accent]">{{ cartTotalSum }}
+                                ₽</span>
+                        </div>
+
+                        <button v-if="checkoutMode === 'order'" @click="sendToWhatsapp"
+                            class="w-full py-4 md:py-5 bg-[--lusso-brown] text-white rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl hover:scale-[1.02] transition-all">Оформить
+                            в WhatsApp</button>
+                        <button v-else @click="closeModal"
+                            class="w-full py-4 md:py-5 bg-[--lusso-brown] text-white rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl transition-all">Закрыть</button>
+                    </div>
+                </div>
+
+                <!-- Подтверждение очистки -->
+                <div v-if="confirmClear"
+                    class="relative bg-white w-[90%] max-w-xs rounded-[2rem] p-6 md:p-10 text-center shadow-2xl animate__animated animate__bounceIn">
+                    <div
+                        class="w-12 h-12 md:w-16 md:h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl font-bold">
+                        !</div>
+                    <h3 class="text-lg md:text-xl font-black mb-2">Очистить?</h3>
+                    <p class="text-[10px] md:text-xs text-gray-400 font-medium mb-6 md:mb-8 leading-relaxed">Все товары
+                        исчезнут из корзины.</p>
+                    <div class="flex gap-2 md:gap-3">
+                        <button @click="confirmClear = false"
+                            class="flex-1 py-3 md:py-4 bg-gray-100 rounded-xl md:rounded-2xl font-bold text-gray-400 text-[10px] md:text-xs uppercase tracking-widest">Нет</button>
+                        <button @click="clearCart"
+                            class="flex-1 py-3 md:py-4 bg-red-500 text-white rounded-xl md:rounded-2xl font-bold text-[10px] md:text-xs uppercase tracking-widest shadow-lg shadow-red-500/20">Да</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Декор и Закрытие (Адаптивные отступы) -->
-            <div v-if="selectedItem.isNew" class="absolute top-4 left-4 md:top-6 md:left-6 bg-[red] text-white text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full uppercase tracking-widest shadow-lg">
-                Новинка
-            </div>
-            <button @click="closeItemModal" 
-                    class="absolute top-4 right-4 md:top-6 md:right-6 w-9 h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white text-xl">
+
+            <!-- МОДАЛКА БЛЮДА (ИЗМЕНЕННАЯ) -->
+            <div v-if="selectedItem" class="fixed inset-0 z-[260] flex md:items-center md:justify-center">
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-[--lusso-brown]/80 backdrop-blur-md" @click="closeItemModal"></div>
+
+                <!-- Modal Container -->
+                <div
+                    class="relative bg-white w-full md:max-w-lg h-full md:h-auto md:max-h-[90vh] md:rounded-[3rem] flex flex-col overflow-hidden shadow-2xl animate__animated animate__fadeInUp">
+
+                    <!-- SLIDER SECTION -->
+                    <div class="relative h-[35vh] sm:h-[45vh] md:h-[400px] bg-[#F8F5F2] overflow-hidden flex-shrink-0"
+                        @touchstart="onTouchStart" @touchend="onTouchEnd">
+
+                        <img :src="selectedItem.images?.length ? selectedItem.images[activeSlide] : selectedItem.image"
+                            class="w-full h-full object-cover transition-transform duration-700">
+
+                        <!-- Кнопки управления -->
+                        <div v-if="selectedItem.images?.length > 1"
+                            class="absolute inset-x-2 md:inset-x-4 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none">
+                            <button @click.stop="prevSlide"
+                                class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">‹</button>
+                            <button @click.stop="nextSlide"
+                                class="pointer-events-auto w-8 h-8 md:w-10 md:h-10 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center text-white text-xl">›</button>
+                        </div>
+
+                        <!-- Индикаторы -->
+                        <div v-if="selectedItem.images?.length > 1"
+                            class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2">
+                            <div v-for="(_, i) in selectedItem.images" :key="i"
+                                class="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-300"
+                                :class="activeSlide === i ? 'bg-white w-4 md:w-5' : 'bg-white/40'">
+                            </div>
+                        </div>
+
+                        <!-- Badge -->
+                        <div v-if="selectedItem.isNew"
+                            class="absolute top-4 left-4 md:top-6 md:left-6 bg-[red] text-white text-[8px] md:text-[9px] font-black px-3 py-1 md:px-4 md:py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+                            Новинка
+                        </div>
+                        <button @click="closeItemModal"
+                            class="absolute top-4 right-4 md:top-6 md:right-6 w-9 h-9 md:w-10 md:h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center text-white text-xl">
+                            ✕
+                        </button>
+                    </div>
+
+                    <!-- CONTENT SECTION (Scrollable) -->
+                    <!-- pb-32 добавлен, чтобы кнопка не закрывала контент -->
+                    <div class="flex-1 overflow-y-auto p-5 md:p-10 no-scrollbar custom-scroll bg-white pb-32">
+                        <div class="flex justify-between items-start mb-4 md:mb-6">
+                            <h3
+                                class="text-xl md:text-3xl font-black text-[--lusso-brown] tracking-tighter leading-tight pr-4">
+                                {{ selectedItem.name }}</h3>
+                            <span class="text-lg md:text-xl font-black text-[--lusso-accent] whitespace-nowrap">{{
+                                calculateModalPrice() }} ₽</span>
+
+
+                        </div>
+
+                        <p class="text-xs md:text-base text-[--lusso-brown]/60 leading-relaxed mb-6 md:mb-8">
+                            {{ selectedItem.fullDesc || selectedItem.desc }}
+                        </p>
+
+                      
+
+                        <!-- !!! ВСТАВЛЕННЫЙ БЛОК МОДИФИКАТОРОВ !!! -->
+                        <div v-if="selectedItem.modifiers && selectedItem.modifiers.length > 0" class="mb-6 md:mb-8">
+                            <h4
+                                class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-accent] mb-3">
+                                Добавить к вкусу</h4>
+                            <div class="space-y-2">
+                                <label v-for="mod in selectedItem.modifiers" :key="mod.id"
+                                    class="flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer"
+                                    :class="isModifierSelected(mod) ? 'bg-[--lusso-cream] border-[--lusso-accent]' : 'bg-white border-gray-100'">
+
+                                    <div class="flex items-center gap-3">
+                                        <!-- Кастомный чекбокс -->
+                                        <div class="w-4 h-4 rounded border flex items-center justify-center transition-all"
+                                            :class="isModifierSelected(mod) ? 'bg-[--lusso-accent] border-[--lusso-accent]' : 'border-gray-300'">
+                                            <svg v-if="isModifierSelected(mod)" class="w-3 h-3 text-white" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                                <path d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-xs font-bold text-[--lusso-brown]">{{ mod.name }}</span>
+                                    </div>
+                                    <span class="text-[10px] font-black text-[--lusso-accent]" v-if="mod.price > 0">+{{
+                                        mod.price }} ₽</span>
+
+                                    <!-- Скрытый инпут -->
+                                    <input type="checkbox" class="hidden" :value="mod" v-model="currentModifiers">
+                                </label>
+                            </div>
+                        </div>  
+
+                          <!-- БЛОК "С ЭТИМ ЧАСТО БЕРУТ" (UPSELL) -->
+                        <div v-if="recommendedItems && recommendedItems.length > 0"
+                            class="mb-8 pt-6 border-t border-dashed border-gray-100">
+                            <h4
+                                class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-brown] mb-4">
+                                С этим часто берут
+                            </h4>
+
+                            <!-- Горизонтальный скролл -->
+                            <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+                                <div v-for="rec in recommendedItems" :key="rec.id"
+                                    class="min-w-[140px] w-[140px] md:min-w-[160px] md:w-[160px] bg-white border border-gray-100 rounded-2xl p-3 flex flex-col shadow-sm relative overflow-hidden group">
+
+                                    <!-- Картинка -->
+                                    <div class="h-20 mb-3 rounded-lg overflow-hidden relative">
+                                        <img :src="rec.image"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    </div>
+
+                                    <!-- Инфо -->
+                                    <div class="flex-grow">
+                                        <h5
+                                            class="font-bold text-[11px] md:text-xs text-[--lusso-brown] leading-tight mb-1">
+                                            {{ rec.name }}</h5>
+                                        <p class="text-[10px] font-medium text-[--lusso-brown]/60">{{ rec.price }} ₽</p>
+                                    </div>
+
+                                    <!-- Кнопка добавления -->
+                                    <!-- Используем changeQty(rec, 1), чтобы сразу добавить в корзину -->
+                                    <button @click.stop="changeQty(rec, 1)"
+                                        class="mt-3 w-full py-2 bg-[--lusso-cream] hover:bg-[--lusso-accent] hover:text-white text-[--lusso-brown] text-[9px] font-black uppercase tracking-widest rounded-lg transition-all flex items-center justify-center gap-2">
+                                        <span v-if="getItemQty(rec.id) > 0">В корзине ({{ getItemQty(rec.id) }})</span>
+                                        <span v-else>+ Добавить</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Ингредиенты -->
+                        <div v-if="selectedItem.ingredients?.length" class="pb-4">
+                            <h4
+                                class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-accent] mb-2 md:mb-3">
+                                Состав</h4>
+                            <p class="text-xs md:text-sm text-[--lusso-brown]/80 leading-relaxed">
+                                {{ selectedItem.ingredients.join(', ') }}
+                            </p>
+                        </div>
+
+                        <!-- Характеристики (БЖУ) -->
+                        <h4
+                            class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-accent] mb-2 md:mb-3">
+                            Характеристики (БЖУ)</h4>
+                        <div v-if="selectedItem.nutrition"
+                            class="grid grid-cols-4 gap-2 md:gap-4 p-3 md:p-5 bg-[--lusso-cream]/30 rounded-2xl md:rounded-[2rem] border border-[--lusso-accent]/10 mb-6 md:mb-8">
+
+                            <div class="text-center"
+                                v-for="(val, key) in {'Белки': selectedItem.nutrition.proteins, 'Жиры': selectedItem.nutrition.fats, 'Углеводы': selectedItem.nutrition.carbs, 'Ккал': selectedItem.nutrition.calories}"
+                                :key="key">
+                                <p
+                                    class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">
+                                    {{ key }}</p>
+                                <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ val }}<span
+                                        v-if="key!=='Ккал'">г</span></p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <!-- FOOTER (Action Bar) -->
+                    <div class="p-5 md:p-8 border-t border-[--lusso-accent]/5 bg-white flex-shrink-0">
+                        <button @click="addFromModal"
+                            class="w-full py-4 md:py-5 bg-[--lusso-brown] hover:bg-[--lusso-accent]  text-white rounded-xl md:rounded-[1.5rem] font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl active:scale-95 transition-all">
+                            Добавить в корзину
+                        </button>
+                    </div>
+                </div>
+            </div> 
+
+
+            <!-- УВЕДОМЛЕНИЕ -->
+            <transition name="animate__animated animate__fade">
+                <div v-if="showNotice"
+                    class="fixed top-24 left-1/2 -translate-x-1/2 z-[300] w-[90%] max-w-md bg-[--lusso-brown] text-[--lusso-cream] p-5 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/10">
+                    <div
+                        class="w-8 h-8 bg-[--lusso-accent] rounded-full flex items-center justify-center font-bold text-white text-xs">
+                        !</div>
+                    <p class="text-xs font-bold uppercase tracking-widest">{{ noticeText }}</p>
+                </div>
+            </transition> 
+
+         
+<!-- UPSELL TOAST (Список рекомендаций) -->
+<!-- UPSELL TOAST (Сетка рекомендаций) -->
+<transition 
+    enter-active-class="animate__animated animate__fadeIn"
+    leave-active-class="animate__animated animate__fadeOut">
+    
+    <div v-if="showSuggestion && suggestionItems.length > 0" 
+         style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 2147483647; width: 95%; max-width: 500px;"
+         class="bg-white border border-[--lusso-brown]/10 shadow-2xl rounded-2xl p-4 backdrop-blur-md bg-white/95">
+        
+        <!-- Заголовок + Крестик -->
+        <div class="flex justify-between items-center mb-3">
+            <p class="text-[10px] font-bold text-[--lusso-accent] uppercase tracking-widest flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[--lusso-accent] animate-pulse"></span>
+                Идеально дополнит
+            </p>
+            <button @click="showSuggestion = false" class="w-6 h-6 rounded-full bg-gray-50 text-gray-400 flex items-center justify-center hover:bg-gray-100 hover:text-red-400 transition-colors">
                 ✕
             </button>
         </div>
 
-        <!-- CONTENT SECTION (Scrollable) -->
-        <div class="flex-1 overflow-y-auto p-5 md:p-10 no-scrollbar custom-scroll bg-white">
-            <div class="flex justify-between items-start mb-4 md:mb-6">
-                <h3 class="text-xl md:text-3xl font-black text-[--lusso-brown] tracking-tighter leading-tight pr-4">{{ selectedItem.name }}</h3>
-                <span class="text-lg md:text-xl font-black text-[--lusso-accent] whitespace-nowrap">{{ selectedItem.price }} ₽</span>
+        <!-- СЕТКА (2 колонки на моб, 4 на ПК) -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 max-h-[60vh] overflow-y-auto custom-scroll">
+            
+            <div v-for="rec in suggestionItems" :key="rec.id" 
+                 class="flex flex-col bg-gray-50/50 rounded-xl p-2 border border-gray-100 relative group hover:border-[--lusso-brown]/20 transition-all">
+                
+                <!-- Верх: Картинка + Инфо -->
+                <div class="flex gap-2 mb-2 items-center">
+                    <div class="w-10 h-10 rounded-lg bg-white overflow-hidden flex-shrink-0 shadow-sm">
+                        <img :src="rec.image" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-0">
+                        <h5 class="font-bold text-[10px] text-[--lusso-brown] leading-tight mb-0.5 line-clamp-2">
+                            {{ rec.name }}
+                        </h5>
+                        <p class="text-[9px] font-black text-[--lusso-accent]">{{ rec.price }} ₽</p>
+                    </div>
+                </div>
+
+                <!-- Кнопка -->
+                <button @click="addSuggestion(rec)" 
+                        class="mt-auto w-full py-2 bg-white border border-[--lusso-brown]/10 text-[--lusso-brown] rounded-lg text-[9px] font-black uppercase tracking-widest hover:bg-[--lusso-brown] hover:text-white transition-all shadow-sm active:scale-95 flex items-center justify-center gap-1">
+                    <span>+</span> Добавить
+                </button>
             </div>
 
-            <p class="text-xs md:text-base text-[--lusso-brown]/60 leading-relaxed mb-6 md:mb-8">
-                {{ selectedItem.fullDesc || selectedItem.desc }}
-            </p>
-
-            <!-- Характеристики (БЖУ) (Уменьшены для мобильных) -->
-            <div v-if="selectedItem.nutrition" class="grid grid-cols-4 gap-2 md:gap-4 p-3 md:p-5 bg-[--lusso-cream]/30 rounded-2xl md:rounded-[2rem] border border-[--lusso-accent]/10 mb-6 md:mb-8">
-                <div class="text-center">
-                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Белки</p>
-                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.proteins }}г</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Жиры</p>
-                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.fats }}г</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Углев</p>
-                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.carbs }}г</p>
-                </div>
-                <div class="text-center">
-                    <p class="text-[7px] md:text-[9px] font-bold text-[--lusso-accent] uppercase mb-0.5 md:mb-1">Ккал</p>
-                    <p class="font-black text-[10px] md:text-sm text-[--lusso-brown]">{{ selectedItem.nutrition.calories }}</p>
-                </div>
-            </div>
-
-            <!-- Ингредиенты -->
-            <div v-if="selectedItem.ingredients?.length" class="pb-4">
-                <h4 class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[--lusso-accent] mb-2 md:mb-3">Состав</h4>
-                <p class="text-xs md:text-sm text-[--lusso-brown]/80 leading-relaxed">
-                    {{ selectedItem.ingredients.join(', ') }}
-                </p>
-            </div>
-        </div>
-
-        <!-- FOOTER (Action Bar) (Фиксирован снизу) -->
-        <div class="p-5 md:p-8 border-t border-[--lusso-accent]/5 bg-white flex-shrink-0">
-            <button @click="addFromModal"
-                    class="w-full py-4 md:py-5 bg-[--lusso-brown] hover:bg-[--lusso-accent]  text-white rounded-xl md:rounded-[1.5rem] font-black text-[10px] md:text-xs tracking-[0.2em] uppercase shadow-xl active:scale-95 transition-all">
-                Добавить в корзину
-            </button>
         </div>
     </div>
-</div>
+</transition>
 
 
 
-        <!-- Конец модалки  -->
 
-        <!-- УВЕДОМЛЕНИЕ -->
-        <transition name="animate__animated animate__fadeInDown">
-            <div v-if="showNotice"
-                class="fixed top-24 left-1/2 -translate-x-1/2 z-[300] w-[90%] max-w-md bg-[--lusso-brown] text-[--lusso-cream] p-5 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/10">
-                <div
-                    class="w-8 h-8 bg-[--lusso-accent] rounded-full flex items-center justify-center font-bold text-white text-xs">
-                    !</div>
-                <p class="text-xs font-bold uppercase tracking-widest">{{ noticeText }}</p>
-            </div>
-        </transition>
+        </div>
+
+
+
+
+
         @@include('template/partials/footer.html')
         @@include('template/partials/scripts.html')
     </div>

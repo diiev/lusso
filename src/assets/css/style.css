@@ -1,4 +1,4 @@
-@import "fonts.css";
+
 /* сброс */  
 
 /* Reset and base styles  */
@@ -96,7 +96,7 @@ input[type='file'] {
 
 
 
-@import "animate.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
